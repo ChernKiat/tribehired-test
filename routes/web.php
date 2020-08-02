@@ -24,15 +24,21 @@ Route::get('/spell-check', 'SpellCheckController@index')->name('spell.check');
 Route::get('/ws', 'HomeController@ws')->name('ws');
 Route::get('/scrabble', 'HomeController@scrabble')->name('scrabble');
 Route::get('/math-genius', 'HomeController@mathGenius')->name('math.genius');
-Route::get('/net-junkies', 'HomeController@netJunkies')->name('net.junkies');
 Route::get('/mash_up', 'HomeController@mashUp')->name('mash.up');
 Route::get('/gmtk', 'HomeController@gmtk')->name('gmtk');
 Route::get('/test', 'HomeController@test')->name('test');
 
+Route::prefix('net-junkies')->namespace('NetJunkies')->name('netjunkies.')->group(function() {
+    Route::prefix('posts')->name('post.')->group(function() {
+        Route::get('create', 'PostController@create')->name('create');
+        Route::post('/', 'PostController@store')->name('store');
+    });
+});
+
 Route::prefix('seal-chamber')->namespace('SealChamber')->name('sealchamber.')->group(function() {
     Route::get('/', 'PageController@roomCode')->name('room.code');
 
-    Route::prefix('room')->name('room.')->group(function() {
+    Route::prefix('rooms')->name('room.')->group(function() {
         Route::get('join', 'RoomController@join')->name('join');
     });
 });
@@ -40,8 +46,11 @@ Route::prefix('seal-chamber')->namespace('SealChamber')->name('sealchamber.')->g
 Route::namespace('Tesseract')->group(function() {
     Route::resource('documents', 'DocumentController')
         ->except('show');
-    Route::get('documents/{document}/crop', 'DocumentController@crop')->name('documents.crop');
-    Route::get('documents/{document}/export', 'DocumentController@export')->name('documents.export');
+
+    Route::prefix('documents')->name('document.')->group(function() {
+        Route::get('{document}/crop', 'DocumentController@crop')->name('crop');
+        Route::get('{document}/export', 'DocumentController@export')->name('export');
+    });
 });
 
 Route::prefix('system')->namespace('Admin')->group(function() {
