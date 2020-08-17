@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Models\NetJunkies;
+namespace App\Models\NetJunkies;
 
 use Illuminate\Database\Eloquent\Model;
 

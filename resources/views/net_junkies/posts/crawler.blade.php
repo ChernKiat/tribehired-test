@@ -8,13 +8,24 @@
                 <div class="card-header">Register</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
+                    @if(Session::has('success'))
+                        <div class="alert alert-success">{!! Session::get('success') !!}</div>
+                    @endif
+                    @if(Session::has('fail'))
+                        <div class="alert alert-danger">{!! Session::get('fail') !!}</div>
+                    @endif
+                    @if(Session::has('error'))
+                        <div class="alert alert-danger">{!! Session::get('error') !!}</div>
+                    @endif
+                    @if(count($errors) > 0)
+                        @foreach($errors->all() as $error)
+                            <div class="alert alert-danger">{!! $error !!}</div>
+                        @endforeach
                     @endif
 
                     <form action="{{ route('netjunkies.post.store') }}" method="POST">
+                        {{ csrf_field() }}
+
                         <div class="form-group">
                             <label for="url">URL:</label>
                             <textarea id="url" name="url" class="form-control" placeholder="e.g https://www.facebook.com" row="4"></textarea>

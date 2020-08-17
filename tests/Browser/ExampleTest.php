@@ -22,7 +22,10 @@ class ExampleTest extends DuskTestCase
         // $browser->clear('name');
         // $browser->select('name', 'value');
         // $browser->press('text');
-        
+
+        // $browser->element('selector')->getAttribute('attribute');
+        // $data = $browser->script("return javascript_code;");
+
         $this->assertTrue(true);
     }
 }

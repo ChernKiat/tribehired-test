@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Browser;
+namespace Tests\Browser\keep;
 
 use App\Models\VideoChannel\Video;
 use Laravel\Dusk\Browser;
@@ -24,7 +24,7 @@ class VideoDownloaderTest extends DuskTestCase
 
                 $browser->pause(1000000);
             });
-            
+
             $video->save();
         }
 

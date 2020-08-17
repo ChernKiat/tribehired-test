@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\NetJunkies;
 
 use App\Http\Controllers\Controller;
-use App\Http\Models\NetJunkies\Post;
+use App\Models\NetJunkies\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -14,14 +14,16 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'url'  => 'required',
+        ]);
+
         $sql = new Post();
-        $sql->source  = $source;
         $sql->url     = $request->input('url');
+
+        $sql->setPostSource();
+
         $sql->save();
-
-        $posts = TribeHiredAPITool::getPostsIndexWithComments($request->input('search'));
-
-        $output = array();
 
         return redirect()->route('netjunkies.post.create')->with('success', 'Successfully added New URL');
     }

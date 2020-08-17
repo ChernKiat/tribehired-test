@@ -43,6 +43,10 @@ Route::prefix('seal-chamber')->namespace('SealChamber')->name('sealchamber.')->g
     });
 });
 
+Route::prefix('vengeance-mail')->namespace('VengeanceMail')->name('vengeancemail.')->group(function() {
+    Route::get('send', 'EmailController@sendSpamMail')->name('send.spam.mail');
+});
+
 Route::namespace('Tesseract')->group(function() {
     Route::resource('documents', 'DocumentController')
         ->except('show');
