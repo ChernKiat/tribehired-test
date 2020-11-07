@@ -84,9 +84,12 @@ class FileTool
     {
         FolderTool::createFoldersRecursively($path);
 
-        $image = CodeTool::randomGenerator('filename') . '.' . FileTool::extractFileDetails(FileTool::extractURLDetails($url, 'path'), 'extension');
-        return file_put_contents("{$path}\\{$image}", file_get_contents($url));
-        // return copy($url, "{$path}\\{$image}");
+        $file = CodeTool::randomGenerator('filename') . '.' . FileTool::extractFileDetails(FileTool::extractURLDetails($url, 'path'), 'extension');
+        $localfile = "{$path}\\{$file}";
+        file_put_contents($localfile, file_get_contents($url));
+        // copy($url, $localfile);
+
+        return $localfile;
     }
 
     public static function convertBase64StringToImage($base64String, $path = "images/", $name = null)

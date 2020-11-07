@@ -12,7 +12,7 @@ class FolderTool
             if (!$includeFolders) {
                 foreach ($files as $key => $file) {
                     $extension = pathinfo($file, PATHINFO_EXTENSION);
-                    if(empty($extension)){
+                    if (empty($extension)) {
                         unset($files[$key]);
                     }
                 }
