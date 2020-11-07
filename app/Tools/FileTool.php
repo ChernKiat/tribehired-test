@@ -4,16 +4,35 @@ namespace App\Tools;
 
 class FileTool
 {
+    public static function extractURLDetails($url, $part = null)
+    {
+        $urlParts = parse_url($url);
+
+        if (!is_null($part)) {
+            switch ($part) {
+                case 'path':
+                case 'query':
+                case 'scheme':
+                    return $urlParts[$part];
+                    break;
+                default:
+                    return false;
+                    break;
+            }
+        } else {
+            return $urlParts;
+        }
+    }
     public static function extractFileDetails($path, $part = null)
     {
         $pathParts = pathinfo($path);
+
         if (!is_null($part)) {
             switch ($part) {
                 case 'extension':
-                    return $pathParts['extension'];
-                    break;
                 case 'filename':
-                    return $pathParts['filename'];
+                    return $pathParts[$part];
+                    return $pathParts[$part];
                     break;
                 default:
                     return false;
@@ -21,6 +40,7 @@ class FileTool
             }
         } else {
             return $pathParts;
+        }
     }
 
     public static function emptyATextFile($path)
@@ -64,7 +84,7 @@ class FileTool
     {
         FolderTool::createFoldersRecursively($path);
 
-        $image = CodeTool::randomGenerator('filename') . '.' . FileTool::extractFileDetails($url, 'extension');
+        $image = CodeTool::randomGenerator('filename') . '.' . FileTool::extractFileDetails(FileTool::extractURLDetails($url, 'path'), 'extension');
         return file_put_contents("{$path}\\{$image}", file_get_contents($url));
         // return copy($url, "{$path}\\{$image}");
     }

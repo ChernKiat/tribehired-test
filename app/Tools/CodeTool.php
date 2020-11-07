@@ -11,7 +11,7 @@ class CodeTool
     {
         switch ($type) {
             case 'filename':
-                return Carbon::now()->getTimestamp() . Str::random(10);
+                return Str::random(10) . Carbon::now()->getTimestamp();
                 break;
             default:
                 return mt_rand(); // random integer
