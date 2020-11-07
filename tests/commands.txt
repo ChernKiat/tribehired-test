@@ -1,2 +1,5 @@
 php artisan dusk
 
+// Error: This version of ChromeDriver only supports Chrome version 83
+php artisan dusk:chrome-driver
+

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Tools;
+namespace App\Links;
 
 use GuzzleHttp\Client;
 
-class APITool
+class BaseLink
 {
     const BASE_URL  = "";
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Tools\Test;
+namespace App\Links\Test;
 
-use App\Tools\APITool;
+use App\Links\BaseLink;
 
-class TribeHiredAPITool extends APITool
+class TribeHiredLink extends BaseLink
 {
     const BASE_URL  = "https://jsonplaceholder.typicode.com";
 
