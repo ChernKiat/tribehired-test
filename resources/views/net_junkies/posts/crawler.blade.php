@@ -28,7 +28,7 @@
 
                         <div class="form-group">
                             <label for="url">URL:</label>
-                            <textarea id="url" name="url" class="form-control" placeholder="e.g https://www.facebook.com" row="4"></textarea>
+                            <textarea id="url" name="url" class="form-control" placeholder="e.g https://www.facebook.com" rows="4"></textarea>
                         </div>
                         <button class="btn btn-primary">Submit</button>
                     </form>

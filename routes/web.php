@@ -35,6 +35,10 @@ Route::prefix('net-junkies')->namespace('NetJunkies')->name('netjunkies.')->grou
     });
 });
 
+Route::prefix('board-game')->namespace('BoardGame')->name('boardgame.')->group(function() {
+    Route::get('combination', 'BoardGameController@test')->name('combination.test');
+});
+
 Route::prefix('seal-chamber')->namespace('SealChamber')->name('sealchamber.')->group(function() {
     Route::get('/', 'PageController@roomCode')->name('room.code');
 
