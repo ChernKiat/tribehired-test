@@ -64,6 +64,7 @@ class NetJunkiesCrawlerTest extends DuskTestCase
                 // $browser->pause(100000);
             });
 
+            $post->crawled_at = Carbon::now();
             $post->crawler_status = Post::CRAWLER_STATUS_SUCCESS;
             $post->save();
         } else {

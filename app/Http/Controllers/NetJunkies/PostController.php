@@ -9,7 +9,7 @@ class PostController extends Controller
 {
     public function create()
     {
-        return view('net_junkies.posts.crawler');
+        return view('net_junkies.posts.link');
     }
 
     public function store(Request $request)
@@ -26,5 +26,14 @@ class PostController extends Controller
         $sql->save();
 
         return redirect()->route('netjunkies.post.create')->with('success', 'Successfully added New URL');
+    }
+
+    public function edit($id)
+    {
+        $post = Post::with(['comments'])->find($id);
+
+        return view('net_junkies.posts.content', [
+            'post'  => $post,
+        ]);
     }
 }

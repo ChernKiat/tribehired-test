@@ -16,9 +16,4 @@ class Comment extends Model
     {
         return $this->belongsTo(Post::class, 'post_id', 'id');
     }
-
-    public function reactions()
-    {
-        return $this->hasMany(Reaction::class, 'comment_id', 'id');
-    }
 }
