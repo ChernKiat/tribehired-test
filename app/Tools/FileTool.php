@@ -84,7 +84,7 @@ class FileTool
     {
         FolderTool::createFoldersRecursively($path);
 
-        $file = CodeTool::randomGenerator('filename') . '.' . FileTool::extractFileDetails(FileTool::extractURLDetails($url, 'path'), 'extension');
+        $file = StringTool::randomGenerator('filename') . '.' . FileTool::extractFileDetails(FileTool::extractURLDetails($url, 'path'), 'extension');
         $localfile = "{$path}\\{$file}";
         file_put_contents($localfile, file_get_contents($url));
         // copy($url, $localfile);
