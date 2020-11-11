@@ -19,11 +19,19 @@ class CreatePostsTable extends Migration
             $table->tinyInteger('source')->nullable();
             $table->text('url');
 
-            $table->timestamp('crawled_at')->nullable();
-            $table->tinyInteger('crawled_status')->nullable();
+            $table->string('user_name')->nullable();
+            $table->string('user_image')->nullable();
+            $table->tinyInteger('main_type')->default(1)->comment('1 = text, 2 = image');
             $table->text('title')->nullable();
             $table->string('image')->nullable();
+            $table->unsignedInteger('reaction_total')->default(0);
             $table->timestamp('posted_at')->nullable();
+
+            $table->timestamp('crawled_at')->nullable();
+            $table->tinyInteger('crawler_status')->nullable();
+
+            $table->tinyInteger('live_status')->default(0);
+            $table->string('video')->nullable();
             $table->timestamps();
         });
     }

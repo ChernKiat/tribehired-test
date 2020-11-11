@@ -19,14 +19,18 @@ class CreateCommentsTable extends Migration
 
             $table->unsignedInteger('post_id');
             $table->foreign('post_id')
-                  ->references('id')->on('posts')
+                  ->references('id')->on('netjunkies_posts')
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
 
-            $table->string('user_name');
-            $table->string('user_image');
+            $table->string('user_name')->nullable();
+            $table->string('user_image')->nullable();
             $table->text('comment');
+            $table->unsignedInteger('reaction_total')->default(0);
             $table->timestamp('posted_at')->nullable();
+
+            $table->boolean('is_selected')->default(0);
+            $table->integer('live_order')->nullable();
             $table->timestamps();
         });
     }

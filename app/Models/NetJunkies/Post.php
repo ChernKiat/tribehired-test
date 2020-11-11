@@ -13,9 +13,12 @@ class Post extends Model
     const SOURCE_FACEBOOK  = 1;
     const SOURCE_REDDIT    = 3;
 
-    const STATUS_ERROR    = 0;
-    const STATUS_SUCCESS  = 1;
-    const STATUS_RUN      = 3;
+    const CRAWLER_STATUS_ERROR    = 0;
+    const CRAWLER_STATUS_SUCCESS  = 1;
+    const CRAWLER_STATUS_RUN      = 3;
+
+    const MAIN_TYPE_TEXT   = 1;
+    const MAIN_TYPE_IMAGE  = 2;
 
     protected $fillable = [
     ];

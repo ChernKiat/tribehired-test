@@ -23,6 +23,8 @@ class StringTool
     {
         $map = array('k' => 1000, 'm' => 1000000, 'b' => 1000000000);
         list($value, $suffix) = sscanf(strtolower($abbreviation), "%f%s");
-        return intval($value * $map[$suffix]);
+
+        $output = is_null($suffix) ? $value : $value * $map[$suffix];
+        return intval($output);
     }
 }

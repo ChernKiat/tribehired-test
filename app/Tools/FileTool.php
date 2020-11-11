@@ -89,7 +89,11 @@ class FileTool
         file_put_contents($localfile, file_get_contents($url));
         // copy($url, $localfile);
 
-        return $localfile;
+        if (file_exists($localfile)) {
+            return $file;
+        } else {
+            return false;
+        }
     }
 
     public static function convertBase64StringToImage($base64String, $path = "images/", $name = null)

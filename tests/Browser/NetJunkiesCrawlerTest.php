@@ -2,10 +2,12 @@
 
 namespace Tests\Browser;
 
+use App\Models\NetJunkies\Comment;
 use App\Models\NetJunkies\Post;
 use App\Tools\FileTool;
 use App\Tools\FolderTool;
 use App\Tools\StringTool;
+use Carbon\Carbon;
 use Facebook\WebDriver\WebDriverBy;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
@@ -14,34 +16,55 @@ class NetJunkiesCrawlerTest extends DuskTestCase
 {
     public function testSavePost()
     {
-        // $image = FileTool::downloadAFile("https://scontent.fkul13-1.fna.fbcdn.net/v/t1.0-9/109064205_3097115153670675_7409044947644634701_n.jpg?_nc_cat=105&ccb=2&_nc_sid=730e14&_nc_ohc=5_PsW2vh-i0AX8uYfVl&_nc_ht=scontent.fkul13-1.fna&oh=7349f86984c27461677d63bd04e5ef2c&oe=5FCD4CB2", storage_path("app\\images\\1"));
-        //         dd($image ?? '');
-
-        $post = Post::whereNull('crawled_at')->whereNull('crawled_status')->first();
+        $post = Post::whereNull('crawled_at')->first();
         if (!empty($post)) {
-            // $post->crawled_status = Post::STATUS_RUN;
-            // $post->save();
+            $post->crawler_status = Post::CRAWLER_STATUS_RUN;
+            $post->save();
 
             $this->browse(function(Browser $browser) use ($post) {
                 $browser->visit($post->url);
                 // $browser->visitRoute('welcome');
 
-                $this->facebookLogin($browser);
-                // $status = $this->facebookDownloadMainImage($browser, storage_path("app\\images\\{$post->id}"));
-                // $total = $this->facebookCrawlMainReaction($browser);
+                if (!$this->facebookLogin($browser)) {
+                    $post->crawler_status = Post::CRAWLER_STATUS_RUN;
+                    $post->save();
+                    dd('login failed...');
+                }
+
+                $postLocalPath = "\\storage\\posts\\{$post->id}";
+                $postLocalStoragePath = storage_path("app{$postLocalPath}");
+                if (true) {
+                    $image = $this->facebookDownloadMainImage($browser, $postLocalStoragePath);
+                    if ($image) {
+                        $post->image      = "{$postLocalPath}\\{$image}";
+                        $post->main_type  = Post::MAIN_TYPE_IMAGE;
+                        $post->save();
+                    }
+                } else {
+
+                }
+
+                $reaction = $this->facebookCrawlMainReaction($browser);
+                $post->reaction_total  = $reaction;
+                $post->save();
+
                 $this->facebookClickViewMoreCommentsButton($browser);
+
                 $comments = $this->facebookCrawlTopComments($browser, 50);
-                dd($comments, 'o0o');
+                foreach ($comments as $key => $comment) {
+                    $comments[$key]['post_id'] = $post->id;
+                }
+                Comment::insert($comments);
 
                 // $browser->downloadVideo($video->url, storage_path("videos\\{$video->id}"));
                 // $post->video_name = $browser->page->videoFile;
 
                 // $this->assertFileExists(storage_path("videos\\{$video->id}") . "\\{$video->video_name}");
 
-                $browser->pause(100000);
+                // $browser->pause(100000);
             });
 
-            $post->crawled_status = 3;
+            $post->crawler_status = Post::CRAWLER_STATUS_SUCCESS;
             $post->save();
         } else {
 
@@ -52,19 +75,24 @@ class NetJunkiesCrawlerTest extends DuskTestCase
 
     public function facebookLogin($browser)
     {
-        try {
-            $browser->waitFor('#email', 5);
-        } catch (\Exception $e) {
-        }
+        try { $browser->waitFor('#email', 5); } catch (\Exception $e) {}
 
-        if ($browser->element('#email')) {
-            $browser->type('email', 'yuna1450@live.com.my')
-                    // ->value('#email', 'yuna1450@live.com.my')
-                    ->waitFor('#pass', 2)
-                    ->type('pass', 'girl1450')
-                    // ->value('#pass', 'girl1450')
-                    ->waitFor('#loginbutton', 2)
+        $browser->type('email', 'yuna1450@live.com.my')
+                // ->value('#email', 'yuna1450@live.com.my')
+                ->type('pass', 'girl1450');
+                // ->value('#pass', 'girl1450')
+
+        try { $browser->waitFor('#loginbutton', 5); } catch (\Exception $e) {}
+
+        if ($browser->element('#loginbutton')) {
+            $browser->click('#loginbutton');
+            return true;
+        } elseif ($browser->element('#login_form > div:nth-child(2) > div:nth-child(3) > div[role="button"]:nth-child(1)')) {
+            $browser->element('#login_form > div:nth-child(2) > div:nth-child(3) > div[role="button"]:nth-child(1)')
                     ->click('#loginbutton');
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -75,7 +103,7 @@ class NetJunkiesCrawlerTest extends DuskTestCase
                             ->getAttribute('src');
         // $image = $browser->script("return document.querySelector('div[role=\"main\"] div[data-pagelet=\"MediaViewerPhoto\"] img').getAttribute('src');");
 
-        return file_exists(FileTool::downloadAFile($url, $destination));
+        return FileTool::downloadAFile($url, $destination);
     }
 
     public function facebookCrawlMainReaction($browser)
@@ -112,7 +140,7 @@ class NetJunkiesCrawlerTest extends DuskTestCase
             if (count($comments) > $total) { break; }
             $temp = array(
                 'comment' => $comment->findElement(WebDriverBy::cssSelector('div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:last-child > span:nth-child(1) > div:nth-child(1) > div:nth-child(1)'))->getText(),
-                'reaction' => $comment->findElement(WebDriverBy::cssSelector('div:nth-child(2) > div:nth-child(1) > span:nth-child(1) > div:nth-child(1) > div:nth-child(1) > span:nth-child(2)'))->getText(),
+                'reaction_total' => StringTool::abbreviationsToIntegersConverter($comment->findElement(WebDriverBy::cssSelector('div:nth-child(2) > div:nth-child(1) > span:nth-child(1) > div:nth-child(1) > div:nth-child(1) > span:nth-child(2)'))->getText()),
             );
             // if (empty($temp['reaction'])) { $temp['reaction'] = 0; }
             $comments[] = $temp;
