@@ -28,6 +28,15 @@ class PostController extends Controller
         return redirect()->route('netjunkies.post.create')->with('success', 'Successfully added New URL');
     }
 
+    public function index()
+    {
+        $posts = Post::whereNotNull('crawled_at')->get();
+
+        return view('net_junkies.posts.manage', [
+            'posts'  => $posts,
+        ]);
+    }
+
     public function edit($id)
     {
         $post = Post::with(['comments'])->find($id);

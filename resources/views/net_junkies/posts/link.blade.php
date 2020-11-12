@@ -31,6 +31,7 @@
                             <textarea id="url" name="url" class="form-control" placeholder="e.g https://www.facebook.com" rows="4"></textarea>
                         </div>
                         <button class="btn btn-primary">Submit</button>
+                        <a href="{{ route('netjunkies.post.index') }}" class="btn btn-primary float-right">Back</a>
                     </form>
                 </div>
             </div>

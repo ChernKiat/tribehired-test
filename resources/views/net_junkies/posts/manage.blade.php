@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Register</div>
+                <div class="card-header">List</div>
 
                 <div class="card-body">
                     @if(Session::has('success'))
@@ -26,9 +26,9 @@
                     <table class="table table-hover table-bordered my-js-data-table">
                         <thead>
                             <tr>
-                                <th>{{ trans('admin.no') }}</th>
-                                <th>{{ trans('admin.topic') }}</th>
-                                <th>{{ trans('admin.operation') }}</th>
+                                <th>No.</th>
+                                <th>Title</th>
+                                <th>Operation</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,13 +39,13 @@
                                         @if ($row->main_type == \App\Models\NetJunkies\Post::MAIN_TYPE_TEXT)
                                         {{ $row->title }}
                                         @elseif ($row->main_type == \App\Models\NetJunkies\Post::MAIN_TYPE_IMAGE && !empty($row->image))
-                                        <img src="{{ $row->image }}" height="100%" width="100%" alt="Post Main Image" />
+                                        <img src="{{ $row->image }}" width="100%" height="auto" alt="Post Main Image" />
                                         @else
                                         -
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('netjunkies.post.edit' , $row->id) }}" class="btn btn-link pull-left"><span class="glyphicon glyphicon-ok"></span> {{ trans('admin.edit') }}</a>
+                                        <a href="{{ route('netjunkies.post.edit', $row->id) }}" class="btn btn-link pull-left"><span class="glyphicon glyphicon-ok"></span> Edit</a>
                                     </td>
                                 </tr>
                             @endforeach

@@ -32,9 +32,9 @@ class NetJunkiesCrawlerTest extends DuskTestCase
                 }
 
                 $postLocalPath = "\\storage\\posts\\{$post->id}";
-                $postLocalStoragePath = storage_path("app{$postLocalPath}");
+                $postLocalFullPath = storage_path("app\\public{$postLocalPath}");
                 if (true) {
-                    $image = $this->facebookDownloadMainImage($browser, $postLocalStoragePath);
+                    $image = $this->facebookDownloadMainImage($browser, $postLocalFullPath);
                     if ($image) {
                         $post->image      = "{$postLocalPath}\\{$image}";
                         $post->main_type  = Post::MAIN_TYPE_IMAGE;
