@@ -3,13 +3,11 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        @include('modules.net_junkies.posts.layouts.button')
-
         <div class="col-md-8">
-            <a href="{{ route('netjunkies.post.index') }}" class="btn btn-primary float-right">Back</a>
-            @include('general.alert')
+            @include('modules.net_junkies.layouts.button')
+
             <div class="card">
-                <div class="card-header">Link</div>
+                <div class="card-header">URL</div>
 
                 <div class="card-body">
                     @include('layouts.alert')

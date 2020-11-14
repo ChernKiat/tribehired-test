@@ -9,7 +9,7 @@ class PostController extends Controller
 {
     public function create()
     {
-        return view('modules.net_junkies.posts.link');
+        return view('modules.net_junkies.posts.url');
     }
 
     public function store(Request $request)

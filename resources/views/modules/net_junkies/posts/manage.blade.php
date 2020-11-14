@@ -3,9 +3,9 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        @include('modules.net_junkies.posts.layouts.button')
-
         <div class="col-md-8">
+            @include('modules.net_junkies.layouts.button')
+
             <div class="card">
                 <div class="card-header">List</div>
 
