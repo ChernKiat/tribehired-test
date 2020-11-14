@@ -3,12 +3,14 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
+        @include('modules.net_junkies.posts.layouts.button')
+
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">List</div>
 
                 <div class="card-body">
-                    @include('general.alert')
+                    @include('layouts.alert')
 
                     <table class="table table-hover table-bordered my-js-data-table">
                         <thead>

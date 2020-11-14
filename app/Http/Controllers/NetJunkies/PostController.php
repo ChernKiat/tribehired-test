@@ -9,7 +9,7 @@ class PostController extends Controller
 {
     public function create()
     {
-        return view('net_junkies.posts.link');
+        return view('modules.net_junkies.posts.link');
     }
 
     public function store(Request $request)
@@ -32,7 +32,7 @@ class PostController extends Controller
     {
         $posts = Post::whereNotNull('crawled_at')->get();
 
-        return view('net_junkies.posts.manage', [
+        return view('modules.net_junkies.posts.manage', [
             'posts'  => $posts,
         ]);
     }
@@ -41,7 +41,7 @@ class PostController extends Controller
     {
         $post = Post::with(['comments'])->find($id);
 
-        return view('net_junkies.posts.content', [
+        return view('modules.net_junkies.posts.content', [
             'post'  => $post,
         ]);
     }

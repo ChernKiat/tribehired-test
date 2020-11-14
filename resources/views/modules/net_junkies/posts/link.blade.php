@@ -6,8 +6,10 @@
         @include('modules.net_junkies.posts.layouts.button')
 
         <div class="col-md-8">
+            <a href="{{ route('netjunkies.post.index') }}" class="btn btn-primary float-right">Back</a>
+            @include('general.alert')
             <div class="card">
-                <div class="card-header">Register</div>
+                <div class="card-header">Link</div>
 
                 <div class="card-body">
                     @include('layouts.alert')

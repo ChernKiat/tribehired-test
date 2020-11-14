@@ -3,12 +3,14 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
+        @include('modules.net_junkies.posts.layouts.button')
+
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Register</div>
 
                 <div class="card-body">
-                    @include('general.alert')
+                    @include('layouts.alert')
 
                     <form action="{{ route('netjunkies.post.store') }}" method="POST">
                         {{ csrf_field() }}
