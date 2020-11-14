@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Link</div>
+                <div class="card-header">Register</div>
 
                 <div class="card-body">
                     @include('general.alert')
@@ -18,7 +18,6 @@
                             <textarea id="url" name="url" class="form-control" placeholder="e.g https://www.facebook.com" rows="4"></textarea>
                         </div>
                         <button class="btn btn-primary">Submit</button>
-                        <a href="{{ route('netjunkies.post.index') }}" class="btn btn-primary float-right">Back</a>
                     </form>
                 </div>
             </div>
