@@ -1,5 +1,10 @@
 {
     "/js/app.js": "/js/app.js",
+    "/js/bootstrap.js": "/js/bootstrap.js",
     "/css/app.css": "/css/app.css",
-    "/js/bootstrap.js": "/js/bootstrap.js"
+    "/js/icheck/icheck.js": "/js/icheck/icheck.js",
+    "/css/datatables.net-bs4/css/dataTables.bootstrap4.min.css": "/css/datatables.net-bs4/css/dataTables.bootstrap4.min.css",
+    "/css/icheck/skins/flat/blue.css": "/css/icheck/skins/flat/blue.css",
+    "/css/icheck/skins/flat/blue.png": "/css/icheck/skins/flat/blue.png",
+    "/css/icheck/skins/flat/blue@2x.png": "/css/icheck/skins/flat/blue@2x.png"
 }
