@@ -3,13 +3,28 @@
 @section('css')
 <link href="/css/icheck/skins/flat/blue.css" rel="stylesheet">
 <link href="/css/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link href="/css/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" />
 @stop
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             @include('modules.net_junkies.layouts.button')
+
+            <div class="list-group">
+              <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+
+
+              <a href="#" class="list-group-item list-group-item-action list-group-item-primary">This is a primary list group item</a>
+              <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">This is a secondary list group item</a>
+              <a href="#" class="list-group-item list-group-item-action list-group-item-success">This is a success list group item</a>
+              <a href="#" class="list-group-item list-group-item-action list-group-item-danger">This is a danger list group item</a>
+              <a href="#" class="list-group-item list-group-item-action list-group-item-warning">This is a warning list group item</a>
+              <a href="#" class="list-group-item list-group-item-action list-group-item-info">This is a info list group item</a>
+              <a href="#" class="list-group-item list-group-item-action list-group-item-light">This is a light list group item</a>
+              <a href="#" class="list-group-item list-group-item-action list-group-item-dark">This is a dark list group item</a>
+            </div>
 
             <div class="card">
                 <div class="card-header">Register</div>

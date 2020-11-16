@@ -45,4 +45,14 @@ class PostController extends Controller
             'post'  => $post,
         ]);
     }
+
+    public function show($id)
+    {
+        return view('modules.net_junkies.posts.media');
+    }
+
+    public function test()
+    {
+        return view('modules.net_junkies.index');
+    }
 }

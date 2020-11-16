@@ -34,6 +34,7 @@ Route::prefix('net-junkies')->namespace('NetJunkies')->name('netjunkies.')->grou
         Route::post('/', 'PostController@store')->name('store');
         Route::get('/', 'PostController@index')->name('index');
         Route::get('{id}/edit', 'PostController@edit')->name('edit');
+        Route::get('{id}', 'PostController@show')->name('show');
     });
 });
 
