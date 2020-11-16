@@ -29,10 +29,12 @@ const mix = require('laravel-mix');
 
 // mix.js('public/test/myA.js', 'public/myMathGenius/js/myNewTest.js');
 
-mix.js('resources/js/bootstrap.js', 'public/js');
 
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
+    .js('resources/js/bootstrap.js', 'public/js');
+
+mix.js('resources/js/plugin.js', 'public/js')
     .copy('node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css',
         'public/css/datatables.net-bs4/css/dataTables.bootstrap4.min.css');
 

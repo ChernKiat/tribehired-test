@@ -4,10 +4,6 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-window.$ = window.jQuery = require('jquery');
-window.dt = require('datatables.net')(window, $);
-window.buttons = require('datatables.net-buttons')(window, $);
-
 require('./bootstrap');
 
 window.Vue = require('vue');
