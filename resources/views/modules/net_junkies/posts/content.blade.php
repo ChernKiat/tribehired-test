@@ -47,17 +47,17 @@
 @endsection
 
 @section('footer')
-<script src="/js/plugin.js"></script>
+<script src="/js/icheck/icheck.js"></script>
 <script>
 $(function() {
     $(".my-js-data-table").DataTable({
         // "order": [[1, 'desc']]
     });
 
-    // $('.my-js-data-table input[type="checkbox"]').iCheck({
-    //     checkboxClass: 'icheckbox_flat-blue',
-    //     radioClass: 'iradio_flat-blue'
-    // });
+    $('.my-js-data-table input[type="checkbox"]').iCheck({
+        checkboxClass: 'icheckbox_flat-blue',
+        radioClass: 'iradio_flat-blue'
+    });
 });
 </script>
 @endsection
