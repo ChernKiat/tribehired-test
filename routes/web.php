@@ -22,8 +22,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/spell-check', 'SpellCheckController@index')->name('spell.check');
 Route::get('/ws', 'HomeController@ws')->name('ws');
-Route::get('/scrabble', 'HomeController@scrabble')->name('scrabble');
-Route::get('/math-genius', 'HomeController@mathGenius')->name('math.genius');
 Route::get('/mash_up', 'HomeController@mashUp')->name('mash.up');
 Route::get('/gmtk', 'HomeController@gmtk')->name('gmtk');
 Route::get('/test', 'HomeController@test')->name('test');
@@ -67,3 +65,6 @@ Route::namespace('Tesseract')->group(function() {
 Route::prefix('system')->namespace('Admin')->group(function() {
     Route::get('documents/{document}/crop', 'RouteTestController@test')->name('test');
 });
+
+Route::get('/scrabble', 'HomeController@scrabble')->name('scrabble');
+Route::get('/math-genius', 'HomeController@mathGenius')->name('math.genius');
