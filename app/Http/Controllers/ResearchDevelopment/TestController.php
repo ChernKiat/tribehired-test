@@ -5,8 +5,8 @@ use App\Http\Controllers\Controller;
 
 class TestController extends Controller
 {
-    public function barcode()
+    public function test()
     {
-        return view('research_development.barcode');
+        return view('modules.research_development.test');
     }
 }

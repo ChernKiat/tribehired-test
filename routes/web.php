@@ -26,6 +26,10 @@ Route::get('/mash_up', 'HomeController@mashUp')->name('mash.up');
 Route::get('/gmtk', 'HomeController@gmtk')->name('gmtk');
 Route::get('/test', 'HomeController@test')->name('test');
 
+Route::prefix('research-development')->namespace('ResearchDevelopment')->name('researchdevelopment.')->group(function() {
+    Route::get('test', 'TestController@test')->name('test');
+});
+
 Route::prefix('net-junkies')->namespace('NetJunkies')->name('netjunkies.')->group(function() {
     Route::prefix('posts')->name('post.')->group(function() {
         Route::get('create', 'PostController@create')->name('create');
