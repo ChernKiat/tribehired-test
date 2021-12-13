@@ -30,6 +30,12 @@ Route::prefix('research-development')->namespace('ResearchDevelopment')->name('r
     Route::get('test', 'TestController@test')->name('test');
 });
 
+Route::prefix('hololive-fan')->namespace('HololiveFan')->name('hololivefan.')->group(function() {
+    Route::prefix('subtitles')->name('subtitle.')->group(function() {
+        Route::get('/', 'SubtitleController@test')->name('test');
+    });
+});
+
 Route::prefix('net-junkies')->namespace('NetJunkies')->name('netjunkies.')->group(function() {
     Route::prefix('posts')->name('post.')->group(function() {
         Route::get('create', 'PostController@create')->name('create');
