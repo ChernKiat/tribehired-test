@@ -14,6 +14,6 @@ class Exchange extends Model
 
     public function pairs()
     {
-        return $this->hasMany(Pair::class, 'exchange_id', 'id');
+        return $this->hasMany(Pair::class, 'cryptobot_exchange_id', 'id');
     }
 }

@@ -14,6 +14,6 @@ class Pair extends Model
 
     public function exchange()
     {
-        return $this->belongsTo(Exchange::class, 'exchange_id', 'id');
+        return $this->belongsTo(Exchange::class, 'cryptobot_exchange_id', 'id');
     }
 }

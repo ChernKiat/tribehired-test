@@ -95,7 +95,7 @@ class CCXTSkin
         }
     }
 
-    public function fetchTickers($pairId, $exchange = null, $is_initiated = false)
+    public function fetchTickers($pair = null, $exchange = null, $is_initiated = false)
     {
         if (!$is_initiated) {
             $this->initExchange($exchange);

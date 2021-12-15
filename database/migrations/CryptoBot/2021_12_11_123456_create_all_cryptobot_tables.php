@@ -34,13 +34,60 @@ class CreateAllCryptobotTables extends Migration
         Schema::create('cryptobot_pairs', function(Blueprint $table)
         {
             $table->increments('id');
-            $table->unsignedInteger('exchange_id');
+            $table->unsignedInteger('cryptobot_exchange_id');
             $table->string('pair', 90)->nullable();
             $table->boolean('is_active')->default(0);
             $table->softDeletes();
             $table->timestamps();
 
-            $table->index(['exchange_id', 'pair'], 'exchange_pair');
+            $table->index(['cryptobot_exchange_id', 'pair'], 'exchange_pair');
+        });
+
+        CCXTSkin::updatePairs();
+
+        Schema::create('cryptobot_tickers', function(Blueprint $table)
+        {
+            $table->increments('id');
+            $table->unsignedInteger('cryptobot_exchange_id'); // ->index();
+            $table->unsignedInteger('cryptobot_pair_id'); // ->index();
+            $table->bigInteger('timestamp'); // ->index();
+            $table->timestamp('datetime')->nullable();
+            $table->decimal('high', 15, 6)->nullable();
+            $table->decimal('low', 15, 6)->nullable();
+            $table->decimal('bid', 15, 6)->nullable();
+            $table->decimal('bid_volume', 15, 6)->nullable();
+            $table->decimal('ask', 15, 6)->nullable();
+            $table->decimal('ask_volume', 15, 6)->nullable();
+            $table->decimal('vwap', 15, 6)->nullable(); // volume-weighted average price
+            $table->decimal('open', 15, 6)->nullable();
+            $table->decimal('close', 15, 6)->nullable();
+            // $table->decimal('first', 15, 6)->nullable();
+            $table->decimal('last', 15, 6)->nullable();
+            $table->decimal('change', 15, 6)->nullable();
+            $table->decimal('percentage', 15, 6)->nullable();
+            $table->decimal('average', 15, 6)->nullable();
+            $table->decimal('base_volume', 15, 6)->nullable();
+            $table->decimal('quote_volume', 15, 6)->nullable();
+            $table->softDeletes();
+            $table->timestamps();
+            $table->unique(['cryptobot_exchange_id', 'cryptobot_pair_id', 'timestamp'], 'exchange_pair_timestamp_ticker');
+        });
+
+        Schema::create('cryptobot_ohlcvs', function(Blueprint $table)
+        {
+            $table->increments('id');
+            $table->unsignedInteger('cryptobot_exchange_id'); // ->index();
+            $table->unsignedInteger('cryptobot_pair_id'); // ->index();
+            $table->bigInteger('timestamp'); // ->index();
+            $table->timestamp('datetime')->nullable();
+            $table->decimal('open', 15, 6)->nullable();
+            $table->decimal('high', 15, 6)->nullable();
+            $table->decimal('low', 15, 6)->nullable();
+            $table->decimal('close', 15, 6)->nullable();
+            $table->decimal('volume', 15, 6)->nullable();
+            $table->softDeletes();
+            $table->timestamps();
+            $table->unique(['cryptobot_exchange_id', 'cryptobot_pair_id', 'timestamp'], 'exchange_pair_timestamp_ohlcv');
         });
     }
 
@@ -54,5 +101,9 @@ class CreateAllCryptobotTables extends Migration
         Schema::drop('cryptobot_exchanges');
 
         Schema::drop('cryptobot_pairs');
+
+        Schema::drop('cryptobot_tickers');
+
+        Schema::drop('cryptobot_ohlcvs');
     }
 }
