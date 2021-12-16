@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Test;
+namespace App\Http\Controllers\ResearchDevelopment;
 
 use App\Http\Controllers\Controller;
 use App\Tools\Test\TribeHiredAPITool;

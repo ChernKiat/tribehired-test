@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tools\CryptoBot;
+namespace App\Skins\CryptoBot;
 
 use App\Models\CryptoBot\Exchange;
 use App\Models\CryptoBot\Ohclv;
@@ -17,15 +17,19 @@ class CCXTSkin
 
     public static $exchanges = ccxt\Exchange::$exchanges;
 
-    public function initExchange($exchange)
+    public function initExchange($exchange, $is_rate_limited = true)
     {
-        $exchange = "\ccxt\\{$exchange}";
-        $this->exchange = new $exchange (array(
+        $data = array(
             'apiKey'    => env(strtoupper($exchange) . '_APIKEY', null),
             'secret'    => env(strtoupper($exchange) . '_SECRET', null),
             'uid'       => env(strtoupper($exchange) . '_UID', null),
             'password'  => env(strtoupper($exchange) . '_PASSWORD', null),
-        ));
+        );
+
+        if ($is_rate_limited) { $data['enableRateLimit'] = true; }
+
+        $exchange = "ccxt\\{$exchange}";
+        $this->exchange = new $exchange ($data);
     }
 
     public function setCryptobotExchange($cryptobotExchange)
