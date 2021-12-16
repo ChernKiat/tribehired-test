@@ -2,10 +2,12 @@
 
 namespace App\Tools\CryptoBot;
 
-use ccxt;
 use App\Models\CryptoBot\Exchange;
+use App\Models\CryptoBot\Ohclv;
 use App\Models\CryptoBot\Pair;
 use App\Models\CryptoBot\Ticker;
+use Carbon\Carbon;
+use ccxt;
 
 class CCXTSkin
 {
@@ -101,26 +103,95 @@ class CCXTSkin
             $this->initExchange($exchange);
         }
 
-        $cryptobotPair = Pair::where('exchange', $exchange)->first();
+        if (is_null($this->cryptobotExchange)) {
+            if (!is_null($exchange)) {
+                $this->setCryptobotExchange(!is_object($exchange) ? Exchange::find($exchange) : $exchange);
+            } else {
+                return false;
+            }
+        }
+
+        if (is_null($this->cryptobotPair)) {
+            if (!is_null($pair)) {
+                $this->setCryptobotPair(!is_object($pair) ? Pair::find($pair) : $pair);
+            } else {
+                return false;
+            }
+        }
+
         // try {
-            Pair::updateOrCreate(['exchange_id' => $cryptobotExchange->id, 'exchange_pair' => $pair]);
-            if ($ex->hasFetchTickers) {
-                $tick = $class->fetchTicker($pair);
-                unset($tick['info']);
-                $dt = explode('.', $tick['datetime']);
-                $tick['timestamp'] = (intval($tick['timestamp']) / 1000);
-                $tick['bh_exchanges_id'] = $exid;
-                $tick['datetime'] = $dt[0];
+            if ($this->cryptobotExchange->hasFetchTickers) {
+                $data = $this->exchange->fetchTicker($pair);
+                unset($data['info']);
+                $data['cryptobot_exchange_id'] = $this->cryptobotExchange->id;
+                $data['cryptobot_pair_id'] = $this->cryptobotPair->id;
+                $data['timestamp'] = (intval($data['timestamp']) / 1000);
+                $data['datetime'] = explode('.', $data['datetime'])[0];
 
-                $tick['basevolume'] = $tick['baseVolume'];
-                unset($tick['baseVolume']);
-                $tick['quotevolume'] = $tick['quoteVolume'];
-                unset($tick['quoteVolume']);
-                $tickers_model = new Models\BhTickers();
+                $data['bid_volume'] = $data['bidVolume'];
+                unset($data['bidVolume']);
+                $data['ask_volume'] = $data['askVolume'];
+                unset($data['askVolume']);
+                $data['base_volume'] = $data['baseVolume'];
+                unset($data['baseVolume']);
+                $data['quote_volume'] = $data['quoteVolume'];
+                unset($data['quoteVolume']);
 
-                $tickers_model::updateOrCreate(
-                    ['bh_exchanges_id' => $exid, 'symbol' => $pair, 'timestamp' => $tick['timestamp']]
-                    , $tick);
+                Ticker::updateOrCreate([
+                    'cryptobot_exchange_id'  => $this->cryptobotExchange->id,
+                    'cryptobot_pair_id'      => $this->cryptobotPair->id,
+                    'timestamp'              => $data['timestamp']
+                ], $data);
+            }
+        // } catch (ccxt\AuthenticationError $e) {
+        //     return array('status' => false, 'status' => "\n\t{$exchange} needs auth (set this exchange to -1 in the database to disable it)..\n\n");
+        // } catch (ccxt\BaseError $e) {
+        //     return array('status' => false, 'status' => "\n\t{$exchange} error (set this exchange to -1 in the database to disable it):\n {$e}\n\n");
+        // }
+    }
+
+    public function fetchOHLCVs($pair = null, $exchange = null, $is_initiated = false)
+    {
+        if (!$is_initiated) {
+            $this->initExchange($exchange);
+        }
+
+        if (is_null($this->cryptobotExchange)) {
+            if (!is_null($exchange)) {
+                $this->setCryptobotExchange(!is_object($exchange) ? Exchange::find($exchange) : $exchange);
+            } else {
+                return false;
+            }
+        }
+
+        if (is_null($this->cryptobotPair)) {
+            if (!is_null($pair)) {
+                $this->setCryptobotPair(!is_object($pair) ? Pair::find($pair) : $pair);
+            } else {
+                return false;
+            }
+        }
+
+        // try {
+            if ($this->cryptobotPair->has_fetch_ohlcv) {
+                foreach ($this->exchange->fetchOHLCV($this->cryptobotPair->pair, '1m', (Carbon::now()->subMinutes(5)->timestamp * 1000), 5) as $ohlcv) {
+                    $data = [];
+                    $data['cryptobot_exchange_id']  = $this->cryptobotExchange->id;
+                    $data['cryptobot_pair_id']      = $this->cryptobotPair->id;
+                    $data['timestamp']              = (intval($ohlcv[0]) / 1000);
+                    $data['datetime']               = Carbon::createFromTimestamp($data['timestamp'])->toDateTimeString();
+                    $data['open']                   = $ohlcv[1];
+                    $data['high']                   = $ohlcv[2];
+                    $data['low']                    = $ohlcv[3];
+                    $data['close']                  = $ohlcv[4];
+                    $data['volume']                 = $ohlcv[5];
+
+                    Ohclv::updateOrCreate([
+                        'cryptobot_exchange_id'  => $this->cryptobotExchange->id,
+                        'cryptobot_pair_id'      => $this->cryptobotPair->id,
+                        'timestamp'              => $data['timestamp']
+                    ], $data);
+                }
             }
         // } catch (ccxt\AuthenticationError $e) {
         //     return array('status' => false, 'status' => "\n\t{$exchange} needs auth (set this exchange to -1 in the database to disable it)..\n\n");
