@@ -9,8 +9,7 @@ class Pair extends Model
     protected $table = 'cryptobot_pairs';
     // protected $table = 'pairs';
 
-    protected $fillable = [
-    ];
+    protected $guarded = [];
 
     public function exchange()
     {

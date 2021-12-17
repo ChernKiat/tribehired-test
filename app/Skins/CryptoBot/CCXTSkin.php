@@ -8,6 +8,7 @@ use App\Models\CryptoBot\Pair;
 use App\Models\CryptoBot\Ticker;
 use Carbon\Carbon;
 use ccxt;
+use Exception;
 
 class CCXTSkin
 {
@@ -15,7 +16,12 @@ class CCXTSkin
     private $cryptobotExchange = null;
     private $cryptobotPair = null;
 
-    public static $exchanges = ccxt\Exchange::$exchanges;
+    public function __construct($exchange = null)
+    {
+        if (!is_null($exchange)) {
+            $this->initExchange($exchange);
+        }
+    }
 
     public function initExchange($exchange, $is_rate_limited = true)
     {
@@ -25,11 +31,11 @@ class CCXTSkin
             'uid'       => env(strtoupper($exchange) . '_UID', null),
             'password'  => env(strtoupper($exchange) . '_PASSWORD', null),
         );
-
         if ($is_rate_limited) { $data['enableRateLimit'] = true; }
 
         $exchange = "ccxt\\{$exchange}";
         $this->exchange = new $exchange ($data);
+        return $this->exchange;
     }
 
     public function setCryptobotExchange($cryptobotExchange)
@@ -40,65 +46,6 @@ class CCXTSkin
     public function setCryptobotPair($cryptobotPair)
     {
         $this->cryptobotPair = $cryptobotPair;
-    }
-
-    public function updateExchanges($is_initiated = false)
-    {
-        // no delete
-
-        foreach (self::$exchanges as $exchange) {
-            // try {
-                if (!$is_initiated) {
-                    $this->initExchange($exchange);
-                }
-
-                $urls = $this->exchange->urls;
-                $data = array();
-                $data['exchange'] = $exchange;
-                $data['has_fetch_tickers'] = $this->exchange->hasFetchTickers ?? 1;
-                $data['has_fetch_ohlcv'] = $this->exchange->hasFetchOHLCV ?? 1;
-                // encode all APIs & documentation URLs
-                $data['data'] = json_encode($this->exchange->api, 1) . json_encode($urls, 1);
-                $data['url'] = is_array($urls['www']) ? $urls['www'][0] : $urls['www'];
-                $data['url_api'] = is_array($urls['api']) ? array_shift($urls['api']) : $urls['api'];
-                $data['url_doc'] = is_array($urls['doc']) ? $urls['doc'][0] : $urls['doc'];
-
-                Exchange::updateOrCreate(['exchange' => $exchange], $data);
-            // } catch (ccxt\AuthenticationError $e) {
-                // return array('status' => false, 'status' => "\n\t{$exchange} needs auth (set this exchange to -1 in the database to disable it)..\n\n");
-            // } catch (ccxt\BaseError $e) {
-                // return array('status' => false, 'status' => "\n\t{$exchange} error (set this exchange to -1 in the database to disable it):\n {$e}\n\n");
-            // }
-        }
-        // return array('status' => true);
-        return true;
-    }
-
-    public function updatePairs($is_initiated = false)
-    {
-        // no delete
-
-        foreach(self::$exchanges as $exchange) {
-            if (!$is_initiated) {
-                $this->initExchange($exchange);
-            }
-
-            $pairs = $this->exchange->load_markets();
-            if (empty($pairs)) {
-                continue;
-            }
-
-            $this->cryptobotExchange = Exchange::where('exchange', $exchange)->first();
-            foreach (array_keys($pairs) as $pair) {
-                // try {
-                    Pair::updateOrCreate(['exchange_id' => $this->cryptobotExchange->id, 'exchange_pair' => $pair]);
-                // } catch (ccxt\AuthenticationError $e) {
-                //     return array('status' => false, 'status' => "\n\t{$exchange} needs auth (set this exchange to -1 in the database to disable it)..\n\n");
-                // } catch (ccxt\BaseError $e) {
-                //     return array('status' => false, 'status' => "\n\t{$exchange} error (set this exchange to -1 in the database to disable it):\n {$e}\n\n");
-                // }
-            }
-        }
     }
 
     public function fetchTickers($pair = null, $exchange = null, $is_initiated = false)
@@ -124,7 +71,7 @@ class CCXTSkin
         }
 
         // try {
-            if ($this->cryptobotExchange->hasFetchTickers) {
+            if ($this->cryptobotExchange->has_fetch_tickers) {
                 $data = $this->exchange->fetchTicker($pair);
                 unset($data['info']);
                 $data['cryptobot_exchange_id'] = $this->cryptobotExchange->id;
@@ -151,10 +98,12 @@ class CCXTSkin
         //     return array('status' => false, 'status' => "\n\t{$exchange} needs auth (set this exchange to -1 in the database to disable it)..\n\n");
         // } catch (ccxt\BaseError $e) {
         //     return array('status' => false, 'status' => "\n\t{$exchange} error (set this exchange to -1 in the database to disable it):\n {$e}\n\n");
+        // } catch (Exception $e) {
+        //     dd($e);
         // }
     }
 
-    public function fetchOHLCVs($pair = null, $exchange = null, $is_initiated = false)
+    public function fetchOHLCV($pair = null, $exchange = null, $is_initiated = false)
     {
         if (!$is_initiated) {
             $this->initExchange($exchange);
@@ -201,6 +150,65 @@ class CCXTSkin
         //     return array('status' => false, 'status' => "\n\t{$exchange} needs auth (set this exchange to -1 in the database to disable it)..\n\n");
         // } catch (ccxt\BaseError $e) {
         //     return array('status' => false, 'status' => "\n\t{$exchange} error (set this exchange to -1 in the database to disable it):\n {$e}\n\n");
+        // } catch (Exception $e) {
+        //     dd($e);
         // }
+    }
+
+    public static function updateExchanges()
+    {
+        // no delete
+
+        foreach (ccxt\Exchange::$exchanges as $exchange) {
+            // try {
+                $exchange = (new self())->initExchange($exchange);
+                $urls = $exchange->urls;
+                $data = array();
+                $data['exchange'] = $exchange->id;
+                $data['has_fetch_tickers'] = $exchange->hasFetchTickers ?? 1;
+                $data['has_fetch_ohlcv'] = $exchange->hasFetchOHLCV ?? 1;
+                // encode all APIs & documentation URLs
+                $data['data'] = json_encode($exchange->api, 1) . json_encode($urls, 1);
+                $data['url'] = is_array($urls['www']) ? $urls['www'][0] : $urls['www'];
+                $data['url_api'] = is_array($urls['api']) ? array_shift($urls['api']) : $urls['api'];
+                $data['url_doc'] = is_array($urls['doc']) ? $urls['doc'][0] : $urls['doc'];
+
+                Exchange::updateOrCreate(['exchange' => $exchange->id], $data);
+            // } catch (ccxt\AuthenticationError $e) {
+            //     return array('status' => false, 'status' => "\n\t{$exchange->id} needs auth (set this exchange to -1 in the database to disable it)..\n\n");
+            // } catch (ccxt\BaseError $e) {
+            //     return array('status' => false, 'status' => "\n\t{$exchange->id} error (set this exchange to -1 in the database to disable it):\n {$e}\n\n");
+            // } catch (Exception $e) {
+            //     dd($e);
+            // }
+        }
+        // return array('status' => true);
+        return true;
+    }
+
+    public static function updatePairs()
+    {
+        // no delete
+
+        foreach(ccxt\Exchange::$exchanges as $exchange) {
+            $exchange = (new self())->initExchange($exchange);
+            $pairs = $exchange->load_markets();
+            $cryptobotExchange = Exchange::where('exchange', $exchange->id)->first();
+            if (empty($pairs) || empty($cryptobotExchange)) {
+                continue;
+            }
+
+            foreach (array_keys($pairs) as $pair) {
+                // try {
+                    Pair::updateOrCreate(['exchange_id' => $cryptobotExchange->id, 'exchange_pair' => $pair]);
+                // } catch (ccxt\AuthenticationError $e) {
+                //     return array('status' => false, 'status' => "\n\t{$exchange->id} needs auth (set this exchange to -1 in the database to disable it)..\n\n");
+                // } catch (ccxt\BaseError $e) {
+                //     return array('status' => false, 'status' => "\n\t{$exchange->id} error (set this exchange to -1 in the database to disable it):\n {$e}\n\n");
+                // } catch (Exception $e) {
+                //     dd($e);
+                // }
+            }
+        }
     }
 }

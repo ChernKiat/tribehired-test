@@ -20,14 +20,24 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/spell-check', 'SpellCheckController@index')->name('spell.check');
-Route::get('/ws', 'HomeController@ws')->name('ws');
-Route::get('/mash_up', 'HomeController@mashUp')->name('mash.up');
-Route::get('/gmtk', 'HomeController@gmtk')->name('gmtk');
 Route::get('/test', 'HomeController@test')->name('test');
 
-Route::prefix('research-development')->namespace('ResearchDevelopment')->name('researchdevelopment.')->group(function() {
-    Route::get('test', 'TestController@test')->name('test');
+Route::get('/ws', 'HomeController@ws')->name('ws');
+Route::get('/scrabble', 'HomeController@scrabble')->name('scrabble');
+Route::get('/math-genius', 'HomeController@mathGenius')->name('math.genius');
+Route::get('/gmtk', 'HomeController@gmtk')->name('gmtk');
+Route::get('/mash_up', 'HomeController@mashUp')->name('mash.up');
+
+Route::get('/spell-check', 'SpellCheckController@index')->name('spell.check');
+
+Route::prefix('board-game')->namespace('BoardGame')->name('boardgame.')->group(function() {
+    Route::get('combination', 'BoardGameController@test')->name('combination.test');
+});
+
+Route::prefix('crypto-bot')->namespace('CryptoBot')->name('cryptobot.')->group(function() {
+    Route::prefix('ccxt')->name('ccxt.')->group(function() {
+        Route::get('/', 'CCXTController@test')->name('test');
+    });
 });
 
 Route::prefix('hololive-fan')->namespace('HololiveFan')->name('hololivefan.')->group(function() {
@@ -46,8 +56,8 @@ Route::prefix('net-junkies')->namespace('NetJunkies')->name('netjunkies.')->grou
     });
 });
 
-Route::prefix('board-game')->namespace('BoardGame')->name('boardgame.')->group(function() {
-    Route::get('combination', 'BoardGameController@test')->name('combination.test');
+Route::prefix('research-development')->namespace('ResearchDevelopment')->name('researchdevelopment.')->group(function() {
+    Route::get('test', 'TestController@test')->name('test');
 });
 
 Route::prefix('seal-chamber')->namespace('SealChamber')->name('sealchamber.')->group(function() {
@@ -56,10 +66,6 @@ Route::prefix('seal-chamber')->namespace('SealChamber')->name('sealchamber.')->g
     Route::prefix('rooms')->name('room.')->group(function() {
         Route::get('join', 'RoomController@join')->name('join');
     });
-});
-
-Route::prefix('vengeance-mail')->namespace('VengeanceMail')->name('vengeancemail.')->group(function() {
-    Route::get('send', 'EmailController@sendSpamMail')->name('send.spam.mail');
 });
 
 Route::namespace('Tesseract')->group(function() {
@@ -72,9 +78,10 @@ Route::namespace('Tesseract')->group(function() {
     });
 });
 
+Route::prefix('vengeance-mail')->namespace('VengeanceMail')->name('vengeancemail.')->group(function() {
+    Route::get('send', 'EmailController@sendSpamMail')->name('send.spam.mail');
+});
+
 Route::prefix('system')->namespace('Admin')->group(function() {
     Route::get('documents/{document}/crop', 'RouteTestController@test')->name('test');
 });
-
-Route::get('/scrabble', 'HomeController@scrabble')->name('scrabble');
-Route::get('/math-genius', 'HomeController@mathGenius')->name('math.genius');

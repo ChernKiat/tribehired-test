@@ -9,11 +9,15 @@ class Exchange extends Model
     protected $table = 'cryptobot_exchanges';
     // protected $table = 'exchanges';
 
-    protected $fillable = [
-    ];
+    protected $guarded = [];
 
     public function pairs()
     {
         return $this->hasMany(Pair::class, 'cryptobot_exchange_id', 'id');
+    }
+
+    public function pairsActivated()
+    {
+        return $this->pairs()->where('is_active', 1);
     }
 }
