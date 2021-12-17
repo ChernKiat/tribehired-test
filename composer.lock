@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "97ad1eaaab33138d43fef0bb61ea826e",
+    "content-hash": "294b142fd4cce1d3b4aa7f94dfaff06e",
     "packages": [
         {
             "name": "algorithmia/algorithmia",
@@ -156,16 +156,16 @@
         },
         {
             "name": "ccxt/ccxt",
-            "version": "1.63.67",
+            "version": "1.64.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ccxt/ccxt.git",
-                "reference": "61138203bd669d55a495473d9959102534354d65"
+                "reference": "6acc85fb5f1548be2beb573c325afc6ba88c36e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ccxt/ccxt/zipball/61138203bd669d55a495473d9959102534354d65",
-                "reference": "61138203bd669d55a495473d9959102534354d65",
+                "url": "https://api.github.com/repos/ccxt/ccxt/zipball/6acc85fb5f1548be2beb573c325afc6ba88c36e7",
+                "reference": "6acc85fb5f1548be2beb573c325afc6ba88c36e7",
                 "shasum": ""
             },
             "require": {
@@ -428,7 +428,7 @@
             ],
             "support": {
                 "issues": "https://github.com/ccxt/ccxt/issues",
-                "source": "https://github.com/ccxt/ccxt/tree/1.63.67"
+                "source": "https://github.com/ccxt/ccxt/tree/1.64.8"
             },
             "funding": [
                 {
@@ -436,7 +436,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2021-12-13T15:08:06+00:00"
+            "time": "2021-12-16T18:01:26+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",

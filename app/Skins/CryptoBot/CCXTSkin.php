@@ -169,9 +169,10 @@ class CCXTSkin
                 $data['has_fetch_ohlcv'] = $exchange->hasFetchOHLCV ?? 1;
                 // encode all APIs & documentation URLs
                 $data['data'] = json_encode($exchange->api, 1) . json_encode($urls, 1);
-                $data['url'] = is_array($urls['www']) ? $urls['www'][0] : $urls['www'];
-                $data['url_api'] = is_array($urls['api']) ? array_shift($urls['api']) : $urls['api'];
-                $data['url_doc'] = is_array($urls['doc']) ? $urls['doc'][0] : $urls['doc'];
+                $data['url'] = !is_array($urls['www']) ? $urls['www'] : $urls['www'][0];
+                $data['url_api'] = !is_array($urls['api']) ? $urls['api'] :
+                                    (!is_array($urls['api'] = array_shift($urls['api'])) ? $urls['api'] : array_shift($urls['api']));
+                $data['url_doc'] = !is_array($urls['doc']) ? $urls['doc'] : $urls['doc'][0];
 
                 Exchange::updateOrCreate(['exchange' => $exchange->id], $data);
             // } catch (ccxt\AuthenticationError $e) {
@@ -191,6 +192,8 @@ class CCXTSkin
         // no delete
 
         foreach(ccxt\Exchange::$exchanges as $exchange) {
+            if (in_array($exchange, ['bibox'])) { continue; }
+
             $exchange = (new self())->initExchange($exchange);
             $pairs = $exchange->load_markets();
             $cryptobotExchange = Exchange::where('exchange', $exchange->id)->first();
@@ -200,7 +203,7 @@ class CCXTSkin
 
             foreach (array_keys($pairs) as $pair) {
                 // try {
-                    Pair::updateOrCreate(['exchange_id' => $cryptobotExchange->id, 'exchange_pair' => $pair]);
+                    Pair::updateOrCreate(['cryptobot_exchange_id' => $cryptobotExchange->id, 'pair' => $pair]);
                 // } catch (ccxt\AuthenticationError $e) {
                 //     return array('status' => false, 'status' => "\n\t{$exchange->id} needs auth (set this exchange to -1 in the database to disable it)..\n\n");
                 // } catch (ccxt\BaseError $e) {

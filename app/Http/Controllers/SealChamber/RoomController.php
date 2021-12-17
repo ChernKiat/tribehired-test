@@ -44,5 +44,7 @@ class RoomController extends Controller
                 return json_encode(array('status' => 'error', 'message' => 'Tracking No: ' . $request->tracking_no . "<br/>Cancelled at: " . $scan->cancelled_at->addHours(8)));
             } else {
                 return json_encode(array('status' => 'error', 'message' => 'Tracking No: ' . $request->tracking_no . "<br/>Scanned at: " . $scan->scanned_at->addHours(8)));
+            }
+        }
     }
 }

@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('question')->namespace('Test')->name('question.')->group(function() {
+Route::prefix('research-development')->namespace('ResearchDevelopment')->name('researchdevelopment.')->group(function() {
     Route::get('one', 'TribeHiredController@one')->name('one');
     Route::post('two', 'TribeHiredController@two')->name('two');
 });

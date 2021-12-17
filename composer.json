@@ -10,7 +10,7 @@
     "require": {
         "php": "^7.2.5",
         "algorithmia/algorithmia": "^1.0",
-        "ccxt/ccxt": "^1.63",
+        "ccxt/ccxt": "^1.64",
         "drupol/phpermutations": "^1.4",
         "facebook/graph-sdk": "^5.7",
         "fideloper/proxy": "^4.2",

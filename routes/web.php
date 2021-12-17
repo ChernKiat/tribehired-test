@@ -28,21 +28,19 @@ Route::get('/math-genius', 'HomeController@mathGenius')->name('math.genius');
 Route::get('/gmtk', 'HomeController@gmtk')->name('gmtk');
 Route::get('/mash_up', 'HomeController@mashUp')->name('mash.up');
 
-Route::get('/spell-check', 'SpellCheckController@index')->name('spell.check');
-
 Route::prefix('board-game')->namespace('BoardGame')->name('boardgame.')->group(function() {
     Route::get('combination', 'BoardGameController@test')->name('combination.test');
 });
 
 Route::prefix('crypto-bot')->namespace('CryptoBot')->name('cryptobot.')->group(function() {
     Route::prefix('ccxt')->name('ccxt.')->group(function() {
-        Route::get('/', 'CCXTController@test')->name('test');
+        Route::get('test', 'CCXTController@test')->name('test');
     });
 });
 
 Route::prefix('hololive-fan')->namespace('HololiveFan')->name('hololivefan.')->group(function() {
     Route::prefix('subtitles')->name('subtitle.')->group(function() {
-        Route::get('/', 'SubtitleController@test')->name('test');
+        Route::get('test', 'SubtitleController@test')->name('test');
     });
 });
 
@@ -61,7 +59,7 @@ Route::prefix('research-development')->namespace('ResearchDevelopment')->name('r
 });
 
 Route::prefix('seal-chamber')->namespace('SealChamber')->name('sealchamber.')->group(function() {
-    Route::get('/', 'PageController@roomCode')->name('room.code');
+    Route::get('code', 'PageController@roomCode')->name('room.code');
 
     Route::prefix('rooms')->name('room.')->group(function() {
         Route::get('join', 'RoomController@join')->name('join');
@@ -76,12 +74,12 @@ Route::namespace('Tesseract')->group(function() {
         Route::get('{document}/crop', 'DocumentController@crop')->name('crop');
         Route::get('{document}/export', 'DocumentController@export')->name('export');
     });
+
+    Route::prefix('spell-check')->name('spell.')->group(function() {
+        Route::get('/', 'SpellCheckController@index')->name('check');
+    });
 });
 
 Route::prefix('vengeance-mail')->namespace('VengeanceMail')->name('vengeancemail.')->group(function() {
     Route::get('send', 'EmailController@sendSpamMail')->name('send.spam.mail');
-});
-
-Route::prefix('system')->namespace('Admin')->group(function() {
-    Route::get('documents/{document}/crop', 'RouteTestController@test')->name('test');
 });
