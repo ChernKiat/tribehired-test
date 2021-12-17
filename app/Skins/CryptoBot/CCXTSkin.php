@@ -48,10 +48,14 @@ class CCXTSkin
         $this->cryptobotPair = $cryptobotPair;
     }
 
-    public function fetchTickers($pair = null, $exchange = null, $is_initiated = false)
+    public function fetchTickers($pair = null, $exchange = null)
     {
-        if (!$is_initiated) {
-            $this->initExchange($exchange);
+        if (is_null($this->exchange)) {
+            if (is_object($exchange)) {
+                $this->initExchange($exchange->exchange);
+            } else {
+                $this->initExchange($exchange);
+            }
         }
 
         if (is_null($this->cryptobotExchange)) {
@@ -72,7 +76,7 @@ class CCXTSkin
 
         // try {
             if ($this->cryptobotExchange->has_fetch_tickers) {
-                $data = $this->exchange->fetchTicker($pair);
+                $data = $this->exchange->fetchTicker($this->cryptobotPair->pair);
                 unset($data['info']);
                 $data['cryptobot_exchange_id'] = $this->cryptobotExchange->id;
                 $data['cryptobot_pair_id'] = $this->cryptobotPair->id;
@@ -103,10 +107,14 @@ class CCXTSkin
         // }
     }
 
-    public function fetchOHLCV($pair = null, $exchange = null, $is_initiated = false)
+    public function fetchOHLCV($pair = null, $exchange = null)
     {
-        if (!$is_initiated) {
-            $this->initExchange($exchange);
+        if (is_null($this->exchange)) {
+            if (is_object($exchange)) {
+                $this->initExchange($exchange->exchange);
+            } else {
+                $this->initExchange($exchange);
+            }
         }
 
         if (is_null($this->cryptobotExchange)) {
