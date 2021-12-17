@@ -13,8 +13,8 @@ use Exception;
 class CCXTSkin
 {
     private $exchange = null;
-    private $cryptobotExchange = null;
-    private $cryptobotPair = null;
+    // private $cryptobotExchange = null;
+    // private $cryptobotPair = null;
 
     public function __construct($exchange = null)
     {
@@ -38,48 +38,40 @@ class CCXTSkin
         return $this->exchange;
     }
 
-    public function setCryptobotExchange($cryptobotExchange)
-    {
-        $this->cryptobotExchange = $cryptobotExchange;
-    }
+    // public function setCryptobotExchange($cryptobotExchange)
+    // {
+    //     $this->cryptobotExchange = $cryptobotExchange;
+    // }
 
-    public function setCryptobotPair($cryptobotPair)
-    {
-        $this->cryptobotPair = $cryptobotPair;
-    }
+    // public function setCryptobotPair($cryptobotPair)
+    // {
+    //     $this->cryptobotPair = $cryptobotPair;
+    // }
 
-    public function fetchTickers($pair = null, $exchange = null)
+    public function fetchTickers($cryptobotPair, $cryptobotExchange)
     {
         if (is_null($this->exchange)) {
-            if (is_object($exchange)) {
-                $this->initExchange($exchange->exchange);
+            if (is_object($cryptobotExchange)) {
+                $this->initExchange($cryptobotExchange->exchange);
             } else {
-                $this->initExchange($exchange);
+                $this->initExchange($cryptobotExchange);
             }
         }
 
-        if (is_null($this->cryptobotExchange)) {
-            if (!is_null($exchange)) {
-                $this->setCryptobotExchange(!is_object($exchange) ? Exchange::find($exchange) : $exchange);
-            } else {
-                return false;
-            }
+        if (!is_object($cryptobotExchange)) {
+            $cryptobotExchange = Exchange::find($cryptobotExchange);
         }
 
-        if (is_null($this->cryptobotPair)) {
-            if (!is_null($pair)) {
-                $this->setCryptobotPair(!is_object($pair) ? Pair::find($pair) : $pair);
-            } else {
-                return false;
-            }
+        if (!is_null($cryptobotPair)) {
+            $cryptobotPair = Pair::find($cryptobotPair);
         }
 
         // try {
-            if ($this->cryptobotExchange->has_fetch_tickers) {
-                $data = $this->exchange->fetchTicker($this->cryptobotPair->pair);
+            if ($cryptobotExchange->has_fetch_tickers) {
+                $data = $this->exchange->fetchTicker($cryptobotPair->pair);
                 unset($data['info']);
-                $data['cryptobot_exchange_id'] = $this->cryptobotExchange->id;
-                $data['cryptobot_pair_id'] = $this->cryptobotPair->id;
+                $data['cryptobot_exchange_id'] = $cryptobotExchange->id;
+                $data['cryptobot_pair_id'] = $cryptobotPair->id;
                 $data['timestamp'] = (intval($data['timestamp']) / 1000);
                 $data['datetime'] = explode('.', $data['datetime'])[0];
 
@@ -93,8 +85,8 @@ class CCXTSkin
                 unset($data['quoteVolume']);
 
                 Ticker::updateOrCreate([
-                    'cryptobot_exchange_id'  => $this->cryptobotExchange->id,
-                    'cryptobot_pair_id'      => $this->cryptobotPair->id,
+                    'cryptobot_exchange_id'  => $cryptobotExchange->id,
+                    'cryptobot_pair_id'      => $cryptobotPair->id,
                     'timestamp'              => $data['timestamp']
                 ], $data);
             }
@@ -107,30 +99,22 @@ class CCXTSkin
         // }
     }
 
-    public function fetchOHLCV($pair = null, $exchange = null)
+    public function fetchOHLCV($cryptobotPair, $cryptobotExchange)
     {
         if (is_null($this->exchange)) {
-            if (is_object($exchange)) {
-                $this->initExchange($exchange->exchange);
+            if (is_object($cryptobotExchange)) {
+                $this->initExchange($cryptobotExchange->exchange);
             } else {
-                $this->initExchange($exchange);
+                $this->initExchange($cryptobotExchange);
             }
         }
 
-        if (is_null($this->cryptobotExchange)) {
-            if (!is_null($exchange)) {
-                $this->setCryptobotExchange(!is_object($exchange) ? Exchange::find($exchange) : $exchange);
-            } else {
-                return false;
-            }
+        if (!is_object($cryptobotExchange)) {
+            $cryptobotExchange = Exchange::find($cryptobotExchange);
         }
 
-        if (is_null($this->cryptobotPair)) {
-            if (!is_null($pair)) {
-                $this->setCryptobotPair(!is_object($pair) ? Pair::find($pair) : $pair);
-            } else {
-                return false;
-            }
+        if (!is_null($cryptobotPair)) {
+            $cryptobotPair = Pair::find($cryptobotPair);
         }
 
         // try {
