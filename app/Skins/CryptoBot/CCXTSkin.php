@@ -192,7 +192,17 @@ class CCXTSkin
         // no delete
 
         foreach(ccxt\Exchange::$exchanges as $exchange) {
-            if (in_array($exchange, ['bibox'])) { continue; }
+            $cryptobotExchange = Exchange::where('exchange', $exchange)->first();
+            // aofex ExchangeNotAvailable (525 Origin SSL Handshake Error)
+            // bibox ExchangeError
+            // buda ExchangeNotAvailable (DDoS protection by Cloudflare - 6bef9890ce49efb6)
+            // coinbase empty
+            // coinmarketcap ExchangeNotAvailable (DDoS protection by Cloudflare - 6befa1766af0206b)
+            // crex24 53 timeout
+            // flowbtc ExchangeNotAvailable (Missing Authentication Token)
+            // lykke ExchangeNotAvailable (1005)
+            // ripio ExchangeNotAvailable (1020)
+            if (empty($cryptobotExchange) || in_array($exchange, ['aofex', 'bibox', 'buda', 'coinbase', 'coinmarketcap', 'crex24', 'flowbtc', 'lykke', 'ripio'])) { continue; }
 
             $exchange = (new self())->initExchange($exchange);
             $pairs = $exchange->load_markets();
