@@ -9,8 +9,7 @@ class Ticker extends Model
     protected $table = 'cryptobot_tickers';
     // protected $table = 'tickers';
 
-    protected $fillable = [
-    ];
+    protected $guarded = [];
 
     public function pair()
     {

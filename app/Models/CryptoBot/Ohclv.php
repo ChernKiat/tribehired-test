@@ -9,8 +9,7 @@ class Ohclv extends Model
     protected $table = 'cryptobot_ohlcvs';
     // protected $table = 'ohlcvs';
 
-    protected $fillable = [
-    ];
+    protected $guarded = [];
 
     public function pair()
     {

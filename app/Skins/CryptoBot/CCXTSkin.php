@@ -69,6 +69,8 @@ class CCXTSkin
         // try {
             if ($cryptobotExchange->has_fetch_tickers) {
                 $data = $this->exchange->fetchTicker($cryptobotPair->pair);
+                unset($data['symbol']);
+                unset($data['previousClose']);
                 unset($data['info']);
                 $data['cryptobot_exchange_id'] = $cryptobotExchange->id;
                 $data['cryptobot_pair_id'] = $cryptobotPair->id;
@@ -84,6 +86,7 @@ class CCXTSkin
                 $data['quote_volume'] = $data['quoteVolume'];
                 unset($data['quoteVolume']);
 
+                // $cryptobotTicker = Ticker::updateOrCreate([
                 Ticker::updateOrCreate([
                     'cryptobot_exchange_id'  => $cryptobotExchange->id,
                     'cryptobot_pair_id'      => $cryptobotPair->id,
@@ -97,6 +100,9 @@ class CCXTSkin
         // } catch (Exception $e) {
         //     dd($e);
         // }
+
+        // return $cryptobotTicker;
+        return $this;
     }
 
     public function fetchOHLCV($cryptobotPair, $cryptobotExchange)
@@ -118,11 +124,11 @@ class CCXTSkin
         }
 
         // try {
-            if ($this->cryptobotPair->has_fetch_ohlcv) {
-                foreach ($this->exchange->fetchOHLCV($this->cryptobotPair->pair, '1m', (Carbon::now()->subMinutes(5)->timestamp * 1000), 5) as $ohlcv) {
+            if ($cryptobotExchange->has_fetch_ohlcv) {
+                foreach ($this->exchange->fetchOHLCV($cryptobotPair->pair, '1m', (Carbon::now()->subMinutes(5)->timestamp * 1000), 5) as $ohlcv) {
                     $data = [];
-                    $data['cryptobot_exchange_id']  = $this->cryptobotExchange->id;
-                    $data['cryptobot_pair_id']      = $this->cryptobotPair->id;
+                    $data['cryptobot_exchange_id']  = $cryptobotExchange->id;
+                    $data['cryptobot_pair_id']      = $cryptobotPair->id;
                     $data['timestamp']              = (intval($ohlcv[0]) / 1000);
                     $data['datetime']               = Carbon::createFromTimestamp($data['timestamp'])->toDateTimeString();
                     $data['open']                   = $ohlcv[1];
@@ -131,9 +137,10 @@ class CCXTSkin
                     $data['close']                  = $ohlcv[4];
                     $data['volume']                 = $ohlcv[5];
 
+                    // $cryptobotOhclv = Ohclv::updateOrCreate([
                     Ohclv::updateOrCreate([
-                        'cryptobot_exchange_id'  => $this->cryptobotExchange->id,
-                        'cryptobot_pair_id'      => $this->cryptobotPair->id,
+                        'cryptobot_exchange_id'  => $cryptobotExchange->id,
+                        'cryptobot_pair_id'      => $cryptobotPair->id,
                         'timestamp'              => $data['timestamp']
                     ], $data);
                 }
@@ -145,6 +152,9 @@ class CCXTSkin
         // } catch (Exception $e) {
         //     dd($e);
         // }
+
+        // return $cryptobotOhclv;
+        return $this;
     }
 
     public static function updateExchanges()
