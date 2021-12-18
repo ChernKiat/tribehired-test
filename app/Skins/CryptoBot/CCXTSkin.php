@@ -9,15 +9,21 @@ use App\Models\CryptoBot\Ticker;
 use Carbon\Carbon;
 use ccxt;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 
 class CCXTSkin
 {
-    private $exchange = null;
-    private $cryptobotExchange = null;
-    private $cryptobotPair = null;
-
     private $limit = null;
     private $since = null;
+
+    private $exchange = null;
+
+    // ------
+
+    // private $is_multiple = false;
+
+    private $cryptobotExchange = null;
+    private $cryptobotPair = null;
 
     public function __construct($exchange = null)
     {
@@ -40,7 +46,7 @@ class CCXTSkin
 
         $exchange = "ccxt\\{$exchange}";
         $this->exchange = new $exchange ($data);
-        return $this->exchange;
+        return $this->exchange; // for static (setup)
     }
 
     public function setCryptobotExchange($cryptobotExchange)
@@ -50,10 +56,12 @@ class CCXTSkin
 
     public function setCryptobotPair($cryptobotPair)
     {
+        // $this->is_multiple = ($cryptobotPair instanceof Collection);
+
         $this->cryptobotPair = $cryptobotPair;
     }
 
-    public function fetchTicker()
+    private function passPreValidationsPreparations()
     {
         if (is_null($this->cryptobotExchange) || is_null($this->cryptobotPair)) {
             return false;
@@ -62,6 +70,13 @@ class CCXTSkin
         if (is_null($this->exchange)) {
             $this->initExchange($this->cryptobotExchange->exchange);
         }
+
+        return true;
+    }
+
+    public function fetchTicker() // current market price summary
+    {
+        if (!$this->passPreValidationsPreparations()) { throw new Exception('Please setup ccxt dependencies.') }
 
         // try {
             if ($this->cryptobotExchange->has_fetch_tickers) {
@@ -86,9 +101,62 @@ class CCXTSkin
                 // $cryptobotTicker = Ticker::updateOrCreate([
                 Ticker::updateOrCreate([
                     'cryptobot_exchange_id'  => $this->cryptobotExchange->id,
-                    'cryptobot_pair_id'      => $this->cryptobotPair->id,
+                    'cryptobot_pair_id'      => $data['cryptobot_pair_id'],
                     'timestamp'              => $data['timestamp']
                 ], $data);
+                unset($data);
+            }
+        // } catch (ccxt\AuthenticationError $e) {
+        //     return array('status' => false, 'status' => "\n\t{$this->exchange->id} needs auth (set this exchange to -1 in the database to disable it)..\n\n");
+        // } catch (ccxt\BaseError $e) {
+        //     return array('status' => false, 'status' => "\n\t{$this->exchange->id} error (set this exchange to -1 in the database to disable it):\n {$e}\n\n");
+        // } catch (Exception $e) {
+        //     dd($e);
+        // }
+
+        // return $cryptobotTicker;
+        return $this;
+    }
+
+    public function fetchTickers() // current markets price summary
+    {
+        if (!$this->passPreValidationsPreparations()) { throw new Exception('Please setup ccxt dependencies.') }
+
+        // try {
+            if ($this->cryptobotExchange->has_fetch_tickers) {
+                $pairs = $this->cryptobotPair->pluck('pair', 'id')->toArray();
+                $data = $this->exchange->fetch_tickers($pairs);
+                foreach ($pairs as $key => $pair) {
+                    unset($data[$pair]['symbol']);
+                    unset($data[$pair]['previousClose']);
+                    unset($data[$pair]['info']);
+                    $data[$pair]['cryptobot_exchange_id'] = $this->cryptobotExchange->id;
+                    $data[$pair]['cryptobot_pair_id'] = $key;
+                    $data[$pair]['timestamp'] = (intval($data[$pair]['timestamp']) / 1000);
+                    $data[$pair]['datetime'] = explode('.', $data[$pair]['datetime'])[0];
+
+                    $data[$pair]['bid_volume'] = $data[$pair]['bidVolume'];
+                    unset($data[$pair]['bidVolume']);
+                    $data[$pair]['ask_volume'] = $data[$pair]['askVolume'];
+                    unset($data[$pair]['askVolume']);
+                    $data[$pair]['base_volume'] = $data[$pair]['baseVolume'];
+                    unset($data[$pair]['baseVolume']);
+                    $data[$pair]['quote_volume'] = $data[$pair]['quoteVolume'];
+                    unset($data[$pair]['quoteVolume']);
+                }
+                unset($key);
+                unset($pair);
+                unset($pairs);
+                foreach ($data as $value) {
+                    // $cryptobotTickers[] = Ticker::updateOrCreate([
+                    Ticker::updateOrCreate([
+                        'cryptobot_exchange_id'  => $this->cryptobotExchange->id,
+                        'cryptobot_pair_id'      => $value['cryptobot_pair_id'],
+                        'timestamp'              => $value['timestamp']
+                    ], $value);
+                }
+                unset($value);
+                unset($data);
             }
         // } catch (ccxt\AuthenticationError $e) {
         //     return array('status' => false, 'status' => "\n\t{$this->exchange->id} needs auth (set this exchange to -1 in the database to disable it)..\n\n");
@@ -104,13 +172,7 @@ class CCXTSkin
 
     public function fetchOHLCV($params = array())
     {
-        if (is_null($this->cryptobotExchange) || is_null($this->cryptobotPair)) {
-            return false;
-        }
-
-        if (is_null($this->exchange)) {
-            $this->initExchange($this->cryptobotExchange->exchange);
-        }
+        if (!$this->passPreValidationsPreparations()) { throw new Exception('Please setup ccxt dependencies.') }
 
         // try {
             if ($this->cryptobotExchange->has_fetch_ohlcv) {
@@ -129,7 +191,7 @@ class CCXTSkin
                     // $cryptobotOhclv = Ohclv::updateOrCreate([
                     Ohclv::updateOrCreate([
                         'cryptobot_exchange_id'  => $this->cryptobotExchange->id,
-                        'cryptobot_pair_id'      => $this->cryptobotPair->id,
+                        'cryptobot_pair_id'      => $data['cryptobot_pair_id'],
                         'timestamp'              => $data['timestamp']
                     ], $data);
                 }
@@ -148,13 +210,7 @@ class CCXTSkin
 
     public function fetchTrades($params = array())
     {
-        if (is_null($this->cryptobotExchange) || is_null($this->cryptobotPair)) {
-            return false;
-        }
-
-        if (is_null($this->exchange)) {
-            $this->initExchange($this->cryptobotExchange->exchange);
-        }
+        if (!$this->passPreValidationsPreparations()) { throw new Exception('Please setup ccxt dependencies.') }
 
         // try {
             if ($this->cryptobotExchange->has_fetch_ohlcv) {
