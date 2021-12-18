@@ -19,9 +19,14 @@ class CCXTDataCommand extends Command
         ini_set('memory_limit', '256M');
 
         while (1) {
+            $ccxt = (new CCXTSkin());
             foreach (Exchange::with('pairsActivated')->where('is_active', 1)->get() as $exchange) {
+                $ccxt->setCryptobotExchange($exchange);
                 foreach ($exchange->pairsActivated as $pair) {
-                    (new CCXTSkin())->fetchTickers($pair, $exchange)->fetchOHLCV($pair, $exchange);
+                    $ccxt->setCryptobotPair($pair);
+                    // $ccxt->fetchTickers();
+                    // $ccxt->fetchOHLCV();
+                    dd($ccxt->fetchTrades());
                 }
             }
 
