@@ -70,7 +70,7 @@ class CreateAllCryptobotTables extends Migration
             $table->decimal('quote_volume', 15, 6)->nullable();
             $table->softDeletes();
             $table->timestamps();
-            $table->unique(['cryptobot_exchange_id', 'cryptobot_pair_id', 'timestamp'], 'exchange_pair_timestamp_ticker');
+            $table->unique(['cryptobot_exchange_id', 'cryptobot_pair_id', 'timestamp'], 'exchange_pair_timestamp');
         });
 
         Schema::create('cryptobot_ohlcvs', function(Blueprint $table)
@@ -87,7 +87,7 @@ class CreateAllCryptobotTables extends Migration
             $table->decimal('volume', 15, 6)->nullable();
             $table->softDeletes();
             $table->timestamps();
-            $table->unique(['cryptobot_exchange_id', 'cryptobot_pair_id', 'timestamp'], 'exchange_pair_timestamp_ohlcv');
+            $table->unique(['cryptobot_exchange_id', 'cryptobot_pair_id', 'timestamp'], 'exchange_pair_timestamp');
         });
     }
 
