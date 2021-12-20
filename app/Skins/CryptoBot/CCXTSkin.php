@@ -62,13 +62,16 @@ class CCXTSkin
     public function setCryptobotExchange($cryptobotExchange)
     {
         $this->cryptobotExchange = $cryptobotExchange;
+
+        return $this;
     }
 
     public function setCryptobotPair($cryptobotPair)
     {
         // $this->is_multiple = ($cryptobotPair instanceof Collection);
-
         $this->cryptobotPair = $cryptobotPair;
+
+        return $this;
     }
 
     private function passPreValidationsPreparations()
@@ -89,7 +92,7 @@ class CCXTSkin
         if (!$this->passPreValidationsPreparations()) { throw new Exception('Please setup ccxt dependencies.'); }
 
         // try {
-            if ($this->exchange->hasFetchTicker) {
+            if ($this->exchange->has['fetchTicker']) {
                 $data = $this->exchange->fetch_ticker($this->cryptobotPair->pair);
                 unset($data['symbol']);
                 unset($data['previousClose']);
@@ -137,7 +140,7 @@ class CCXTSkin
         if (!$this->passPreValidationsPreparations()) { throw new Exception('Please setup ccxt dependencies.'); }
 
         // try {
-            if ($this->exchange->hasFetchTickers) {
+            if ($this->exchange->has['fetchTickers']) {
                 $pairs = $this->cryptobotPair->pluck('pair', 'id')->toArray();
                 $data = $this->exchange->fetch_tickers($pairs);
                 foreach ($pairs as $key => $pair) {
@@ -193,7 +196,7 @@ class CCXTSkin
         if (!$this->passPreValidationsPreparations()) { throw new Exception('Please setup ccxt dependencies.'); }
 
         // try {
-            if ($this->exchange->hasFetchOHLCV) {
+            if ($this->exchange->has['fetchOHLCV']) {
                 foreach ($this->exchange->fetch_ohlcv($this->cryptobotPair->pair, '1m', $this->since, $this->limit, $params) as $ohlcv) {
                     $data = [];
                     $data['cryptobot_exchange_id']  = $this->cryptobotExchange->id;
@@ -238,7 +241,7 @@ class CCXTSkin
         if (!$this->passPreValidationsPreparations()) { throw new Exception('Please setup ccxt dependencies.'); }
 
         // try {
-            if ($this->exchange->hasFetchTrades) {
+            if ($this->exchange->has['fetchTrades']) {
                 foreach ($this->exchange->fetch_trades($this->cryptobotPair->pair, $this->since, $this->limit, $params) as $trade) {
                     $data = [];
                     $data['cryptobot_exchange_id']  = $this->cryptobotExchange->id;
@@ -296,7 +299,7 @@ class CCXTSkin
         if (!$this->passPreValidationsPreparations()) { throw new Exception('Please setup ccxt dependencies.'); }
 
         // try {
-            if ($this->exchange->hasFetchMyTrades) {
+            if ($this->exchange->has['fetchMyTrades']) {
                 foreach ($this->exchange->fetch_my_trades($this->cryptobotPair->pair, $this->since, $this->limit, $params) as $trade) {
                     $data = [];
                     $data['cryptobot_exchange_id']  = $this->cryptobotExchange->id;
