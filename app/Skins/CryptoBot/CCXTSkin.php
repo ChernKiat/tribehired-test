@@ -6,10 +6,12 @@ use App\Models\CryptoBot\Exchange;
 use App\Models\CryptoBot\Ohclv;
 use App\Models\CryptoBot\Pair;
 use App\Models\CryptoBot\Ticker;
+use App\Models\CryptoBot\Trade;
 use Carbon\Carbon;
 use ccxt;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
+use Log;
 
 class CCXTSkin
 {
@@ -17,6 +19,12 @@ class CCXTSkin
     private $since = null;
 
     private $exchange = null;
+
+    const TYPE_MARKET  = 'market';
+    const TYPE_LIMIT   = 'limit';
+
+    const SIDE_BUY   = 'buy';
+    const SIDE_SELL  = 'sell';
 
     // ------
 
@@ -79,7 +87,7 @@ class CCXTSkin
         if (!$this->passPreValidationsPreparations()) { throw new Exception('Please setup ccxt dependencies.'); }
 
         // try {
-            if ($this->cryptobotExchange->has_fetch_tickers) {
+            if ($this->exchange->hasFetchTicker) {
                 $data = $this->exchange->fetch_ticker($this->cryptobotPair->pair);
                 unset($data['symbol']);
                 unset($data['previousClose']);
@@ -105,13 +113,17 @@ class CCXTSkin
                     'timestamp'              => $data['timestamp']
                 ], $data);
                 unset($data);
+            } else {
+                Log::info("{$this->exchange->id} doesnt have fetchTicker.");
             }
         // } catch (ccxt\AuthenticationError $e) {
-        //     return array('status' => false, 'status' => "\n\t{$this->exchange->id} needs auth (set this exchange to -1 in the database to disable it)..\n\n");
+        //     Log::error("{$this->exchange->id} needs auth (set this exchange to -1 in the database to disable it)..");
+        //     return false;
         // } catch (ccxt\BaseError $e) {
-        //     return array('status' => false, 'status' => "\n\t{$this->exchange->id} error (set this exchange to -1 in the database to disable it):\n {$e}\n\n");
+        //     Log::error("{$this->exchange->id} error (set this exchange to -1 in the database to disable it):\n{$e}");
+        //     return false;
         // } catch (Exception $e) {
-        //     dd($e);
+        //     Log::error($e);
         // }
 
         // return $cryptobotTicker;
@@ -123,7 +135,7 @@ class CCXTSkin
         if (!$this->passPreValidationsPreparations()) { throw new Exception('Please setup ccxt dependencies.'); }
 
         // try {
-            if ($this->cryptobotExchange->has_fetch_tickers) {
+            if ($this->exchange->hasFetchTickers) {
                 $pairs = $this->cryptobotPair->pluck('pair', 'id')->toArray();
                 $data = $this->exchange->fetch_tickers($pairs);
                 foreach ($pairs as $key => $pair) {
@@ -157,13 +169,17 @@ class CCXTSkin
                 }
                 unset($value);
                 unset($data);
+            } else {
+                Log::info("{$this->exchange->id} doesnt have fetchTickers.");
             }
         // } catch (ccxt\AuthenticationError $e) {
-        //     return array('status' => false, 'status' => "\n\t{$this->exchange->id} needs auth (set this exchange to -1 in the database to disable it)..\n\n");
+        //     Log::error("{$this->exchange->id} needs auth (set this exchange to -1 in the database to disable it)..");
+        //     return false;
         // } catch (ccxt\BaseError $e) {
-        //     return array('status' => false, 'status' => "\n\t{$this->exchange->id} error (set this exchange to -1 in the database to disable it):\n {$e}\n\n");
+        //     Log::error("{$this->exchange->id} error (set this exchange to -1 in the database to disable it):\n{$e}");
+        //     return false;
         // } catch (Exception $e) {
-        //     dd($e);
+        //     Log::error($e);
         // }
 
         // return $cryptobotTicker;
@@ -175,7 +191,7 @@ class CCXTSkin
         if (!$this->passPreValidationsPreparations()) { throw new Exception('Please setup ccxt dependencies.'); }
 
         // try {
-            if ($this->cryptobotExchange->has_fetch_ohlcv) {
+            if ($this->exchange->hasFetchOHLCV) {
                 foreach ($this->exchange->fetch_ohlcv($this->cryptobotPair->pair, '1m', $this->since, $this->limit, $params) as $ohlcv) {
                     $data = [];
                     $data['cryptobot_exchange_id']  = $this->cryptobotExchange->id;
@@ -195,13 +211,17 @@ class CCXTSkin
                         'timestamp'              => $data['timestamp']
                     ], $data);
                 }
+            } else {
+                Log::info("{$this->exchange->id} doesnt have fetchOHLCV.");
             }
         // } catch (ccxt\AuthenticationError $e) {
-        //     return array('status' => false, 'status' => "\n\t{$this->exchange->id} needs auth (set this exchange to -1 in the database to disable it)..\n\n");
+        //     Log::error("{$this->exchange->id} needs auth (set this exchange to -1 in the database to disable it)..");
+        //     return false;
         // } catch (ccxt\BaseError $e) {
-        //     return array('status' => false, 'status' => "\n\t{$this->exchange->id} error (set this exchange to -1 in the database to disable it):\n {$e}\n\n");
+        //     Log::error("{$this->exchange->id} error (set this exchange to -1 in the database to disable it):\n{$e}");
+        //     return false;
         // } catch (Exception $e) {
-        //     dd($e);
+        //     Log::error($e);
         // }
 
         // return $cryptobotOhclv;
@@ -215,11 +235,13 @@ class CCXTSkin
         // try {
             dd($this->exchange->fetch_trades($this->cryptobotPair->pair, $this->since, $this->limit, $params));
         // } catch (ccxt\AuthenticationError $e) {
-        //     return array('status' => false, 'status' => "\n\t{$this->exchange->id} needs auth (set this exchange to -1 in the database to disable it)..\n\n");
+        //     Log::error("{$this->exchange->id} needs auth (set this exchange to -1 in the database to disable it)..");
+        //     return false;
         // } catch (ccxt\BaseError $e) {
-        //     return array('status' => false, 'status' => "\n\t{$this->exchange->id} error (set this exchange to -1 in the database to disable it):\n {$e}\n\n");
+        //     Log::error("{$this->exchange->id} error (set this exchange to -1 in the database to disable it):\n{$e}");
+        //     return false;
         // } catch (Exception $e) {
-        //     dd($e);
+        //     Log::error($e);
         // }
 
         // return $cryptobotOhclv;
@@ -236,8 +258,6 @@ class CCXTSkin
                 $urls = $exchange->urls;
                 $data = array();
                 $data['exchange'] = $exchange->id;
-                $data['has_fetch_tickers'] = $exchange->hasFetchTickers ?? 1;
-                $data['has_fetch_ohlcv'] = $exchange->hasFetchOHLCV ?? 1;
                 // encode all APIs & documentation URLs
                 $data['data'] = json_encode($exchange->api, 1) . json_encode($urls, 1);
                 $data['url'] = !is_array($urls['www']) ? $urls['www'] : $urls['www'][0];
@@ -247,11 +267,13 @@ class CCXTSkin
 
                 Exchange::updateOrCreate(['exchange' => $exchange->id], $data);
             // } catch (ccxt\AuthenticationError $e) {
-            //     return array('status' => false, 'status' => "\n\t{$exchange->id} needs auth (set this exchange to -1 in the database to disable it)..\n\n");
+            //     Log::error("{$exchange->id} needs auth (set this exchange to -1 in the database to disable it)..");
+            //     return false;
             // } catch (ccxt\BaseError $e) {
-            //     return array('status' => false, 'status' => "\n\t{$exchange->id} error (set this exchange to -1 in the database to disable it):\n {$e}\n\n");
+            //     Log::error("{$exchange->id} error (set this exchange to -1 in the database to disable it):\n{$e}");
+            //     return false;
             // } catch (Exception $e) {
-            //     dd($e);
+            //     Log::error($e);
             // }
         }
         // return array('status' => true);
@@ -279,6 +301,7 @@ class CCXTSkin
             $pairs = $exchange->load_markets();
             $cryptobotExchange = Exchange::where('exchange', $exchange->id)->first();
             if (empty($pairs) || empty($cryptobotExchange)) {
+                Log::info("{$exchange->id} pairs @ cryptobotExchange variable is empty.");
                 continue;
             }
 
@@ -286,11 +309,13 @@ class CCXTSkin
                 // try {
                     Pair::updateOrCreate(['cryptobot_exchange_id' => $cryptobotExchange->id, 'pair' => $pair]);
                 // } catch (ccxt\AuthenticationError $e) {
-                //     return array('status' => false, 'status' => "\n\t{$exchange->id} needs auth (set this exchange to -1 in the database to disable it)..\n\n");
+                //     Log::error("{$exchange->id} needs auth (set this exchange to -1 in the database to disable it)..");
+                //     return false;
                 // } catch (ccxt\BaseError $e) {
-                //     return array('status' => false, 'status' => "\n\t{$exchange->id} error (set this exchange to -1 in the database to disable it):\n {$e}\n\n");
+                //     Log::error("{$exchange->id} error (set this exchange to -1 in the database to disable it):\n{$e}");
+                //     return false;
                 // } catch (Exception $e) {
-                //     dd($e);
+                //     Log::error($e);
                 // }
             }
         }
