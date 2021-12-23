@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -51,6 +47,12 @@ Route::prefix('net-junkies')->namespace('NetJunkies')->name('netjunkies.')->grou
         Route::get('/', 'PostController@index')->name('index');
         Route::get('{id}/edit', 'PostController@edit')->name('edit');
         Route::get('{id}', 'PostController@show')->name('show');
+    });
+});
+
+Route::prefix('nft-storage')->namespace('NFTStorage')->name('nftstorage.')->group(function() {
+    Route::prefix('image')->name('image.')->group(function() {
+        Route::get('test', 'ImageController@test')->name('test');
     });
 });
 
