@@ -11,6 +11,11 @@ class Order extends Model
 
     protected $guarded = [];
 
+    public function exchange()
+    {
+        return $this->belongsTo(Exchange::class, 'cryptobot_exchange_id', 'id');
+    }
+
     public function pair()
     {
         return $this->belongsTo(Pair::class, 'cryptobot_pair_id', 'id');

@@ -4,6 +4,7 @@ namespace App\Skins\CryptoBot;
 
 use App\Models\CryptoBot\Exchange;
 use App\Models\CryptoBot\Ohclv;
+use App\Models\CryptoBot\Order;
 use App\Models\CryptoBot\Pair;
 use App\Models\CryptoBot\Ticker;
 use App\Models\CryptoBot\Trade;
@@ -211,7 +212,7 @@ class CCXTSkin
 
                     // $cryptobotOhclv[] = Ohclv::updateOrCreate([
                     Ohclv::updateOrCreate([
-                        'cryptobot_exchange_id'  => $this->cryptobotExchange->id,
+                        'cryptobot_exchange_id'  => $data['cryptobot_exchange_id'],
                         'cryptobot_pair_id'      => $data['cryptobot_pair_id'],
                         'timestamp'              => $data['timestamp']
                     ], $data);
@@ -268,7 +269,7 @@ class CCXTSkin
 
                     // $cryptobotTrades[] = Trade::updateOrCreate([
                     Trade::updateOrCreate([
-                        'cryptobot_exchange_id'  => $this->cryptobotExchange->id,
+                        'cryptobot_exchange_id'  => $data['cryptobot_exchange_id'],
                         'cryptobot_pair_id'      => $data['cryptobot_pair_id'],
                         'exchange_trade_id'      => $data['exchange_trade_id'],
                         'exchange_order_id'      => $data['exchange_order_id']
@@ -327,7 +328,7 @@ class CCXTSkin
 
                     // $cryptobotTrades[] = Trade::updateOrCreate([
                     Trade::updateOrCreate([
-                        'cryptobot_exchange_id'  => $this->cryptobotExchange->id,
+                        'cryptobot_exchange_id'  => $data['cryptobot_exchange_id'],
                         'cryptobot_pair_id'      => $data['cryptobot_pair_id'],
                         'exchange_trade_id'      => $data['exchange_trade_id'],
                         'exchange_order_id'      => $data['exchange_order_id']
@@ -353,50 +354,59 @@ class CCXTSkin
         return $this;
     }
 
-    public function createOrder($symbol, $type, $side, $amount, $price = null, $params = array())
+    // public function createMarketBuyOrder($amount, $price = null, $params = array())
+    // public function createMarketSellOrder($amount, $price = null, $params = array())
+    // public function createLimitBuyOrder($amount, $price = null, $params = array())
+    // public function createLimitSellOrder($amount, $price = null, $params = array())
+
+    public function createOrder($type, $side, $amount, $price = null, $params = array())
     {
         if (!$this->passPreValidationsPreparations()) { throw new Exception('Please setup ccxt dependencies.'); }
 
         // try {
             if ($this->exchange->has['createOrder']) {
-                $data = $this->exchange->create_order($this->cryptobotPair->pair, $type, $side, $amount, $price, $params);
-                dd($data);
+                $cryptobotOrder = Order::updateOrCreate([
+                    'cryptobot_exchange_id'  => $this->cryptobotExchange->id,
+                    'cryptobot_pair_id'      => $this->cryptobotPair->id,
+                    'exchange_trade_id'      => null,
+                    'exchange_order_id'      => null
+                ], [
+                    'cryptobot_exchange_id'  => $this->cryptobotExchange->id,
+                    'cryptobot_pair_id'      => $this->cryptobotPair->id,
+                    'exchange_trade_id'      => null,
+                    'exchange_order_id'      => null,
+                    'created_at'             => null,
+                    'updated_at'             => null
+                ]);
+                $params['clientOrderId']  = $cryptobotOrder->id;
 
-                $data['cryptobot_exchange_id']  = $this->cryptobotExchange->id;
-                $data['cryptobot_pair_id']      = $this->cryptobotPair->id;
-                $data['exchange_trade_id']      = $trade['id'];
-                $data['exchange_order_id']      = $trade['order'];
-                $data['timestamp']              = intval($trade['timestamp'] / 1000);
-                $data['datetime']               = Carbon::createFromTimestamp($data['timestamp'])->toDateTimeString();
-                if (!empty($trade['type']) && in_array($trade['type'], array(self::TYPE_MARKET, self::TYPE_LIMIT))) {
-                    $data['type']               = $trade['type'];
+                $order = $this->exchange->create_order($this->cryptobotPair->pair, $type, $side, $amount, $price, $params);
+                // $cryptobotOrder->exchange_trade_id  = null;
+                $cryptobotOrder->exchange_order_id  = $order['id'];
+                $cryptobotOrder->timestamp          = intval($order['timestamp'] / 1000);
+                $cryptobotOrder->datetime           = Carbon::createFromTimestamp($cryptobotOrder->timestamp)->toDateTimeString();
+                if (!empty($order['type']) && in_array($order['type'], array(self::TYPE_MARKET, self::TYPE_LIMIT))) {
+                    $cryptobotOrder->type           = $order['type'];
                 } else {
-                    $data['type']               = (!empty($trade['takerOrMaker']) && in_array($trade['takerOrMaker'],
-                                                        array(self::TYPE_TAKER, self::TYPE_MAKER))) ? $trade['takerOrMaker'] :
+                    $cryptobotOrder->type           = (!empty($order['takerOrMaker']) && in_array($order['takerOrMaker'],
+                                                        array(self::TYPE_TAKER, self::TYPE_MAKER))) ? $order['takerOrMaker'] :
                                                             null;
                 }
-                $data['side']                   = (!empty($trade['side']) && in_array($trade['side'],
-                                                        array(self::SIDE_BUY, self::SIDE_BUY))) ? $trade['side'] : null;
-                $data['price']                  = $trade['price'];
-                $data['amount']                 = $trade['amount'];
-                $data['fee_cost']               = $trade['fee']['cost'] ?? null;
-                $data['fee_rate']               = $trade['fee']['rate'] ?? null;
-                $data['fee_currency']           = $trade['fee']['currency'] ?? null;
-                $data['is_own']                 = true;
-                // $trade['fees'] = an array with a list of fees I think
-
-                // $cryptobotTrades[] = Trade::updateOrCreate([
-                Trade::updateOrCreate([
-                    'cryptobot_exchange_id'  => $this->cryptobotExchange->id,
-                    'cryptobot_pair_id'      => $data['cryptobot_pair_id'],
-                    'exchange_trade_id'      => $data['exchange_trade_id'],
-                    'exchange_order_id'      => $data['exchange_order_id']
-                ], $data);
-                unset($trade);
-                unset($params);
-                unset($data);
+                $cryptobotOrder->side               = (!empty($order['side']) && in_array($order['side'],
+                                                        array(self::SIDE_BUY, self::SIDE_BUY))) ? $order['side'] : null;
+                $cryptobotOrder->price              = $order['price'];
+                $cryptobotOrder->amount             = $order['amount'];
+                $cryptobotOrder->fee_cost           = $order['fee']['cost'] ?? null;
+                $cryptobotOrder->fee_rate           = $order['fee']['rate'] ?? null;
+                $cryptobotOrder->fee_currency       = $order['fee']['currency'] ?? null;
+                $cryptobotOrder->is_own             = true;
+                $cryptobotOrder->created_at         = Carbon::now();
+                $cryptobotOrder->save();
+                // $order['fees'] = an array with a list of fees I think
+                unset($order);
+                unset($cryptobotOrder);
             } else {
-                Log::info("{$this->exchange->id} doesnt have fetchMyTrades.");
+                Log::info("{$this->exchange->id} doesnt have createOrder.");
             }
         // } catch (ccxt\AuthenticationError $e) {
         //     Log::error("{$this->exchange->id} needs auth (set this exchange to -1 in the database to disable it)..");
@@ -408,7 +418,43 @@ class CCXTSkin
         //     Log::error($e);
         // }
 
-        // return $cryptobotTrades;
+        // return $cryptobotOrder;
+        return $this;
+    }
+
+    public function cancelOrder($order, $params = array())
+    {
+        if (!$this->passPreValidationsPreparations()) { throw new Exception('Please setup ccxt dependencies.'); }
+
+        // try {
+            if ($this->exchange->has['cancelOrder']) {
+                if (is_object($order)) { $order = $order->id; }
+
+                $order = $this->exchange->cancel_order($order, $this->cryptobotPair->pair, $params);
+
+                $cryptobotOrder = Order::updateOrCreate([
+                    'id'           => $order->id,
+                ], [
+                    'canceled_at'  => Carbon::now(),
+                ]);
+
+                // $order['fees'] = an array with a list of fees I think
+                unset($order);
+                unset($cryptobotOrder);
+            } else {
+                Log::info("{$this->exchange->id} doesnt have cancelOrder.");
+            }
+        // } catch (ccxt\AuthenticationError $e) {
+        //     Log::error("{$this->exchange->id} needs auth (set this exchange to -1 in the database to disable it)..");
+        //     return false;
+        // } catch (ccxt\BaseError $e) {
+        //     Log::error("{$this->exchange->id} error (set this exchange to -1 in the database to disable it):\n{$e}");
+        //     return false;
+        // } catch (Exception $e) {
+        //     Log::error($e);
+        // }
+
+        // return $cryptobotOrder;
         return $this;
     }
 

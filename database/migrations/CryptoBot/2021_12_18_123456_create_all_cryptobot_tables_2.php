@@ -20,7 +20,7 @@ class CreateAllCryptobotTables2 extends Migration
             $table->unsignedInteger('cryptobot_pair_id'); // ->index();
             $table->string('exchange_trade_id', 90)->nullable();
             $table->string('exchange_order_id', 90)->nullable();
-            $table->bigInteger('timestamp'); // ->index();
+            $table->bigInteger('timestamp')->nullable(); // ->index();
             $table->timestamp('datetime')->nullable();
             $table->enum('type', ['market', 'limit'])->nullable();
             $table->enum('side', ['buy', 'sell'])->nullable();
@@ -44,7 +44,7 @@ class CreateAllCryptobotTables2 extends Migration
             $table->unsignedInteger('cryptobot_pair_id'); // ->index();
             $table->string('exchange_trade_id', 90)->nullable();
             $table->string('exchange_order_id', 90)->nullable();
-            $table->bigInteger('timestamp'); // ->index();
+            $table->bigInteger('timestamp')->nullable(); // ->index();
             $table->timestamp('datetime')->nullable();
             $table->enum('type', ['market', 'limit'])->nullable();
             $table->enum('side', ['buy', 'sell'])->nullable();
