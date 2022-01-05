@@ -354,6 +354,30 @@ class CCXTSkin
         return $this;
     }
 
+    public function fetchBalance($params = array())
+    {
+        if (!$this->passPreValidationsPreparations()) { throw new Exception('Please setup ccxt dependencies.'); }
+
+        // try {
+            $data = [];
+            if ($this->exchange->has['fetchBalance']) {
+                $data = $this->exchange->fetch_balance($params);
+            } else {
+                Log::info("{$this->exchange->id} doesnt have fetchBalance.");
+            }
+        // } catch (ccxt\AuthenticationError $e) {
+        //     Log::error("{$this->exchange->id} needs auth (set this exchange to -1 in the database to disable it)..");
+        //     return false;
+        // } catch (ccxt\BaseError $e) {
+        //     Log::error("{$this->exchange->id} error (set this exchange to -1 in the database to disable it):\n{$e}");
+        //     return false;
+        // } catch (Exception $e) {
+        //     Log::error($e);
+        // }
+
+        return $data;
+    }
+
     // public function createMarketBuyOrder($amount, $price = null, $params = array())
     // public function createMarketSellOrder($amount, $price = null, $params = array())
     // public function createLimitBuyOrder($amount, $price = null, $params = array())
@@ -428,17 +452,23 @@ class CCXTSkin
 
         // try {
             if ($this->exchange->has['cancelOrder']) {
-                if (is_object($order)) { $order = $order->id; }
+                if (is_object($order)) {
+                    $exchange_order_id = $order->exchange_order_id;
+                    $order = $params['clientOrderId'] = $order->id;
+                } else {
+                    $exchange_order_id = $params['clientOrderId'] = $order;
+                }
 
-                $order = $this->exchange->cancel_order($order, $this->cryptobotPair->pair, $params);
+                $this->exchange->cancel_order($exchange_order_id, $this->cryptobotPair->pair, $params);
 
                 $cryptobotOrder = Order::updateOrCreate([
-                    'id'           => $order->id,
+                    'id'           => $order,
                 ], [
                     'canceled_at'  => Carbon::now(),
                 ]);
 
                 // $order['fees'] = an array with a list of fees I think
+                unset($exchange_order_id);
                 unset($order);
                 unset($cryptobotOrder);
             } else {
