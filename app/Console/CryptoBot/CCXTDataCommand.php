@@ -4,13 +4,13 @@ namespace App\Console\CryptoBot;
 
 use App\Models\CryptoBot\Exchange;
 use App\Skins\CryptoBot\CCXTSkin;
-use Carbon\Carbon;
-use Config;
 use Illuminate\Console\Command;
 
 class CCXTDataCommand extends Command
 {
-    protected $signature = 'CCXTDataCommand:update';
+    // protected $name = 'CCXTDataCommand:update';
+
+    protected $signature = 'CCXTDataCommand:update {--pair}';
 
     protected $description = '';
 
