@@ -16,7 +16,7 @@ class CCXTStrategyCommand extends Command
         ini_set('memory_limit', '256M');
 
         while (1) {
-            foreach (Strategy::with('pairsActivated')->where('is_active', 1)->get() as $strategy) {
+            foreach (Strategy::with('pairs')->where('is_active', 1)->get() as $strategy) {
                 $strategy->run();
             }
 

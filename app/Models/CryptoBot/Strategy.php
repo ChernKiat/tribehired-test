@@ -65,6 +65,11 @@ class Strategy extends Model
 
     private function runCrossPair()
     {
+        dd($this->pairs->groupBy('cryptobot_exchange_id'));
 
+        $group = array();
+        foreach ($this->pairs as $pair) {
+            $group[$pair->cryptobot_exchange_id][] = $pair;
+        }
     }
 }
