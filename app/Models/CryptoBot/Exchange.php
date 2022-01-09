@@ -11,6 +11,8 @@ class Exchange extends Model
 
     protected $guarded = [];
 
+    const BINANCE  = 7;
+
     public function pairs()
     {
         return $this->hasMany(Pair::class, 'cryptobot_exchange_id', 'id');

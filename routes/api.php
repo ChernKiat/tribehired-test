@@ -18,3 +18,9 @@ Route::prefix('research-development')->namespace('ResearchDevelopment')->name('r
     Route::get('one', 'TribeHiredController@one')->name('one');
     Route::post('two', 'TribeHiredController@two')->name('two');
 });
+
+Route::prefix('crypto-bot')->namespace('CryptoBot')->name('cryptobot.')->group(function() {
+    Route::prefix('ccxt')->name('ccxt.')->group(function() {
+        Route::get('ohlcv', 'CCXTController@ohlcv')->name('ohlcv');
+    });
+});

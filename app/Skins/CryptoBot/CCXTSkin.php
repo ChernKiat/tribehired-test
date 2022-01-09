@@ -16,8 +16,9 @@ use Log;
 
 class CCXTSkin
 {
-    private $limit = null;
+    private $timeframe = '1m';
     private $since = null;
+    private $limit = null;
 
     private $exchange = null;
 
@@ -36,13 +37,16 @@ class CCXTSkin
     private $cryptobotExchange = null;
     private $cryptobotPair = null;
 
-    public function __construct($exchange = null)
+    public function __construct($parameters = array('exchange' => null, 'timeframe' => '1m', 'since' => null, 'limit' => null, ))
     {
-        if (!is_null($exchange)) {
-            $this->initExchange($exchange);
+        // if (array_key_exists('exchange', $parameters) && !is_null($parameters['exchange'])) {
+        if (!is_null($parameters['exchange'])) {
+            $this->initExchange($parameters['exchange']);
         }
-        $this->limit = 5;
-        $this->since = Carbon::now()->subMinutes(5)->timestamp * 1000;
+        $this->timeframe = $parameters['timeframe'] ?? '1m';
+        $this->since = $parameters['since'] ?? Carbon::now()->subMinutes(5)->timestamp * 1000;
+        $this->limit = $parameters['limit'] ?? 5;
+        unset($parameters);
     }
 
     public function initExchange($exchange, $is_rate_limited = true)
@@ -198,7 +202,7 @@ class CCXTSkin
 
         // try {
             if ($this->exchange->has['fetchOHLCV']) {
-                foreach ($this->exchange->fetch_ohlcv($this->cryptobotPair->pair, '1m', $this->since, $this->limit, $params) as $ohlcv) {
+                foreach ($this->exchange->fetch_ohlcv($this->cryptobotPair->pair, $this->timeframe, $this->since, $this->limit, $params) as $ohlcv) {
                     $data = [];
                     $data['cryptobot_exchange_id']  = $this->cryptobotExchange->id;
                     $data['cryptobot_pair_id']      = $this->cryptobotPair->id;

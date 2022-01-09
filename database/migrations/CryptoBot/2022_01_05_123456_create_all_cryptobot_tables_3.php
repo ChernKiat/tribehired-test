@@ -18,6 +18,7 @@ class CreateAllCryptobotTables3 extends Migration
             $table->increments('id');
             $table->string('name')->nullable();
             $table->tinyInteger('type')->default(1);
+            $table->tinyInteger('state')->default(1);
             $table->text('comment')->nullable();
             $table->boolean('is_active')->default(0);
             $table->softDeletes();
