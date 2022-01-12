@@ -2,6 +2,7 @@
 
 namespace App\Traits\CryptoBot;
 
+use DB;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
@@ -9,14 +10,14 @@ trait DynamicDatabaseTrait
 {
     protected $table = '';
 
-    public static function setTableName($table_name)
+    public static function createDynamicTable($table_name)
     {
-        self::existTable($table_name);
+        self::existDynamicTable($table_name);
 
         return self::from($table_name);
     }
 
-    public static function existTableName($table_name)
+    public static function existDynamicTable($table_name)
     {
         if (!Schema::hasTable($table_name)) {
             Schema::create($table_name, function(Blueprint $table)
@@ -36,5 +37,14 @@ trait DynamicDatabaseTrait
                 $table->unique(['cryptobot_exchange_id', 'cryptobot_pair_id', 'timestamp'], 'exchange_pair_timestamp');
             });
         }
+    }
+
+    public static function accessLatestDynamicTable()
+    {
+        $total = count(array_filter(DB::connection()->getDoctrineSchemaManager()->listTableNames(), function ($table_name) {
+                        return (stripos($table_name, 'pattern_') !== false);
+                    }));
+
+        return $total !== 0 ? self::from("pattern_{$total}") : false;
     }
 }
