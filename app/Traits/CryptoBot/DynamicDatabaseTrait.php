@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Schema;
 
 trait DynamicDatabaseTrait
 {
-    protected $table = '';
+    // protected $table = '';
 
     public static function createDynamicTable($table_name)
     {

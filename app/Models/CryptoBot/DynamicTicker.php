@@ -15,17 +15,17 @@ class DynamicTicker extends Model
 
     protected $guarded = [];
 
-    const 1_HOUR  = 3600;
-    const 1_DAY   = 86400;
-    const 1_WEEK  = 604800;
+    const TIMESTAMP_1_HOUR  = 3600;
+    const TIMESTAMP_1_DAY   = 86400;
+    const TIMESTAMP_1_WEEK  = 604800;
 
-    const 100000_SECOND     = '1d 3h 46m 40s';
-    const 500000_SECOND     = '5d 18h 53m 20s';
-    const 800000_SECOND     = '9d 6h 13m 20s';
-    const 1000000_SECOND    = '11d 13h 46m 40s';
-    const 5000000_SECOND    = '1m 29d 20h 53m 20s';
-    const 10000000_SECOND   = '3m 26d 17h 46m 40s';
-    const 100000000_SECOND  = '3y 2m 2d 9h 46m 40s';
+    const TIME_100000_SECOND     = '1d 3h 46m 40s';
+    const TIME_500000_SECOND     = '5d 18h 53m 20s';
+    const TIME_800000_SECOND     = '9d 6h 13m 20s';
+    const TIME_1000000_SECOND    = '11d 13h 46m 40s';
+    const TIME_5000000_SECOND    = '1m 29d 20h 53m 20s';
+    const TIME_10000000_SECOND   = '3m 26d 17h 46m 40s';
+    const TIME_100000000_SECOND  = '3y 2m 2d 9h 46m 40s';
 
     public function pair()
     {
@@ -43,7 +43,7 @@ class DynamicTicker extends Model
 
     public static function getTimestampGroup($timestamp)
     {
-        return intval($timestamp / self::1_WEEK) . 'w';
+        return intval($timestamp / self::TIMESTAMP_1_WEEK) . 'w';
     }
 
     public static function accessLatestDynamicTable()
