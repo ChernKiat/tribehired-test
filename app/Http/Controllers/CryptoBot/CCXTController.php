@@ -17,6 +17,7 @@ class CCXTController extends Controller
             $ccxt->setCryptobotExchange($exchange);
 
             $ccxt->setCryptobotPair($exchange->pairsActivated);
+            dd($ccxt->fetchTickers(CCXTSkin::MODE_DYNAMIC));
             foreach ($exchange->pairsActivated as $pair) {
                 $ccxt->setCryptobotPair($pair);
                 // dd($ccxt->fetchTicker());
