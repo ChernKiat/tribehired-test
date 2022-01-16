@@ -22,12 +22,8 @@ class CCXTDataCommand extends Command
             $ccxt = (new CCXTSkin());
             foreach (Exchange::with('pairsActivated')->where('is_active', 1)->get() as $exchange) {
                 $ccxt->setCryptobotExchange($exchange);
-                foreach ($exchange->pairsActivated as $pair) {
-                    $ccxt->setCryptobotPair($pair);
-                    // $ccxt->fetchTickers();
-                    // $ccxt->fetchOHLCV();
-                    dd($ccxt->fetchTrades());
-                }
+                $ccxt->setCryptobotPair($exchange->pairsActivated);
+                $ccxt->fetchTickers(CCXTSkin::MODE_DYNAMIC);
             }
 
             sleep(5);

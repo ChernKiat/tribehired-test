@@ -4,6 +4,8 @@ namespace App\Models\CryptoBot;
 use App\Traits\CryptoBot\DynamicDatabaseTrait;
 use DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class DynamicTicker extends Model
 {
@@ -78,15 +80,17 @@ class DynamicTicker extends Model
 
     public static function getTimestampGroup($timestamp)
     {
-        return intval($timestamp / self::TIMESTAMP_1_WEEK) . 'w';
+        return intval($timestamp / self::TIMESTAMP_1_WEEK);
     }
 
     public static function accessLatestDynamicTable()
     {
-        $total = count(array_filter(DB::connection()->getDoctrineSchemaManager()->listTableNames(), function ($table_name) {
-                        return (stripos($table_name, 'cryptobot_tickers_') !== false);
-                    }));
+        $dynamicTablesList = array_map(function ($table_name) {
+                                        return intval(explode('_', $table_name)[2] ?? 0);
+                                    }, array_filter(DB::connection()->getDoctrineSchemaManager()->listTableNames(), function ($table_name) {
+                                        return (stripos($table_name, 'cryptobot_tickers_') !== false);
+                                    }));
 
-        return $total !== 0 ? self::from("cryptobot_tickers_{$total}w_data") : false;
+        return !empty($dynamicTablesList) ? (new self)->setTable('cryptobot_tickers_' . max($dynamicTablesList) . 'w_data') : false;
     }
 }

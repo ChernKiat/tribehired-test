@@ -41,10 +41,12 @@ trait DynamicDatabaseTrait
 
     public static function accessLatestDynamicTable()
     {
-        $total = count(array_filter(DB::connection()->getDoctrineSchemaManager()->listTableNames(), function ($table_name) {
-                        return (stripos($table_name, 'pattern_') !== false);
-                    }));
+        $dynamicTablesList = array_map(function ($table_name) {
+                                        return explode('_', $table_name)[1] ?? 0;
+                                    }, array_filter(DB::connection()->getDoctrineSchemaManager()->listTableNames(), function ($table_name) {
+                                        return (stripos($table_name, 'pattern_') !== false);
+                                    }));
 
-        return $total !== 0 ? self::from("pattern_{$total}") : false;
+        return !empty($dynamicTablesList) ? (new self)->setTable('pattern_' . max($dynamicTablesList)) : false;
     }
 }

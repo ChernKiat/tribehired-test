@@ -18,6 +18,7 @@ class CCXTController extends Controller
 
             $ccxt->setCryptobotPair($exchange->pairsActivated);
             dd($ccxt->fetchTickers(CCXTSkin::MODE_DYNAMIC));
+            // dd(self::accessLatestDynamicTable()->get(), 'lol');
             foreach ($exchange->pairsActivated as $pair) {
                 $ccxt->setCryptobotPair($pair);
                 // dd($ccxt->fetchTicker());
