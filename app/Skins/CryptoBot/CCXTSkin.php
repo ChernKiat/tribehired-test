@@ -174,11 +174,9 @@ class CCXTSkin
                 unset($key);
                 unset($pairs);
                 if ($mode == self::MODE_DYNAMIC) {
-                    $dynamicTickersTable = null;
                     foreach ($data as $value) {
-                        $dynamicTickersTable = DynamicTicker::createDynamicTable($value['timestamp']);
                         // $cryptobotTickers[] = Ticker::updateOrCreate([
-                        $dynamicTickersTable->updateOrCreate([
+                        DynamicTicker::createDynamicTable($value['timestamp'])->updateOrCreate([
                             'cryptobot_exchange_id'  => $this->cryptobotExchange->id,
                             'cryptobot_pair_id'      => $value['cryptobot_pair_id'],
                             'timestamp'              => $value['timestamp']

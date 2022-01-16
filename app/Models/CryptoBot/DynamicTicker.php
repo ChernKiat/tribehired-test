@@ -10,8 +10,8 @@ class DynamicTicker extends Model
     use DynamicDatabaseTrait;
 
     // protected $connection = 'mysql';
-    // protected $table = 'cryptobot_tickers_{}_data';
-    // protected $table = 'tickers_{}_data';
+    // protected $table = 'cryptobot_tickers_{}w_data';
+    // protected $table = 'tickers_{}w_data';
 
     protected $guarded = [];
 
@@ -36,9 +36,44 @@ class DynamicTicker extends Model
     {
         $timestamp_group = self::getTimestampGroup($timestamp);
 
-        self::existDynamicTable("cryptobot_tickers_{$timestamp_group}_data");
+        self::existDynamicTable("cryptobot_tickers_{$timestamp_group}w_data");
 
-        return self::from("cryptobot_tickers_{$timestamp_group}_data");
+        // dd(self::from("cryptobot_tickers_{$timestamp_group}w_data"));
+        // dd((new self)->setTable("cryptobot_tickers_{$timestamp_group}w_data"));
+        return (new self)->setTable("cryptobot_tickers_{$timestamp_group}w_data");
+    }
+
+    public static function existDynamicTable($table_name)
+    {
+        if (!Schema::hasTable($table_name)) {
+            Schema::create($table_name, function(Blueprint $table)
+            {
+                $table->increments('id');
+                $table->unsignedInteger('cryptobot_exchange_id'); // ->index();
+                $table->unsignedInteger('cryptobot_pair_id'); // ->index();
+                $table->bigInteger('timestamp'); // ->index();
+                $table->timestamp('datetime')->nullable();
+                $table->decimal('high', 15, 6)->nullable();
+                $table->decimal('low', 15, 6)->nullable();
+                $table->decimal('bid', 15, 6)->nullable();
+                $table->decimal('bid_volume', 15, 6)->nullable();
+                $table->decimal('ask', 15, 6)->nullable();
+                $table->decimal('ask_volume', 15, 6)->nullable();
+                $table->decimal('vwap', 15, 6)->nullable(); // volume-weighted average price
+                $table->decimal('open', 15, 6)->nullable();
+                $table->decimal('close', 15, 6)->nullable();
+                // $table->decimal('first', 15, 6)->nullable();
+                $table->decimal('last', 15, 6)->nullable();
+                $table->decimal('change', 15, 6)->nullable();
+                $table->decimal('percentage', 15, 6)->nullable();
+                $table->decimal('average', 15, 6)->nullable();
+                $table->decimal('base_volume', 15, 6)->nullable();
+                $table->decimal('quote_volume', 15, 6)->nullable();
+                $table->softDeletes();
+                $table->timestamps();
+                $table->unique(['cryptobot_exchange_id', 'cryptobot_pair_id', 'timestamp'], 'exchange_pair_timestamp');
+            });
+        }
     }
 
     public static function getTimestampGroup($timestamp)

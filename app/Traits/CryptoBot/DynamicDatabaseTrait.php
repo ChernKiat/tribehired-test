@@ -14,7 +14,7 @@ trait DynamicDatabaseTrait
     {
         self::existDynamicTable($table_name);
 
-        return self::from($table_name);
+        return (new self)->setTable($table_name);
     }
 
     public static function existDynamicTable($table_name)
