@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('CCXTDataCommand:update --pair=')->withoutOverlapping()->everyMinute();
+        $schedule->command('CCXTDataCommand:update')->withoutOverlapping()->everyMinute();
     }
 
     /**
