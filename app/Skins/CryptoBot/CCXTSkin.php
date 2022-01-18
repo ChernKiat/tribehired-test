@@ -38,6 +38,7 @@ class CCXTSkin
 
     const MODE_NORMAL   = 'normal';
     const MODE_DYNAMIC  = 'dynamic';
+    const MODE_REVIVE   = 'revive';
 
     private $cryptobotExchange = null;
     private $cryptobotPair = null;
@@ -152,30 +153,42 @@ class CCXTSkin
         // try {
             if ($this->exchange->has['fetchTickers']) {
                 $data = $this->exchange->fetch_tickers($this->cryptobotPair->pluck('pair')->toArray());
-                foreach ($this->cryptobotPair as $pair) {
-                    if ($data[$pair->pair]['bid'] == 0 && $data[$pair->pair]['bidVolume'] == 0 && $data[$pair->pair]['ask'] == 0 && $data[$pair->pair]['askVolume'] == 0) {
-                        $pair->is_active         = 0;
-                        $pair->latest_ticked_at  = explode('.', $data[$pair->pair]['datetime'])[0];
-                        $pair->save();
-                        // mail
-                        continue;
-                    }
-                    unset($data[$pair->pair]['symbol']);
-                    unset($data[$pair->pair]['previousClose']);
-                    unset($data[$pair->pair]['info']);
-                    $data[$pair->pair]['cryptobot_exchange_id'] = $this->cryptobotExchange->id;
-                    $data[$pair->pair]['cryptobot_pair_id'] = $pair->id;
-                    $data[$pair->pair]['timestamp'] = intval($data[$pair->pair]['timestamp'] / 1000);
-                    $data[$pair->pair]['datetime'] = explode('.', $data[$pair->pair]['datetime'])[0];
+                if ($this->mode != self::MODE_REVIVE) {
+                    foreach ($this->cryptobotPair as $pair) {
+                        if ($data[$pair->pair]['bid'] == 0 && $data[$pair->pair]['bidVolume'] == 0 && $data[$pair->pair]['ask'] == 0 && $data[$pair->pair]['askVolume'] == 0) {
+                            $pair->is_active         = 0;
+                            $pair->latest_ticked_at  = explode('.', $data[$pair->pair]['datetime'])[0];
+                            $pair->save();
+                            // mail
+                            continue;
+                        }
+                        unset($data[$pair->pair]['symbol']);
+                        unset($data[$pair->pair]['previousClose']);
+                        unset($data[$pair->pair]['info']);
+                        $data[$pair->pair]['cryptobot_exchange_id'] = $this->cryptobotExchange->id;
+                        $data[$pair->pair]['cryptobot_pair_id'] = $pair->id;
+                        $data[$pair->pair]['timestamp'] = intval($data[$pair->pair]['timestamp'] / 1000);
+                        $data[$pair->pair]['datetime'] = explode('.', $data[$pair->pair]['datetime'])[0];
 
-                    $data[$pair->pair]['bid_volume'] = $data[$pair->pair]['bidVolume'];
-                    unset($data[$pair->pair]['bidVolume']);
-                    $data[$pair->pair]['ask_volume'] = $data[$pair->pair]['askVolume'];
-                    unset($data[$pair->pair]['askVolume']);
-                    $data[$pair->pair]['base_volume'] = $data[$pair->pair]['baseVolume'];
-                    unset($data[$pair->pair]['baseVolume']);
-                    $data[$pair->pair]['quote_volume'] = $data[$pair->pair]['quoteVolume'];
-                    unset($data[$pair->pair]['quoteVolume']);
+                        $data[$pair->pair]['bid_volume'] = $data[$pair->pair]['bidVolume'];
+                        unset($data[$pair->pair]['bidVolume']);
+                        $data[$pair->pair]['ask_volume'] = $data[$pair->pair]['askVolume'];
+                        unset($data[$pair->pair]['askVolume']);
+                        $data[$pair->pair]['base_volume'] = $data[$pair->pair]['baseVolume'];
+                        unset($data[$pair->pair]['baseVolume']);
+                        $data[$pair->pair]['quote_volume'] = $data[$pair->pair]['quoteVolume'];
+                        unset($data[$pair->pair]['quoteVolume']);
+                    }
+                } else {
+                    foreach ($this->cryptobotPair as $pair) {
+                        $datetime = explode('.', $data[$pair->pair]['datetime'])[0];
+                        // if ($pair->latest_ticked_at != $datetime) {
+                            $pair->is_active         = 1;
+                            $pair->save();
+                            // mail
+                            continue;
+                        // }
+                    }
                 }
                 unset($pair);
                 if ($this->mode == self::MODE_DYNAMIC) {
@@ -187,6 +200,7 @@ class CCXTSkin
                             'timestamp'              => $value['timestamp']
                         ], $value);
                     }
+                } elseif ($this->mode == self::MODE_REVIVE) {
                 } else {
                     foreach ($data as $value) {
                         // $cryptobotTickers[] = Ticker::updateOrCreate([

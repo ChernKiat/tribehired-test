@@ -22,4 +22,9 @@ class Exchange extends Model
     {
         return $this->pairs()->where('is_active', 1);
     }
+
+    public function pairsDeactivated()
+    {
+        return $this->pairs()->where('is_active', 0);
+    }
 }

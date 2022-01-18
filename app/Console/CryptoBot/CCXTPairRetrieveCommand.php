@@ -19,11 +19,11 @@ class CCXTPairRetrieveCommand extends Command
         ini_set('memory_limit', '256M');
 
         while (1) {
-            $ccxt = (new CCXTSkin());
+            $ccxt = (new CCXTSkin(array('mode' => CCXTSkin::MODE_DYNAMIC)));
             foreach (Exchange::with('pairsActivated')->where('is_active', 1)->get() as $exchange) {
                 $ccxt->setCryptobotExchange($exchange);
                 $ccxt->setCryptobotPair($exchange->pairsActivated);
-                $ccxt->fetchTickers(CCXTSkin::MODE_DYNAMIC);
+                $ccxt->fetchTickers();
             }
 
             sleep(5);

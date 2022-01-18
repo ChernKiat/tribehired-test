@@ -18,15 +18,11 @@ class CCXTPairReviveCommand extends Command
     {
         ini_set('memory_limit', '256M');
 
-        while (1) {
-            $ccxt = (new CCXTSkin());
-            foreach (Exchange::with('pairsActivated')->where('is_active', 1)->get() as $exchange) {
-                $ccxt->setCryptobotExchange($exchange);
-                $ccxt->setCryptobotPair($exchange->pairsActivated);
-                $ccxt->fetchTickers(CCXTSkin::MODE_DYNAMIC);
-            }
-
-            sleep(5);
+        $ccxt = (new CCXTSkin());
+        foreach (Exchange::with('pairsDeactivated')->where('is_active', 1)->get() as $exchange) {
+            $ccxt->setCryptobotExchange($exchange);
+            $ccxt->setCryptobotPair($exchange->pairsDeactivated);
+            $ccxt->fetchTickers();
         }
     }
 }
