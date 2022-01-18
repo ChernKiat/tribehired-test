@@ -6,11 +6,11 @@ use App\Models\CryptoBot\Exchange;
 use App\Skins\CryptoBot\CCXTSkin;
 use Illuminate\Console\Command;
 
-class CCXTDataCommand extends Command
+class CCXTPairRetrieveCommand extends Command
 {
-    // protected $name = 'CCXTDataCommand:update';
+    // protected $name = 'CCXTPairCommand:retrieve';
 
-    protected $signature = 'CCXTDataCommand:update {--pair}';
+    protected $signature = 'CCXTPairCommand:retrieve {--pair}';
 
     protected $description = '';
 

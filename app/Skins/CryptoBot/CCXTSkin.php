@@ -27,6 +27,7 @@ class CCXTSkin
 
     private $timeframe = '1m';
     private $since = null;
+    private $mode = self::MODE_NORMAL;
     private $limit = null;
 
     private $exchange = null;
@@ -41,14 +42,14 @@ class CCXTSkin
     private $cryptobotExchange = null;
     private $cryptobotPair = null;
 
-    public function __construct($parameters = array('exchange' => null, 'timeframe' => '1m', 'since' => null, 'limit' => null, ))
-    {
+    public function __construct($parameters = array('exchange' => null, 'timeframe' => '1m', 'since' => null, 'mode' => self::MODE_NORMAL, 'limit' => null, )) {
         // if (array_key_exists('exchange', $parameters) && !is_null($parameters['exchange'])) {
         if (!is_null($parameters['exchange'])) {
             $this->initExchange($parameters['exchange']);
         }
-        $this->timeframe = $parameters['timeframe'] ?? '1m';
+        $this->timeframe = $parameters['timeframe'];
         $this->since = $parameters['since'] ?? Carbon::now()->subMinutes(5)->timestamp * 1000;
+        $this->mode = $parameters['mode'];
         $this->limit = $parameters['limit'] ?? 5;
         unset($parameters);
     }
@@ -144,36 +145,40 @@ class CCXTSkin
         return $this;
     }
 
-    public function fetchTickers($mode = self::MODE_NORMAL) // current markets price summary
+    public function fetchTickers() // current markets price summary
     {
         if (!$this->passPreValidationsPreparations()) { throw new Exception('Please setup ccxt dependencies.'); }
 
         // try {
             if ($this->exchange->has['fetchTickers']) {
-                $pairs = $this->cryptobotPair->pluck('pair', 'id')->toArray();
-                $data = $this->exchange->fetch_tickers($pairs);
-                foreach ($pairs as $key => $pair) {
-                    unset($data[$pair]['symbol']);
-                    unset($data[$pair]['previousClose']);
-                    unset($data[$pair]['info']);
-                    $data[$pair]['cryptobot_exchange_id'] = $this->cryptobotExchange->id;
-                    $data[$pair]['cryptobot_pair_id'] = $key;
-                    $data[$pair]['timestamp'] = intval($data[$pair]['timestamp'] / 1000);
-                    $data[$pair]['datetime'] = explode('.', $data[$pair]['datetime'])[0];
+                $data = $this->exchange->fetch_tickers($this->cryptobotPair->pluck('pair')->toArray());
+                foreach ($this->cryptobotPair as $pair) {
+                    if ($data[$pair->pair]['bid'] == 0 && $data[$pair->pair]['bidVolume'] == 0 && $data[$pair->pair]['ask'] == 0 && $data[$pair->pair]['askVolume'] == 0) {
+                        $pair->is_active         = 0;
+                        $pair->latest_ticked_at  = explode('.', $data[$pair->pair]['datetime'])[0];
+                        $pair->save();
+                        // mail
+                        continue;
+                    }
+                    unset($data[$pair->pair]['symbol']);
+                    unset($data[$pair->pair]['previousClose']);
+                    unset($data[$pair->pair]['info']);
+                    $data[$pair->pair]['cryptobot_exchange_id'] = $this->cryptobotExchange->id;
+                    $data[$pair->pair]['cryptobot_pair_id'] = $pair->id;
+                    $data[$pair->pair]['timestamp'] = intval($data[$pair->pair]['timestamp'] / 1000);
+                    $data[$pair->pair]['datetime'] = explode('.', $data[$pair->pair]['datetime'])[0];
 
-                    $data[$pair]['bid_volume'] = $data[$pair]['bidVolume'];
-                    unset($data[$pair]['bidVolume']);
-                    $data[$pair]['ask_volume'] = $data[$pair]['askVolume'];
-                    unset($data[$pair]['askVolume']);
-                    $data[$pair]['base_volume'] = $data[$pair]['baseVolume'];
-                    unset($data[$pair]['baseVolume']);
-                    $data[$pair]['quote_volume'] = $data[$pair]['quoteVolume'];
-                    unset($data[$pair]['quoteVolume']);
+                    $data[$pair->pair]['bid_volume'] = $data[$pair->pair]['bidVolume'];
+                    unset($data[$pair->pair]['bidVolume']);
+                    $data[$pair->pair]['ask_volume'] = $data[$pair->pair]['askVolume'];
+                    unset($data[$pair->pair]['askVolume']);
+                    $data[$pair->pair]['base_volume'] = $data[$pair->pair]['baseVolume'];
+                    unset($data[$pair->pair]['baseVolume']);
+                    $data[$pair->pair]['quote_volume'] = $data[$pair->pair]['quoteVolume'];
+                    unset($data[$pair->pair]['quoteVolume']);
                 }
                 unset($pair);
-                unset($key);
-                unset($pairs);
-                if ($mode == self::MODE_DYNAMIC) {
+                if ($this->mode == self::MODE_DYNAMIC) {
                     foreach ($data as $value) {
                         // $cryptobotTickers[] = Ticker::updateOrCreate([
                         DynamicTicker::createDynamicTable($value['timestamp'])->updateOrCreate([
@@ -194,7 +199,6 @@ class CCXTSkin
                 }
                 unset($value);
                 unset($data);
-                unset($mode);
             } else {
                 Log::info("{$this->exchange->id} doesnt have fetchTickers.");
             }

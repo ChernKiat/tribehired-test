@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        CryptoBot\CCXTDataCommand::class,
+        CryptoBot\CCXTPairRetrieveCommand::class,
+        CryptoBot\CCXTPairReviveCommand::class,
     ];
 
     /**
@@ -24,7 +25,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('CCXTDataCommand:update')->withoutOverlapping()->everyMinute();
+        $schedule->command('CCXTPairCommand:retrieve')->withoutOverlapping()->everyMinute();
+        $schedule->command('CCXTPairCommand:revive')->withoutOverlapping()->everyDay();
     }
 
     /**

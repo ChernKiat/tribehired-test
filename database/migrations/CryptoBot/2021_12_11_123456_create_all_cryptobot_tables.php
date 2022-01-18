@@ -37,6 +37,7 @@ class CreateAllCryptobotTables extends Migration
             $table->unsignedInteger('cryptobot_exchange_id');
             $table->string('pair', 90)->nullable();
             $table->boolean('is_active')->default(0);
+            $table->timestamp('latest_ticked_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
 
