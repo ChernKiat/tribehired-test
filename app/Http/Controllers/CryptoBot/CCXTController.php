@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CryptoBot;
 use App\Http\Controllers\Controller;
 use App\Models\CryptoBot\Exchange;
 use App\Models\CryptoBot\Order;
+use App\Models\CryptoBot\Strategy;
 use App\Skins\CryptoBot\CCXTSkin;
 use Illuminate\Http\Request;
 
@@ -12,6 +13,9 @@ class CCXTController extends Controller
 {
     public function test()
     {
+        $strategy = Strategy::setupCrossPair(Exchange::BINANCE);
+        dd($strategy, 'lol');
+
         $ccxt = (new CCXTSkin());
         foreach (Exchange::with('pairsActivated')->where('is_active', 1)->get() as $exchange) {
             $ccxt->setCryptobotExchange($exchange);

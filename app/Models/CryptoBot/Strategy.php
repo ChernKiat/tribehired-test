@@ -128,53 +128,37 @@ class Strategy extends Model
                 $groups[$pair->cryptobot_base_currency_id][$pair->cryptobot_quote_currency_id] = $pair->id;
                 $groups[$pair->cryptobot_quote_currency_id][$pair->cryptobot_base_currency_id] = $pair->id;
             }
-            // dd($groups);
+            dd($groups);
+
+            // $json_connection = json_encode($connection);
+            // $log = 'unset';
+            // Log::info(json_encode(compact('key', 'currency', 'json_connection', 'row', 'pair', 'log')));
+
+            // $possible_connections = array();
+            // $cryptobot_currencies = Currency::pluck('name', 'id')->toArray();
+            // foreach ($cryptobot_currencies as $key => $currency) {
+            //     $possible_connections[] = array('strategy' => $currency, 'pair' => array(), 'start' => $key, 'end' => $key, 'continue' => true);
+            //     foreach ($possible_connections as $index => $connection) {
+            //         if ($connection['continue'] && $key == $connection['end'] && array_key_exists($key, $groups)) {
+            //             $base = $connection;
+            //             foreach ($groups[$key] as $row => $pair) {
+            //                 if ($row >= $key) {
+            //                     $temp = $base;
+            //                     $temp['strategy'] .= "/{$cryptobot_currencies[$row]}";
+            //                     $temp['pair'][] = $pair;
+            //                     $temp['end'] = $row;
+            //                     $possible_connections[] = $temp;
+            //                 } elseif ($connection['start'] == $connection['end'] && count($connection['pair']) > 2) {
+            //                     $possible_connections[$index]['continue'] = false;
+            //                 } else {
+            //                     unset($possible_connections[$index]);
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
 
             $possible_connections = array();
-            $cryptobot_currencies = Currency::pluck('name', 'id')->toArray();
-            $log = 'start';
-            Log::info(json_encode(compact('log')));
-            // dd($cryptobot_currencies);
-            foreach ($cryptobot_currencies as $key => $currency) {
-                $possible_connections[] = array('strategy' => $currency, 'pair' => array(), 'start' => $key, 'end' => $key, 'continue' => true);
-                $log = 'true base add possible_connections';
-                Log::info(json_encode(compact('key', 'currency', 'log')));
-                foreach ($possible_connections as $index => $connection) {
-            // dd($connection['continue'], $key == $connection['end'], array_key_exists($key, $groups), $groups);
-                    if ($connection['continue'] && $key == $connection['end'] && array_key_exists($key, $groups)) {
-                        $base = $connection;
-                        $connection = json_encode($connection);
-                        $log = 'change base';
-                        Log::info(json_encode(compact('key', 'currency', 'connection', 'log')));
-                        foreach ($groups[$key] as $row => $pair) {
-                            // dd($possible_connections, $index, $currency, $row, $key, $connection);
-                            if ($row >= $key) {
-                                $connection = json_encode($connection);
-                                $log = 'row >= key';
-                                Log::info(json_encode(compact('key', 'currency', 'connection', 'row', 'pair', 'log')));
-
-                                $temp = $base;
-                                $temp['strategy'] .= "/{$cryptobot_currencies[$row]}";
-                                $temp['pair'][] = $pair;
-                                $temp['end'] = $row;
-                                $possible_connections[] = $temp;
-                            } elseif ($connection['start'] == $connection['end'] && count($connection['pair']) > 2) {
-                                $connection = json_encode($connection);
-                                $log = 'start == end';
-                                Log::info(json_encode(compact('key', 'currency', 'connection', 'row', 'pair', 'log')));
-
-                                $possible_connections[$index]['continue'] = false;
-                            } else {
-                                $connection = json_encode($connection);
-                                $log = 'unset';
-                                Log::info(json_encode(compact('key', 'currency', 'connection', 'row', 'pair', 'log')));
-
-                                unset($possible_connections[$index]);
-                            }
-                        }
-                    }
-                }
-            }
             dddd($possible_connections, $groups);
 
             foreach ($cryptobot_strategies as $key => $value) {
