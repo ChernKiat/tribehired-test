@@ -45,12 +45,12 @@ class CCXTSkin
 
     public function __construct($parameters = array('exchange' => null, 'timeframe' => '1m', 'since' => null, 'mode' => self::MODE_NORMAL, 'limit' => null, )) {
         // if (array_key_exists('exchange', $parameters) && !is_null($parameters['exchange'])) {
-        if (!is_null($parameters['exchange'])) {
+        if (array_key_exists($parameters, $exchange) && !is_null($parameters['exchange'])) {
             $this->initExchange($parameters['exchange']);
         }
-        $this->timeframe = $parameters['timeframe'];
+        $this->timeframe = $parameters['timeframe'] ?? '1m';
         $this->since = $parameters['since'] ?? Carbon::now()->subMinutes(5)->timestamp * 1000;
-        $this->mode = $parameters['mode'];
+        $this->mode = $parameters['mode'] ?? self::MODE_NORMAL;
         $this->limit = $parameters['limit'] ?? 5;
         unset($parameters);
     }

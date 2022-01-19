@@ -56,7 +56,7 @@ class Strategy extends Model
                 break;
             case self::TYPE_BASIC_GRID_DCA:
             default:
-                $this->runBasicGridDCA()
+                $this->runBasicGridDCA();
                 break;
         }
     }
@@ -97,28 +97,30 @@ class Strategy extends Model
             Order::whereIn('cryptobot_strategy_id', $cryptobot_strategies)->update(['cryptobot_strategy_id' => null]);
             self::whereIn('id', $cryptobot_strategies)->delete();
 
-            $cryptobotPairs = Pair::where(function ($query) use ($request) {
+            $cryptobotPairs = Pair::where(function ($query) {
                                         $query->whereNull('cryptobot_quote_currency_id')->orWhereNull('cryptobot_base_currency_id');
                                     })->where('is_active', 1)->where('cryptobot_exchange_id', $cryptobot_exchange_id)->get();
             foreach ($cryptobotPairs as $pair) {
                 $currencies = explode('/', $pair->pair);
-                foreach ($currencies as $key => $pair) {
+                foreach ($currencies as $key => $currency) {
                     $currencies[$key] = Currency::updateOrCreate([
-                        'name'  => $currencies[$key],
+                        'name'  => $currency,
                     ], [
-                        'name'  => $currencies[$key],
+                        'name'  => $currency,
                     ]);
                     if ($key == 0) {
                         $cryptobot_currency_id = 'cryptobot_base_currency_id';
                     } elseif ($key == 1) {
                         $cryptobot_currency_id = 'cryptobot_quote_currency_id';
                     }
-                    if (is_null($pair->{$cryptobot_currency_id})) { $pair->{$cryptobot_currency_id} = $currencies[$key]; }
+                    if (is_null($pair->{$cryptobot_currency_id})) {
+                        $pair->{$cryptobot_currency_id} = $currencies[$key]->id;
+                        $pair->save();
+                    }
                 }
             }
 
             $groups = array();
-            // foreach (Currency::pluck('name', 'id')->toArray() as $key => $currency) {
             foreach ($cryptobotPairs as $pair) {
                 $groups[$pair->cryptobot_base_currency_id][$pair->cryptobot_quote_currency_id] = $pair->id;
                 $groups[$pair->cryptobot_quote_currency_id][$pair->cryptobot_base_currency_id] = $pair->id;
@@ -130,7 +132,7 @@ class Strategy extends Model
                 $possible_connections = array();
                 $connections[$pair->cryptobot_base_currency_id] = $pair->id;
                 $connections[$pair->cryptobot_quote_currency_id] = $pair->id;
-                ->where('cryptobot_exchange_id', $cryptobot_exchange_id)
+                // ->where('cryptobot_exchange_id', $cryptobot_exchange_id)
             }
 
             foreach ($cryptobot_strategies as $key => $value) {
