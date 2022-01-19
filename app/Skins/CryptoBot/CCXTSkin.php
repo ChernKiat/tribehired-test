@@ -44,8 +44,7 @@ class CCXTSkin
     private $cryptobotPair = null;
 
     public function __construct($parameters = array('exchange' => null, 'timeframe' => '1m', 'since' => null, 'mode' => self::MODE_NORMAL, 'limit' => null, )) {
-        // if (array_key_exists('exchange', $parameters) && !is_null($parameters['exchange'])) {
-        if (array_key_exists($parameters, $exchange) && !is_null($parameters['exchange'])) {
+        if (array_key_exists('exchange', $parameters) && !is_null($parameters['exchange'])) {
             $this->initExchange($parameters['exchange']);
         }
         $this->timeframe = $parameters['timeframe'] ?? '1m';

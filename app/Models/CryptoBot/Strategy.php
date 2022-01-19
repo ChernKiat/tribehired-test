@@ -4,6 +4,7 @@ namespace App\Models\CryptoBot;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Log;
 
 class Strategy extends Model
 {
@@ -82,17 +83,17 @@ class Strategy extends Model
                                                 $query->where('cryptobot_exchange_id', $cryptobot_exchange_id);
                                             })->where('type', self::TYPE_CROSS_PAIR)->pluck('id')->toArray();
 
-        if (self::whereIn('id', $cryptobot_strategies)->whereHas('orders', function ($query) {
-                                                                $query->where('is_own', 1)->whereNull('completed_at')->whereNull('canceled_at')->whereNull('deleted_at');
-                                                            })->exists()) { return false; }
+        // if (self::whereIn('id', $cryptobot_strategies)->whereHas('orders', function ($query) {
+        //                                                         $query->where('is_own', 1)->whereNull('completed_at')->whereNull('canceled_at')->whereNull('deleted_at');
+        //                                                     })->exists()) { return false; }
 
-        self::whereIn('id', $cryptobot_strategies)->update(['is_active' => 0]);
+        // self::whereIn('id', $cryptobot_strategies)->update(['is_active' => 0]);
 
-        sleep(30);
+        // sleep(30);
 
         $cryptobotOrdersBuilder = Order::whereIn('cryptobot_strategy_id', $cryptobot_strategies)->where('is_own', 1)->whereNull('completed_at')->whereNull('canceled_at')->whereNull('deleted_at');
 
-        if (!$cryptobotOrdersBuilder->exists()) {
+        if (!$cryptobotOrdersBuilder->exists() || true) {
             DB::table('cryptobot_pair_strategy')->whereIn('cryptobot_strategy_id', $cryptobot_strategies)->delete();
             Order::whereIn('cryptobot_strategy_id', $cryptobot_strategies)->update(['cryptobot_strategy_id' => null]);
             self::whereIn('id', $cryptobot_strategies)->delete();
@@ -120,20 +121,61 @@ class Strategy extends Model
                 }
             }
 
+            $cryptobotPairs = Pair::where('is_active', 1)->where('cryptobot_exchange_id', $cryptobot_exchange_id)->get();
+
             $groups = array();
             foreach ($cryptobotPairs as $pair) {
                 $groups[$pair->cryptobot_base_currency_id][$pair->cryptobot_quote_currency_id] = $pair->id;
                 $groups[$pair->cryptobot_quote_currency_id][$pair->cryptobot_base_currency_id] = $pair->id;
             }
-            dd($groups);
+            // dd($groups);
 
             $possible_connections = array();
-            foreach ($groups as $group) {
-                $possible_connections = array();
-                $connections[$pair->cryptobot_base_currency_id] = $pair->id;
-                $connections[$pair->cryptobot_quote_currency_id] = $pair->id;
-                // ->where('cryptobot_exchange_id', $cryptobot_exchange_id)
+            $cryptobot_currencies = Currency::pluck('name', 'id')->toArray();
+            $log = 'start';
+            Log::info(json_encode(compact('log')));
+            // dd($cryptobot_currencies);
+            foreach ($cryptobot_currencies as $key => $currency) {
+                $possible_connections[] = array('strategy' => $currency, 'pair' => array(), 'start' => $key, 'end' => $key, 'continue' => true);
+                $log = 'true base add possible_connections';
+                Log::info(json_encode(compact('key', 'currency', 'log')));
+                foreach ($possible_connections as $index => $connection) {
+            // dd($connection['continue'], $key == $connection['end'], array_key_exists($key, $groups), $groups);
+                    if ($connection['continue'] && $key == $connection['end'] && array_key_exists($key, $groups)) {
+                        $base = $connection;
+                        $connection = json_encode($connection);
+                        $log = 'change base';
+                        Log::info(json_encode(compact('key', 'currency', 'connection', 'log')));
+                        foreach ($groups[$key] as $row => $pair) {
+                            // dd($possible_connections, $index, $currency, $row, $key, $connection);
+                            if ($row >= $key) {
+                                $connection = json_encode($connection);
+                                $log = 'row >= key';
+                                Log::info(json_encode(compact('key', 'currency', 'connection', 'row', 'pair', 'log')));
+
+                                $temp = $base;
+                                $temp['strategy'] .= "/{$cryptobot_currencies[$row]}";
+                                $temp['pair'][] = $pair;
+                                $temp['end'] = $row;
+                                $possible_connections[] = $temp;
+                            } elseif ($connection['start'] == $connection['end'] && count($connection['pair']) > 2) {
+                                $connection = json_encode($connection);
+                                $log = 'start == end';
+                                Log::info(json_encode(compact('key', 'currency', 'connection', 'row', 'pair', 'log')));
+
+                                $possible_connections[$index]['continue'] = false;
+                            } else {
+                                $connection = json_encode($connection);
+                                $log = 'unset';
+                                Log::info(json_encode(compact('key', 'currency', 'connection', 'row', 'pair', 'log')));
+
+                                unset($possible_connections[$index]);
+                            }
+                        }
+                    }
+                }
             }
+            dddd($possible_connections, $groups);
 
             foreach ($cryptobot_strategies as $key => $value) {
                 $cryptobotStrategy = self::updateOrCreate([
