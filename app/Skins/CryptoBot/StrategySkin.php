@@ -16,18 +16,17 @@ use Log;
 
 class StrategySkin
 {
-    private $limit = null;
-    private $since = null;
-
     private $exchange = null;
 
-    public function __construct($exchange = null)
+    // ------
+
+    private $cryptobotPair = null;
+
+    public function __construct($parameters = array('exchange' => null, 'mode' => self::MODE_NORMAL, )) {
     {
         if (!is_null($exchange)) {
             $this->initExchange($exchange);
         }
-        $this->limit = 5;
-        $this->since = Carbon::now()->subMinutes(5)->timestamp * 1000;
     }
 
     public function setCryptobotExchange($cryptobotExchange)

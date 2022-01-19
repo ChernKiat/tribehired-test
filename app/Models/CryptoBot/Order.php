@@ -11,6 +11,11 @@ class Order extends Model
 
     protected $guarded = [];
 
+    public function strategy()
+    {
+        return $this->belongsTo(Strategy::class, 'cryptobot_strategy_id', 'id');
+    }
+
     public function exchange()
     {
         return $this->belongsTo(Exchange::class, 'cryptobot_exchange_id', 'id');

@@ -42,15 +42,17 @@ class Strategy extends Model
     public function run()
     {
         switch ($this->type) {
-            case self::TYPE_PARTNER_API:
+            case self::TYPE_SHORT_GRID_DCA:
+                break;
+            case self::TYPE_PARTNER_API: // Duckside DAO
                 break;
             case self::TYPE_P2P:
                 break;
             case self::TYPE_CROSS_EXCHANGE:
                 break;
             case self::TYPE_CROSS_PAIR:
+                $this->runCrossPair();
                 break;
-                $this->runCrossPair()
             case self::TYPE_BASIC_GRID_DCA:
             default:
                 $this->runBasicGridDCA()
@@ -70,6 +72,37 @@ class Strategy extends Model
         $group = array();
         foreach ($this->pairs as $pair) {
             $group[$pair->cryptobot_exchange_id][] = $pair;
+        }
+    }
+
+    public static function setupCrossPair($cryptobot_exchange_id)
+    {
+        $cryptobot_strategies = self::whereHas('pairs', function ($query) use ($cryptobot_exchange_id) {
+                                                $query->where('cryptobot_exchange_id', $cryptobot_exchange_id);
+                                            })->where('type', self::TYPE_CROSS_PAIR)->pluck('id')->toArray();
+
+        if (self::whereIn('id', $cryptobot_strategies)->whereHas('orders', function ($query) {
+                                                                $query->where('is_own', 1)->whereNull('completed_at')->whereNull('canceled_at')->whereNull('deleted_at');
+                                                            })->exists()) { return false; }
+
+        self::whereIn('id', $cryptobot_strategies)->update(['is_active' => 0]);
+
+        sleep(60);
+
+        $cryptobotOrdersBuilder = Order::whereIn('cryptobot_strategy_id', $cryptobot_strategies)->where('is_own', 1)->whereNull('completed_at')->whereNull('canceled_at')->whereNull('deleted_at');
+
+        if (!$cryptobotOrdersBuilder->exists()) {
+            DB::table('cryptobot_pair_strategy')->whereIn('cryptobot_strategy_id', $cryptobot_strategies)->delete();
+            Order::whereIn('cryptobot_strategy_id', $cryptobot_strategies)->update(['cryptobot_strategy_id' => null]);
+            self::whereIn('id', $cryptobot_strategies)->delete();
+
+            foreach (Pair::where('cryptobot_exchange_id', $cryptobot_exchange_id)->where('is_active', 1)->get() as $pair) {
+            }
+
+            return true;
+        } else {
+            self::whereIn('id', $cryptobot_strategies)->update(['is_active' => 1]);
+            return false;
         }
     }
 }
