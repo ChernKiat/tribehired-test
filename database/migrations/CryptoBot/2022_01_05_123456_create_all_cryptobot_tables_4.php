@@ -22,8 +22,8 @@ class CreateAllCryptobotTables4 extends Migration
         });
 
         Schema::table('cryptobot_pairs', function (Blueprint $table) {
-            $table->unsignedInteger('cryptobot_base_currency_id')->nullable()->after('cryptobot_exchange_id'); // ->index();
-            $table->unsignedInteger('cryptobot_quote_currency_id')->nullable()->after('cryptobot_base_currency_id'); // ->index();
+            $table->unsignedInteger('cryptobot_quote_currency_id')->nullable()->after('cryptobot_exchange_id'); // ->index();
+            $table->unsignedInteger('cryptobot_base_currency_id')->nullable()->after('cryptobot_quote_currency_id'); // ->index();
         });
 
         Schema::table('cryptobot_pair_strategy', function (Blueprint $table) {
