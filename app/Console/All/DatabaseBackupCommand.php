@@ -2,6 +2,8 @@
 
 namespace App\Console\All;
 
+use DateInterval;
+use Datetime;
 use Illuminate\Console\Command;
 
 class DatabaseBackupCommand extends Command
@@ -17,38 +19,34 @@ class DatabaseBackupCommand extends Command
 
     public function handle()
     {
-        $backupdir = env('DB_BACKUPDIR');
+        $backup_directory = env('DB_BACKUP_DIRECTORY');
         $database = env('DB_DATABASE');
         $mysqldump = env('DB_MYSQLDUMP', 'mysqldump');
-        $backupdayretain = env('DB_BACKUPDAYRETAIN', 14);
+        $backup_keep_day = env('DB_BACKUP_KEEP_DAY', 7);
 
-        if (!$backupdir || !file_exists($backupdir)) {
-            $this->error('failed to backup database, please check your setting.');
-            $this->error("DB_BACKUPDIR={$backupdir}");
+        if (!$backup_directory || !file_exists($backup_directory)) {
+            $this->error("Error. DB_BACKUP_DIRECTORY={$backup_directory}");
             return false;
         }
 
-        $now = new \Datetime();
-        for ($i = $backupdayretain, $j = $backupdayretain + 7; $i < $j; $i++) {
+        $now = new Datetime();
+        for ($i = 0; $i < $backupdayretain; $i++) {
             $prev = clone $now;
-            $prev->sub(new \DateInterval('P'.$i.'D'));
-            $files = glob($backupdir.DIRECTORY_SEPARATOR.$database.'-'.$prev->format('Ymd').'*.sql*');
+            $prev->sub(new DateInterval("P{$i}D"));
+            $files = glob($backup_directory.DIRECTORY_SEPARATOR.$database.'-'.$prev->format('Ymd').'*.sql*');
             if ($files) {
                 array_map(function ($f) {
                     unlink($f);
-                    // $this->info($f);
                 }, $files);
             }
         }
 
-        $filenames = [$database];
+        $filenames = array($database);
         $filenames[] = $now->format('Ymd-His');
-        $fullFileName = $backupdir."/".implode('-', $filenames).".sql";
+        $full_filename = "{$backup_directory}/" . implode('-', $filenames) . '.sql';
 
-        $command = sprintf("{$mysqldump} -u%s -p%s %s > %s", env('DB_USERNAME'), env('DB_PASSWORD'), env('DB_DATABASE'), $fullFileName);
+        exec(sprintf("{$mysqldump} -u%s -p%s %s > %s", env('DB_USERNAME'), env('DB_PASSWORD'), env('DB_DATABASE'), $full_filename));
 
-        exec($command);
-
-        $this->info('BackupDatabase completed ('.$fullFileName.')');
+        $this->info('BackupDatabase completed ('.$full_filename.')');
     }
 }

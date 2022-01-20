@@ -13,8 +13,8 @@ class CCXTController extends Controller
 {
     public function test()
     {
-        CCXTSkin::updatePairs();
-        dd('o0o');
+        \Artisan::call('DatabaseCommand:backup');
+        dd(\Artisan::output(), 'lol');
 
         $strategy = Strategy::setupCrossPair(Exchange::BINANCE);
         dd($strategy, 'lol');
