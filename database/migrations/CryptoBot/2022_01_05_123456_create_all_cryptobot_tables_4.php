@@ -21,13 +21,15 @@ class CreateAllCryptobotTables4 extends Migration
             $table->timestamps();
         });
 
-        Schema::table('cryptobot_pairs', function (Blueprint $table) {
+        Schema::table('cryptobot_pairs', function (Blueprint $table)
+        {
             $table->unsignedInteger('cryptobot_quote_currency_id')->nullable()->after('cryptobot_exchange_id'); // ->index();
             $table->unsignedInteger('cryptobot_base_currency_id')->nullable()->after('cryptobot_quote_currency_id'); // ->index();
         });
 
-        Schema::table('cryptobot_pair_strategy', function (Blueprint $table) {
-            $table->tinyInteger('order')->default(1)->after('cryptobot_strategy_id');
+        Schema::table('cryptobot_pair_strategy', function (Blueprint $table)
+        {
+            $table->boolean('is_base')->default(1)->after('cryptobot_strategy_id');
         });
     }
 
@@ -45,7 +47,7 @@ class CreateAllCryptobotTables4 extends Migration
         });
 
         Schema::table('cryptobot_pair_strategy', function (Blueprint $table) {
-            $table->dropColumn(['order']);
+            $table->dropColumn(['type']);
         });
     }
 }

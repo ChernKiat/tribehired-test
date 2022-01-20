@@ -13,6 +13,9 @@ class CCXTController extends Controller
 {
     public function test()
     {
+        CCXTSkin::updatePairs();
+        dd('o0o');
+
         $strategy = Strategy::setupCrossPair(Exchange::BINANCE);
         dd($strategy, 'lol');
 

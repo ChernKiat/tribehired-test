@@ -14,6 +14,11 @@ class CCXTPairRetrieveCommand extends Command
 
     protected $description = '';
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function handle()
     {
         ini_set('memory_limit', '256M');

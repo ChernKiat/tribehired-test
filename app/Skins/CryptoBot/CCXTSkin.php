@@ -599,7 +599,7 @@ class CCXTSkin
         // no delete
 
         foreach(ccxt\Exchange::$exchanges as $exchange) {
-            $cryptobotExchange = Exchange::where('exchange', $exchange)->first();
+            $cryptobotExchange = Exchange::doesntHave('pairs')->where('exchange', $exchange)->first();
             // aofex ExchangeNotAvailable (525 Origin SSL Handshake Error)
             // bibox ExchangeError
             // buda ExchangeNotAvailable (DDoS protection by Cloudflare - 6bef9890ce49efb6)
