@@ -109,23 +109,21 @@ class Strategy extends Model
 
         $cryptobotPairs = Pair::where('is_active', 1)->where('cryptobot_exchange_id', $cryptobot_exchange_id)->get();
 
-        $cryptobot_currencies = Currency::doesntHave('strategy2')->pluck('id')->toArray();
         $groups = array();
         foreach ($cryptobotPairs as $pair) {
-            if (in_array($pair->cryptobot_base_currency_id, $cryptobot_currencies)) {
-                $groups[$pair->cryptobot_base_currency_id][$pair->cryptobot_quote_currency_id] = $pair;
-            }
-            if (in_array($pair->cryptobot_quote_currency_id, $cryptobot_currencies)) {
-                $groups[$pair->cryptobot_quote_currency_id][$pair->cryptobot_base_currency_id] = $pair;
-            }
+            $groups[$pair->cryptobot_base_currency_id][$pair->cryptobot_quote_currency_id] = $pair;
+            $groups[$pair->cryptobot_quote_currency_id][$pair->cryptobot_base_currency_id] = $pair;
         }
 
+        $cryptobot_currencies = Currency::doesntHave('strategy2')->pluck('id')->toArray();
         foreach ($groups as $key => $group) {
             if (count($group) == 1) {
                 foreach ($group as $row => $pair) {
                     unset($groups[$row][$key]);
                     unset($groups[$key]);
                 }
+            } elseif (count($group) < 10 && !in_array($key, $cryptobot_currencies)) {
+                unset($groups[$key]);
             }
         }
 
@@ -160,7 +158,7 @@ class Strategy extends Model
             foreach ($temp as $row) {
                 foreach ($temp as $index) {
                     if ($row > $index) {
-                        if (array_key_exists($index, $groups[$row])) {
+                        if (array_key_exists($row, $groups) && array_key_exists($index, $groups[$row])) {
                             DB::table('cryptobot_pair_strategy')->updateOrInsert([
                                 'cryptobot_pair_id'      => $groups[$row][$index]->id,
                                 'cryptobot_strategy_id'  => $cryptobotStrategy->id,
@@ -176,6 +174,9 @@ class Strategy extends Model
                     }
                 }
             }
+
+            $cryptobotStrategy->cryptobot_currency_id = $key;
+            $cryptobotStrategy->save();
 
             // DB::table('cryptobot_pair_strategy')->insert($cryptobot_pair_strategy);
             // DB::table('cryptobot_pair_strategy')->upsert($cryptobot_pair_strategy, ['cryptobot_pair_id', 'cryptobot_strategy_id'], ['is_base']);

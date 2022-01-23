@@ -23,6 +23,6 @@ class Currency extends Model
 
     public function strategy2()
     {
-        return $this->hasOne(Order::class, 'cryptobot_currency_id', 'id');
+        return $this->hasOne(Strategy::class, 'cryptobot_currency_id', 'id');
     }
 }
