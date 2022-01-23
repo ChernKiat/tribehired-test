@@ -205,8 +205,7 @@ class CCXTSkin
                         // $cryptobotTickers[] = Ticker::updateOrCreate([
                         Ticker::updateOrCreate([
                             'cryptobot_exchange_id'  => $this->cryptobotExchange->id,
-                            'cryptobot_pair_id'      => $value['cryptobot_pair_id'],
-                            'timestamp'              => $value['timestamp']
+                            'cryptobot_pair_id'      => $value['cryptobot_pair_id']
                         ], $value);
                     }
                 }

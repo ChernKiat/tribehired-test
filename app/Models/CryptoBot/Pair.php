@@ -19,6 +19,11 @@ class Pair extends Model
     //     return $this->hasMany(DynamicTicker::class, 'cryptobot_pair_id', 'id');
     // }
 
+    public function ticker()
+    {
+        return $this->hasOne(Ticker::class, 'cryptobot_pair_id', 'id');
+    }
+
     public function exchange()
     {
         return $this->belongsTo(Exchange::class, 'cryptobot_exchange_id', 'id');
