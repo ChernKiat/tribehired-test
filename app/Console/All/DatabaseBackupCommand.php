@@ -44,8 +44,9 @@ class DatabaseBackupCommand extends Command
 
         $filenames = array($database);
         $filenames[] = $now->format('Ymd-His');
+        $full_filename = "{$backup_directory}/" . implode('-', $filenames) . '.sql';
 
-        exec(sprintf("{$mysqldump} -u%s -p%s %s > %s", env('DB_USERNAME'), env('DB_PASSWORD'), env('DB_DATABASE'), "{$backup_directory}/" . implode('-', $filenames) . '.sql'));
+        exec(sprintf("{$mysqldump} -u%s -p%s %s > %s", env('DB_USERNAME'), env('DB_PASSWORD'), env('DB_DATABASE'), $full_filename));
 
         $this->info("Databases backuped successfully. ({$full_filename})");
     }

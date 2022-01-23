@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('CCXTPairCommand:retrieve')->withoutOverlapping()->everyMinute();
-        // $schedule->command('DatabaseCommand:backup')->withoutOverlapping()->everyMinute();
+        $schedule->command('DatabaseCommand:backup')->withoutOverlapping()->everyMinute();
         // $schedule->command('CCXTPairCommand:revive')->withoutOverlapping()->everyDay();
     }
 

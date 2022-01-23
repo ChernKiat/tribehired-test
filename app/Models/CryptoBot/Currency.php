@@ -20,4 +20,9 @@ class Currency extends Model
     {
         return $this->hasMany(Pair::class, 'cryptobot_base_currency_id', 'id');
     }
+
+    public function strategy2()
+    {
+        return $this->hasOne(Order::class, 'cryptobot_currency_id', 'id');
+    }
 }

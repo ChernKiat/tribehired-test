@@ -13,10 +13,10 @@ class CCXTController extends Controller
 {
     public function test()
     {
-        \Artisan::call('DatabaseCommand:backup');
-        dd(\Artisan::output(), 'lol');
+        // \Artisan::call('DatabaseCommand:backup');
+        // dd(\Artisan::output(), 'lol');
 
-        $strategy = Strategy::setupCrossPair(Exchange::BINANCE);
+        $strategy = Strategy::setupCrossPair(Exchange::BINANCE, true);
         dd($strategy, 'lol');
 
         $ccxt = (new CCXTSkin());

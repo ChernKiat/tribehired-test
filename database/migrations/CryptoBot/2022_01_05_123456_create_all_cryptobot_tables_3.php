@@ -21,6 +21,7 @@ class CreateAllCryptobotTables3 extends Migration
             $table->tinyInteger('state')->default(1);
             $table->text('comment')->nullable();
             $table->boolean('is_active')->default(0);
+            $table->unsignedInteger('cryptobot_currency_id')->nullable()->comment('2');
             $table->softDeletes();
             $table->timestamps();
         });
