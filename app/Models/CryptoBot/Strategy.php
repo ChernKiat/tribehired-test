@@ -22,6 +22,7 @@ class Strategy extends Model
     const TYPE_CROSS_EXCHANGE  = 3;
     const TYPE_P2P             = 4;
     const TYPE_PARTNER_API     = 5;
+    const TYPE_SHORT_GRID_DCA  = 6;
 
     const TYPE_DESCRIPTION_LIST = array(
         self::TYPE_BASIC_GRID_DCA  => 'Basic Grid DCA',
@@ -29,6 +30,7 @@ class Strategy extends Model
         self::TYPE_CROSS_EXCHANGE  => 'Cross Exchange',
         self::TYPE_P2P             => 'P2P',
         self::TYPE_PARTNER_API     => 'Partner API',
+        self::TYPE_SHORT_GRID_DCA  => 'Short Grid DCA',
     );
 
     public function orders()
@@ -38,7 +40,7 @@ class Strategy extends Model
 
     public function pairs()
     {
-        return $this->belongsToMany(Pair::class, 'cryptobot_pair_strategy', 'cryptobot_pair_id', 'cryptobot_strategy_id')->withTimestamps(); // ->using(PairStrategy::class);
+        return $this->belongsToMany(Pair::class, 'cryptobot_pair_strategy', 'cryptobot_strategy_id', 'cryptobot_pair_id')->withTimestamps(); // ->using(PairStrategy::class);
     }
 
 
@@ -70,8 +72,7 @@ class Strategy extends Model
 
     private function runCrossPair()
     {
-        dd($this->pairs->groupBy('cryptobot_exchange_id'));
-
+        dd($this->pairs);
         $group = array();
         foreach ($this->pairs as $pair) {
             $group[$pair->cryptobot_exchange_id][] = $pair;

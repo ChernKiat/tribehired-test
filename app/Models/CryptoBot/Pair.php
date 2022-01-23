@@ -14,6 +14,11 @@ class Pair extends Model
 
     protected $guarded = [];
 
+    // public function dynamicTickers()
+    // {
+    //     return $this->hasMany(DynamicTicker::class, 'cryptobot_pair_id', 'id');
+    // }
+
     public function exchange()
     {
         return $this->belongsTo(Exchange::class, 'cryptobot_exchange_id', 'id');

@@ -16,8 +16,11 @@ class CCXTController extends Controller
         // \Artisan::call('DatabaseCommand:backup');
         // dd(\Artisan::output(), 'lol');
 
-        $strategy = Strategy::setupCrossPair(Exchange::BINANCE, true);
-        dd($strategy, 'lol');
+        // $strategy = Strategy::setupCrossPair(Exchange::BINANCE, false);
+        $strategy = Strategy::first();
+        // dd($strategy, 'lol');
+        dd($strategy->run(), 'lol');
+
 
         $ccxt = (new CCXTSkin());
         foreach (Exchange::with('pairsActivated')->where('is_active', 1)->get() as $exchange) {

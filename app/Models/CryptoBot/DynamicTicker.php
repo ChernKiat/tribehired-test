@@ -58,9 +58,9 @@ class DynamicTicker extends Model
                 $table->decimal('high', 23, 10)->nullable();
                 $table->decimal('low', 23, 10)->nullable();
                 $table->decimal('bid', 23, 10)->nullable();
-                $table->decimal('bid_volume', 23, 10)->nullable();
+                $table->decimal('bid_volume', 31, 13)->nullable();
                 $table->decimal('ask', 23, 10)->nullable();
-                $table->decimal('ask_volume', 23, 10)->nullable();
+                $table->decimal('ask_volume', 31, 13)->nullable();
                 $table->decimal('vwap', 23, 10)->nullable(); // volume-weighted average price
                 $table->decimal('open', 23, 10)->nullable();
                 $table->decimal('close', 23, 10)->nullable();
@@ -69,8 +69,8 @@ class DynamicTicker extends Model
                 $table->decimal('change', 23, 10)->nullable();
                 $table->decimal('percentage', 23, 10)->nullable();
                 $table->decimal('average', 23, 10)->nullable();
-                $table->decimal('base_volume', 23, 10)->nullable();
-                $table->decimal('quote_volume', 23, 10)->nullable();
+                $table->decimal('base_volume', 31, 13)->nullable();
+                $table->decimal('quote_volume', 31, 13)->nullable();
                 $table->softDeletes();
                 $table->timestamps();
                 $table->unique(['cryptobot_exchange_id', 'cryptobot_pair_id', 'timestamp'], 'exchange_pair_timestamp');
