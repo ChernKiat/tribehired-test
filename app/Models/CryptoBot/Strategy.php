@@ -1,6 +1,7 @@
 <?php
 namespace App\Models\CryptoBot;
 
+use Carbon\Carbon;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -79,6 +80,8 @@ class Strategy extends Model
 
     public static function setupCrossPair($cryptobot_exchange_id)
     {
+        ini_set('max_execution_time', '300');
+
         $cryptobot_strategies = self::whereHas('pairs', function ($query) use ($cryptobot_exchange_id) {
                                                 $query->where('cryptobot_exchange_id', $cryptobot_exchange_id);
                                             })->where('type', self::TYPE_CROSS_PAIR)->pluck('id')->toArray();
@@ -142,30 +145,51 @@ class Strategy extends Model
             $cryptobot_currencies = Currency::pluck('name', 'id')->toArray();
             foreach ($groups as $key => $group) {
                 $cryptobotStrategy = self::updateOrCreate([
-                    'name'       => toUpperCase($cryptobotExchange->exchange) . "_{$cryptobot_currencies[$key]}",
+                    'name'        => strtoupper($cryptobotExchange->exchange) . "_{$cryptobot_currencies[$key]}",
                 ], [
-                    'name'       => toUpperCase($cryptobotExchange->exchange) . "_{$cryptobot_currencies[$key]}",
-                    'type'       => self::TYPE_CROSS_PAIR,
-                    'is_active'  => 1,
+                    'name'        => strtoupper($cryptobotExchange->exchange) . "_{$cryptobot_currencies[$key]}",
+                    'type'        => self::TYPE_CROSS_PAIR,
+                    'is_active'   => 1,
+                    'created_at'  => Carbon::now(),
+                    'updated_at'  => Carbon::now(),
                 ]);
 
                 foreach ($group as $row => $pair) {
-                    $cryptobot_pair_strategy[] = array('cryptobot_pair_id' => $pair->id, 'cryptobot_strategy_id' => $cryptobotStrategy->id, 'is_base' => 0);
+                    DB::table('cryptobot_pair_strategy')->updateOrInsert([
+                        'cryptobot_pair_id'      => $pair->id,
+                        'cryptobot_strategy_id'  => $cryptobotStrategy->id,
+                    ], [
+                        'cryptobot_pair_id'      => $pair->id,
+                        'cryptobot_strategy_id'  => $cryptobotStrategy->id,
+                        'is_base'                => 0,
+                        'created_at'             => Carbon::now(),
+                        'updated_at'             => Carbon::now(),
+                    ]);
+                    // $cryptobot_pair_strategy[] = array('cryptobot_pair_id' => $pair->id, 'cryptobot_strategy_id' => $cryptobotStrategy->id, 'is_base' => 0);
                 }
                 $temp = array_keys($group);
                 foreach ($temp as $row) {
                     foreach ($temp as $index) {
-                        if ($row == $index) {
-                            continue;
-                        } else {
+                        if ($row > $index) {
                             if (array_key_exists($index, $groups[$row])) {
-                                $cryptobot_pair_strategy[] = array('cryptobot_pair_id' => $groups[$row][$index]->id, 'cryptobot_strategy_id' => $cryptobotStrategy->id, 'is_base' => 1);
+                                DB::table('cryptobot_pair_strategy')->updateOrInsert([
+                                    'cryptobot_pair_id'      => $groups[$row][$index]->id,
+                                    'cryptobot_strategy_id'  => $cryptobotStrategy->id,
+                                ], [
+                                    'cryptobot_pair_id'      => $groups[$row][$index]->id,
+                                    'cryptobot_strategy_id'  => $cryptobotStrategy->id,
+                                    'is_base'                => 1,
+                                    'created_at'             => Carbon::now(),
+                                    'updated_at'             => Carbon::now(),
+                                ]);
+                                // $cryptobot_pair_strategy[] = array('cryptobot_pair_id' => $groups[$row][$index]->id, 'cryptobot_strategy_id' => $cryptobotStrategy->id, 'is_base' => 1);
                             }
                         }
                     }
                 }
 
-                DB::table('cryptobot_pair_strategy')->upsert($cryptobot_pair_strategy, ['cryptobot_pair_id', 'cryptobot_strategy_id'], ['type']);
+                // DB::table('cryptobot_pair_strategy')->insert($cryptobot_pair_strategy);
+                // DB::table('cryptobot_pair_strategy')->upsert($cryptobot_pair_strategy, ['cryptobot_pair_id', 'cryptobot_strategy_id'], ['is_base']);
             }
             dd('yay');
 
