@@ -55,20 +55,20 @@ class DynamicTicker extends Model
                 $table->unsignedInteger('cryptobot_pair_id'); // ->index();
                 $table->bigInteger('timestamp'); // ->index();
                 $table->timestamp('datetime')->nullable();
-                $table->decimal('high', 23, 10)->nullable();
-                $table->decimal('low', 23, 10)->nullable();
-                $table->decimal('bid', 23, 10)->nullable();
+                $table->decimal('high', 15, 6)->nullable();
+                $table->decimal('low', 15, 6)->nullable();
+                $table->decimal('bid', 15, 6)->nullable();
                 $table->decimal('bid_volume', 31, 13)->nullable();
-                $table->decimal('ask', 23, 10)->nullable();
+                $table->decimal('ask', 15, 6)->nullable();
                 $table->decimal('ask_volume', 31, 13)->nullable();
-                $table->decimal('vwap', 23, 10)->nullable(); // volume-weighted average price
-                $table->decimal('open', 23, 10)->nullable();
-                $table->decimal('close', 23, 10)->nullable();
-                // $table->decimal('first', 23, 10)->nullable();
-                $table->decimal('last', 23, 10)->nullable();
-                $table->decimal('change', 23, 10)->nullable();
-                $table->decimal('percentage', 23, 10)->nullable();
-                $table->decimal('average', 23, 10)->nullable();
+                $table->decimal('vwap', 15, 6)->nullable(); // volume-weighted average price
+                $table->decimal('open', 15, 6)->nullable();
+                $table->decimal('close', 15, 6)->nullable();
+                // $table->decimal('first', 15, 6)->nullable();
+                $table->decimal('last', 15, 6)->nullable();
+                $table->decimal('change', 15, 6)->nullable();
+                $table->decimal('percentage', 15, 6)->nullable();
+                $table->decimal('average', 15, 6)->nullable();
                 $table->decimal('base_volume', 31, 13)->nullable();
                 $table->decimal('quote_volume', 31, 13)->nullable();
                 $table->softDeletes();

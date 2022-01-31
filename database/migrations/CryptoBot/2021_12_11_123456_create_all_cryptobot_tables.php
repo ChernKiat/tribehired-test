@@ -56,9 +56,9 @@ class CreateAllCryptobotTables extends Migration
             $table->decimal('high', 15, 6)->nullable();
             $table->decimal('low', 15, 6)->nullable();
             $table->decimal('bid', 15, 6)->nullable();
-            $table->decimal('bid_volume', 15, 6)->nullable();
+            $table->decimal('bid_volume', 31, 13)->nullable();
             $table->decimal('ask', 15, 6)->nullable();
-            $table->decimal('ask_volume', 15, 6)->nullable();
+            $table->decimal('ask_volume', 31, 13)->nullable();
             $table->decimal('vwap', 15, 6)->nullable(); // volume-weighted average price
             $table->decimal('open', 15, 6)->nullable();
             $table->decimal('close', 15, 6)->nullable();
@@ -67,8 +67,8 @@ class CreateAllCryptobotTables extends Migration
             $table->decimal('change', 15, 6)->nullable();
             $table->decimal('percentage', 15, 6)->nullable();
             $table->decimal('average', 15, 6)->nullable();
-            $table->decimal('base_volume', 15, 6)->nullable();
-            $table->decimal('quote_volume', 15, 6)->nullable();
+            $table->decimal('base_volume', 31, 13)->nullable();
+            $table->decimal('quote_volume', 31, 13)->nullable();
             $table->softDeletes();
             $table->timestamps();
             $table->unique(['cryptobot_exchange_id', 'cryptobot_pair_id', 'timestamp'], 'exchange_pair_timestamp');
