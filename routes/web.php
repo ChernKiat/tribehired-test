@@ -52,7 +52,8 @@ Route::prefix('net-junkies')->namespace('NetJunkies')->name('netjunkies.')->grou
 
 Route::prefix('nft-storage')->namespace('NFTStorage')->name('nftstorage.')->group(function() {
     Route::prefix('image')->name('image.')->group(function() {
-        Route::get('test', 'ImageController@test')->name('test');
+        Route::get('one', 'ImageController@one')->name('one');
+        Route::get('two', 'ImageController@two')->name('two');
     });
 });
 

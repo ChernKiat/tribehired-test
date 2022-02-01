@@ -11,14 +11,19 @@ use Illuminate\Http\Request;
 
 class ImageController extends Controller
 {
-    public function test()
+    public function one()
     {
-        // $gipSkin = GipSkin::test('a.jpg', public_path('myNFTStorage'));
-        // dd('lol');
+        $gipSkin = GipSkin::test('a.jpg', public_path('myNFTStorage'));
+        dd('lol');
 
         // $gip = new Gip(public_path('myNFTStorage\a.jpg'));
         // dd($gip->createProtectImageResize(300, 500, new GipMask(new GipImage(public_path('myNFTStorage\a.jpg'))), new GipImage(public_path('myNFTStorage\a.jpg'))));
 
+        return view('modules.nft_storage.base');
+    }
+
+    public function two()
+    {
         return view('modules.nft_storage.base');
     }
 }
