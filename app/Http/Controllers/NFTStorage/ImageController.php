@@ -24,6 +24,6 @@ class ImageController extends Controller
 
     public function two()
     {
-        return view('modules.nft_storage.base');
+        return view('modules.nft_storage.two');
     }
 }
