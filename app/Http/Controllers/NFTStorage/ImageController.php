@@ -13,6 +13,16 @@ class ImageController extends Controller
 {
     public function one()
     {
+        return view('modules.nft_storage.no_path');
+    }
+
+    public function two()
+    {
+        return view('modules.nft_storage.two');
+    }
+
+    public function three()
+    {
         $gipSkin = GipSkin::test('a.jpg', public_path('myNFTStorage'));
         dd('lol');
 
@@ -20,10 +30,5 @@ class ImageController extends Controller
         // dd($gip->createProtectImageResize(300, 500, new GipMask(new GipImage(public_path('myNFTStorage\a.jpg'))), new GipImage(public_path('myNFTStorage\a.jpg'))));
 
         return view('modules.nft_storage.base');
-    }
-
-    public function two()
-    {
-        return view('modules.nft_storage.two');
     }
 }
