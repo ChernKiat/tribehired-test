@@ -52,13 +52,16 @@ Route::prefix('net-junkies')->namespace('NetJunkies')->name('netjunkies.')->grou
 
 Route::prefix('nft-storage')->namespace('NFTStorage')->name('nftstorage.')->group(function() {
     Route::prefix('image')->name('image.')->group(function() {
-        Route::get('/', 'ImageController@main')->name('main');
-        Route::get('one', 'ImageController@one')->name('one');
-        Route::get('two', 'ImageController@two')->name('two');
-        Route::get('three', 'ImageController@three')->name('three');
-        Route::get('four', 'ImageController@four')->name('four');
-        Route::get('four-path', 'ImageController@path')->name('path');
-        Route::get('four-code', 'ImageController@code')->name('code');
+        Route::get('/', 'DemoController@main')->name('main');
+        Route::get('one', 'DemoController@one')->name('one');
+        Route::get('two', 'DemoController@two')->name('two');
+        Route::get('three', 'DemoController@three')->name('three');
+        Route::get('four', 'DemoController@four')->name('four');
+        Route::get('four-path', 'DemoController@path')->name('path');
+        Route::get('four-code', 'DemoController@code')->name('code');
+
+        Route::get('alpha', 'ImageController@alpha')->name('alpha');
+        Route::get('alpha-response', 'ImageController@response')->name('response');
     });
 });
 

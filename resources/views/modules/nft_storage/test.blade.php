@@ -18,7 +18,7 @@
 
     <div class="c">
 
-        <div class="title">TESTOWY OBRAZEK 1 s</div>
+        {{-- <div class="title">TESTOWY OBRAZEK 1 s</div>
         <div class="gipImage">
             <?php
             include 'Gip.php';
@@ -45,9 +45,9 @@
             $gip->createProtectImgResize(400, null); //resize by witdh
             echo $gip->getHtmlImgProtect();
             ?>
-        </div>
+        </div> --}}
 
-
+        <img style="-webkit-user-select: none;margin: auto;cursor: zoom-in;background-color: hsl(0, 0%, 90%);transition: background-color 300ms;" src="\nft-storage\image\alpha" width="340" height="340">
     </div>
 
 

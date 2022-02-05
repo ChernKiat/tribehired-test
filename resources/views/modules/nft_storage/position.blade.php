@@ -9,7 +9,8 @@
             position:relative;
             background-image: url('/myNFTStorage/p.png');
             height: 548px;
-            width: 731px;
+            /*width: 731px;*/
+            width: auto;
             margin-right: auto;
             margin-left: auto;
         }
@@ -18,7 +19,8 @@
             position:absolute;
             background-image: url('/myNFTStorage/b.png');
             height: 100px;
-            width: 500px;
+            /*width: 500px;*/
+            width: auto;
             top: 90px;
             left: 50px;
         }
