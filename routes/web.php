@@ -55,6 +55,7 @@ Route::prefix('nft-storage')->namespace('NFTStorage')->name('nftstorage.')->grou
         Route::get('one', 'ImageController@one')->name('one');
         Route::get('two', 'ImageController@two')->name('two');
         Route::get('three', 'ImageController@three')->name('three');
+        Route::get('three-image', 'ImageController@image')->name('image');
     });
 });
 

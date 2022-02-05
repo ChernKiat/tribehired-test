@@ -31,4 +31,9 @@ class ImageController extends Controller
 
         return view('modules.nft_storage.base');
     }
+
+    public function image()
+    {
+        return '/myNFTStorage/a.jpg';
+    }
 }
