@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use Closure;
+
 class DisableRouteCache
 {
     /**
@@ -13,11 +15,10 @@ class DisableRouteCache
      */
     public function handle($request, Closure $next)
     {
-        return $next($request)->withHeaders([
-            "Pragma" => "no-cache",
-            "Expires" => "Fri, 01 Jan 1990 00:00:00 GMT",
-            "Cache-Control" => "no-cache, must-revalidate, no-store, max-age=0, private",
-        ]);
-            // ->middleware('cache.headers:private;no-store;no-cache;must-revalidate;post-check=0;pre-check=0;max-age=0')
+        $response = $next($request);
+        $response->headers->set('Pragma', 'no-cache');
+        $response->headers->set('Expires', 'Fri, 01 Jan 1990 00:00:00 GMT');
+        $response->headers->set('Cache-Control', 'private, no-store, no-cache, must-revalidate, max-age=0');
+        return $response;
     }
 }

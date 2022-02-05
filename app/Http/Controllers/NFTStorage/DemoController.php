@@ -32,9 +32,10 @@ class DemoController extends Controller
 
     public function three()
     {
-        // return response()->file('/myNFTStorage/a.jpg');
         return response()->file(public_path('/myNFTStorage/a.jpg'));
-        return response()->file(public_path('/myNFTStorage/a.jpg'), 'image/jpeg');
+        // return response()->file(public_path('/myNFTStorage/a.jpg', ['Cache-Control' => 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0']));
+        // return response()->file(public_path('/myNFTStorage/a.jpg', ['Cache-Control' => 'no-store;no-cache;must-revalidate;post-check=0;pre-check=0;max-age=0']));
+        // return response()->header('Cache-Control', 'no-store;no-cache;must-revalidate;post-check=0;pre-check=0;max-age=0')->file(public_path('/myNFTStorage/a.jpg'));
     }
 
     public function four()
