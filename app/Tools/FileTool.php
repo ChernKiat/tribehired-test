@@ -2,7 +2,7 @@
 
 namespace App\Tools;
 
-use File
+use File;
 
 class FileTool
 {
@@ -45,11 +45,13 @@ class FileTool
         }
     }
 
-    public static function emptyATextFile($path)
+    public static function createAFile($path, $content)
     {
-        $realPath = realpath($path);
-        if (is_writable($realPath)) {
-            file_put_contents($realPath, "");
+        // $realPath = realpath($path);
+        FolderTool::createFoldersRecursively($path);
+
+        if (is_writable($path)) {
+            file_put_contents($path, $content);
 
             return true;
         } else {
@@ -57,16 +59,15 @@ class FileTool
         }
     }
 
-    public static function createAFile($pathWithExtension, $content)
+    public static function emptyATextFile($path)
     {
-        return File::put($pathWithExtension, $content);
+        return self::createAFile($path, "");
     }
 
     public static function deleteAFile($path)
     {
-        $realPath = realpath($path);
-        if (is_writable($realPath)) {
-            unlink($realPath);
+        if (is_writable($path)) {
+            unlink($path);
 
             return true;
         } else {

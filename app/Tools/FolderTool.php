@@ -36,6 +36,7 @@ class FolderTool
 
     public static function createFoldersRecursively($path)
     {
+        $path = pathinfo($path, PATHINFO_DIRNAME);
         if (!file_exists($path)) {
             $oldmask = umask(0);
             // \Illuminate\Support\Facades\File::makeDirectory($path, 0755, true);

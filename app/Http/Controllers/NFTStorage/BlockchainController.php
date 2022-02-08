@@ -17,6 +17,6 @@ class BlockchainController extends Controller
             'name'         => 'Test EVE',
         );
 
-        dd(FileTool(public_path("/myNFTStorage/Server/0.json"), json_encode($meta)));
+        dd(FileTool::createAFile(public_path("/myNFTStorage/Server/0.json"), json_encode($meta)));
     }
 }
