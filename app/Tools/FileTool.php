@@ -2,6 +2,8 @@
 
 namespace App\Tools;
 
+use File
+
 class FileTool
 {
     public static function extractURLDetails($url, $part = null)
@@ -55,17 +57,9 @@ class FileTool
         }
     }
 
-    public static function renameOrMoveAFile($oldPath, $newPath)
+    public static function createAFile($pathWithExtension, $content)
     {
-        if (!file_exists($newPath)) {
-            rename($oldPath, $newPath);
-
-            if (file_exists($newPath)) {
-                return true;
-            }
-        }
-
-        return false;
+        return File::put($pathWithExtension, $content);
     }
 
     public static function deleteAFile($path)
