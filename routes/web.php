@@ -61,7 +61,7 @@ Route::prefix('nft-storage')->namespace('NFTStorage')->name('nftstorage.')->grou
         Route::get('four-code', 'DemoController@code')->name('demo.code');
 
         Route::get('alpha', 'ImageController@alpha')->name('image.alpha');
-        Route::get('alpha-response', 'ImageController@response')->name('image.response');
+        // Route::get('alpha-response', 'ImageController@response')->name('image.response');
 
         Route::get('meta', 'BlockchainController@meta')->name('blockchain.meta');
     });

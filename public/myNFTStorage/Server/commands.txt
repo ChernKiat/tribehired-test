@@ -1,0 +1,6 @@
+moralis-admin-cli deploy
+
+
+
+npm install -g moralis-admin-cli
+

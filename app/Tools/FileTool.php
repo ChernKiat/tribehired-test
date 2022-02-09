@@ -47,16 +47,16 @@ class FileTool
 
     public static function createAFile($path, $content)
     {
-        // $realPath = realpath($path);
         FolderTool::createFoldersRecursively($path);
 
-        if (is_writable($path)) {
+        // if (is_writable($path)) {
             file_put_contents($path, $content);
+            // File::chmod($path, 0664);
 
             return true;
-        } else {
-            return false;
-        }
+        // } else {
+        //     return false;
+        // }
     }
 
     public static function emptyATextFile($path)
