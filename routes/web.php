@@ -51,20 +51,18 @@ Route::prefix('net-junkies')->namespace('NetJunkies')->name('netjunkies.')->grou
 });
 
 Route::prefix('nft-storage')->namespace('NFTStorage')->name('nftstorage.')->group(function() {
-    Route::prefix('image')->name('image.')->group(function() {
-        Route::get('/', 'DemoController@main')->name('demo.main');
-        Route::get('one', 'DemoController@one')->name('demo.one');
-        Route::get('two', 'DemoController@two')->name('demo.two');
-        Route::get('three', 'DemoController@three')->name('demo.three');
-        Route::get('four', 'DemoController@four')->name('demo.four');
-        Route::get('four-path', 'DemoController@path')->name('demo.path');
-        Route::get('four-code', 'DemoController@code')->name('demo.code');
+    Route::get('/', 'DemoController@main')->name('demo.main');
+    Route::get('one', 'DemoController@one')->name('demo.one');
+    Route::get('two', 'DemoController@two')->name('demo.two');
+    Route::get('three', 'DemoController@three')->name('demo.three');
+    Route::get('four', 'DemoController@four')->name('demo.four');
+    Route::get('four-path', 'DemoController@path')->name('demo.path');
+    Route::get('four-code', 'DemoController@code')->name('demo.code');
 
-        Route::get('alpha', 'ImageController@alpha')->name('image.alpha');
-        // Route::get('alpha-response', 'ImageController@response')->name('image.response');
+    Route::get('alpha', 'ImageController@alpha')->name('image.alpha');
+    Route::get('alpha-response-mega', 'ImageController@response')->name('image.response');
 
-        Route::get('meta', 'BlockchainController@meta')->name('blockchain.meta');
-    });
+    Route::get('meta', 'BlockchainController@meta')->name('blockchain.meta');
 });
 
 Route::prefix('research-development')->namespace('ResearchDevelopment')->name('researchdevelopment.')->group(function() {

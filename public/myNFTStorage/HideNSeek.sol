@@ -3,7 +3,7 @@ pragma solidity ^0.8.7;
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC1155/ERC1155.sol";
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
 
-contract HideNSeekContract is ERC1155, Ownable { // HideNSeek
+contract NFTContract is ERC1155, Ownable { // HideNSeek
 
     uint256 public constant ADAM = 0;
     uint256 public constant EVE = 1;
