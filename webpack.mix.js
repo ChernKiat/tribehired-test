@@ -1,6 +1,8 @@
 const mix = require('laravel-mix');
 
-mix.js('resources/js/puppeteer/myHololiveFan/mySubtitlesDownloader.js', 'public/myHololiveFan');
+mix.js('resources/js/myNFTStorage/main.js', 'public/myNFTStorage/');
+
+// mix.js('resources/js/myHololiveFan/puppeteer/mySubtitlesDownloader.js', 'public/myHololiveFan');
 
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
