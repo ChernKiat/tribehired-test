@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 22);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -119,14 +119,14 @@ __webpack_require__(/*! icheck/icheck.min.js */ "./node_modules/icheck/icheck.mi
 
 /***/ }),
 
-/***/ 11:
+/***/ 22:
 /*!**************************************!*\
   !*** multi ./resources/js/icheck.js ***!
   \**************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Kid14\Desktop\Laravel Project\Base\resources\js\icheck.js */"./resources/js/icheck.js");
+module.exports = __webpack_require__(/*! C:\Users\Kid14\Desktop\Laravel Project\seal\resources\js\icheck.js */"./resources/js/icheck.js");
 
 
 /***/ })
