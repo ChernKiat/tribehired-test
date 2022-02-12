@@ -63,6 +63,8 @@ Route::prefix('nft-storage')->namespace('NFTStorage')->name('nftstorage.')->grou
     Route::get('alpha-response-giga', 'ImageController@response')->name('image.response');
 
     Route::get('meta', 'BlockchainController@meta')->name('blockchain.meta');
+
+    Route::get('wallet', 'WalletController@main')->name('wallet.main');
 });
 
 Route::prefix('research-development')->namespace('ResearchDevelopment')->name('researchdevelopment.')->group(function() {
