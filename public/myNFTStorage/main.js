@@ -886,18 +886,28 @@ Moralis.start({
 });
 
 function fetchNFTMetadata(NFTs) {
-  for (var i = 0; i < NFTs.length; i++) {
-    var nft = NFTs[i];
-    var id = nft.token_id; // call moralis cloud function -> static jason file
+  var promises = [];
 
-    fetch(MORALIS_SERVER_URL__ULTIMATE_NFT + "?_ApplicationId=" + MORALIS_APPLICATION_ID__ULTIMATE_NFT + "&nfd_id=" + id).then(function (res) {
+  var _loop = function _loop(i) {
+    var nft = NFTs[i];
+    var id = nft.token_id;
+    promises.push(fetch(MORALIS_SERVER_URL__ULTIMATE_NFT + "functions/getNFT?_ApplicationId=" + MORALIS_APPLICATION_ID__ULTIMATE_NFT + "&nft_id=" + id).then(function (res) {
       return res.json();
     }).then(function (res) {
       return JSON.parse(res.result);
-    }).then(function (res) {
-      return console.log(res);
-    });
+    }) // .then(res => console.log(res, 'lol')))
+    .then(function (res) {
+      nft.metadata = res;
+    }).then(function () {
+      return nft;
+    }));
+  };
+
+  for (var i = 0; i < NFTs.length; i++) {
+    _loop(i);
   }
+
+  return Promise.all(promises);
 }
 
 function initializApp() {
@@ -906,7 +916,7 @@ function initializApp() {
 
 function _initializApp() {
   _initializApp = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-    var currentUser, options, NFTs;
+    var currentUser, options, NFTs, NFTsWithMetadata;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -927,17 +937,19 @@ function _initializApp() {
           case 5:
             alert("Your signed in and ready to go Bro!");
             options = {
-              address: "0xaa43e38158d656e2B366f4D25274606962c09D72",
+              address: "0xf255366f51da383a2869f6280254f0ef1d0d0350",
               chain: "rinkeby"
-            };
+            }; // copy the contract address from url
+
             _context.next = 9;
             return Moralis.Web3API.token.getAllTokenIds(options);
 
           case 9:
             NFTs = _context.sent;
-            fetchNFTMetadata(NFTs.result);
+            NFTsWithMetadata = fetchNFTMetadata(NFTs.result);
+            console.log(NFTs, NFTsWithMetadata, 'o0o');
 
-          case 11:
+          case 12:
           case "end":
             return _context.stop();
         }

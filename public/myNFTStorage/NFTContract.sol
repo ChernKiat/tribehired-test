@@ -12,7 +12,7 @@ contract NFTContract is ERC1155, Ownable {
     uint256 public constant COUPLE = 4;
     uint256 public constant GENESIS = 5;
 
-    constructor() ERC1155("https://v7ua1pdgflb6.usemoralis.com/{id}.json") {
+    constructor() ERC1155("https://tacrcvv49znq.usemoralis.com/{id}.json") {
         _mint(msg.sender, ADAM, 1, "");
         _mint(msg.sender, EVE, 1, "");
         _mint(msg.sender, SERPENT, 1, "");
