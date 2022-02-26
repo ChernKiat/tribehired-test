@@ -877,7 +877,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 // let mix = require('laravel-mix');
 // require('dotenv').config();
 var MORALIS_APPLICATION_ID__ULTIMATE_NFT = 'a0ooNwmpY3RCxLhagR3xjencorgS6RXEUcaw841e';
-var MORALIS_SERVER_URL__ULTIMATE_NFT = 'https://tacrcvv49znq.usemoralis.com:2053/server/'; // Moralis.initialize(MORALIS_APPLICATION_ID__ULTIMATE_NFT)
+var MORALIS_SERVER_URL__ULTIMATE_NFT = 'https://tacrcvv49znq.usemoralis.com:2053/server/';
+var CONTRACT_ADDRESS = '0xf255366f51da383a2869f6280254f0ef1d0d0350'; // copy the contract address from url
+// Moralis.initialize(MORALIS_APPLICATION_ID__ULTIMATE_NFT)
 // Moralis.serverURL=MORALIS_SERVER_URL__ULTIMATE_NFT;
 
 Moralis.start({
@@ -895,12 +897,24 @@ function fetchNFTMetadata(NFTs) {
       return res.json();
     }).then(function (res) {
       return JSON.parse(res.result);
-    }) // .then(res => console.log(res, 'lol')))
+    }) // .then(res => console.log(res, 'lol')));
     .then(function (res) {
       nft.metadata = res;
-    }).then(function () {
+    }).then(function (res) {
+      var options = {
+        address: CONTRACT_ADDRESS,
+        token_id: id,
+        chain: "rinkeby"
+      };
+      return Moralis.Web3API.token.getTokenIdOwners(options);
+    }) // .then(res => console.log(res, 'yay')));
+    .then(function (res) {
+      nft.owners = [];
+      res.result.forEach(function (element) {
+        nft.owners.push(element.owner_of);
+      });
       return nft;
-    }));
+    })); // .then(() => {return nft;}));
   };
 
   for (var i = 0; i < NFTs.length; i++) {
@@ -908,7 +922,11 @@ function fetchNFTMetadata(NFTs) {
   }
 
   return Promise.all(promises);
-}
+} // renderInventory
+// nft.metadata.image // nft.metadata.name // your metadata
+// nft.amount // total copy
+// nft.owners.length // total owners
+
 
 function initializApp() {
   return _initializApp.apply(this, arguments);
@@ -937,17 +955,16 @@ function _initializApp() {
           case 5:
             alert("Your signed in and ready to go Bro!");
             options = {
-              address: "0xf255366f51da383a2869f6280254f0ef1d0d0350",
+              address: CONTRACT_ADDRESS,
               chain: "rinkeby"
-            }; // copy the contract address from url
-
+            };
             _context.next = 9;
             return Moralis.Web3API.token.getAllTokenIds(options);
 
           case 9:
             NFTs = _context.sent;
             NFTsWithMetadata = fetchNFTMetadata(NFTs.result);
-            console.log(NFTs, NFTsWithMetadata, 'o0o');
+            console.log(NFTs, NFTsWithMetadata, 'o0o'); // transfer();
 
           case 12:
           case "end":
@@ -960,6 +977,120 @@ function _initializApp() {
 }
 
 initializApp();
+var web3; // use Remix's methods
+
+function initializAppWithAccount() {
+  return _initializAppWithAccount.apply(this, arguments);
+}
+
+function _initializAppWithAccount() {
+  _initializAppWithAccount = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+    var currentUser, accounts;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            currentUser = Moralis.User.current();
+
+            if (currentUser) {
+              _context2.next = 5;
+              break;
+            }
+
+            _context2.next = 4;
+            return Moralis.Web3.authenticate();
+
+          case 4:
+            currentUser = _context2.sent;
+
+          case 5:
+            _context2.next = 7;
+            return Moralis.Web3.enable();
+
+          case 7:
+            web3 = _context2.sent;
+            _context2.next = 10;
+            return web3.eth.getAccounts();
+
+          case 10:
+            accounts = _context2.sent;
+            console.log(accounts[0], 'wtf'); // current signed in account
+
+            mint();
+
+          case 13:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+  return _initializAppWithAccount.apply(this, arguments);
+}
+
+function mint() {
+  return _mint.apply(this, arguments);
+} // you might need to comment out the if statement that surrounded currentUser to call the authenticate method
+
+
+function _mint() {
+  _mint = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+    var contract;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            contract = new web3.eth.Contract(remix_abi, CONTRACT_ADDRESS); // use Remix's methods
+            // contract.methods.mint(address to, uint256 id, uint256 amount) // follow your solidity contract
+            //     .send({from: accounts[0], value: 0}).on('receipt', function(receipt) {
+            //         alert('mint done!');
+            //     });
+
+          case 1:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3);
+  }));
+  return _mint.apply(this, arguments);
+}
+
+function transfer() {
+  return _transfer.apply(this, arguments);
+}
+
+function _transfer() {
+  _transfer = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+    var options, result;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            // method caller removed temporary
+            options = {
+              type: 'erc1155',
+              receiver: '0x2775490B26e92307909408651e87bfCD83c185A4',
+              contract_address: CONTRACT_ADDRESS,
+              token_id: 5,
+              amount: 1
+            };
+            _context4.next = 3;
+            return Moralis.transfer(options);
+
+          case 3:
+            result = _context4.sent;
+            console.log(result);
+
+          case 5:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4);
+  }));
+  return _transfer.apply(this, arguments);
+}
 
 /***/ }),
 

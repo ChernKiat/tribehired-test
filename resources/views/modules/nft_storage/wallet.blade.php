@@ -20,6 +20,7 @@
         <div class="container">
         </div>
 
-        <script type="text/javascript" src="/myNFTStorage/main.js"></script>
+        <script src="/myNFTStorage/abi.js"></script> {{-- use Remix's methods --}}
+        <script src="/myNFTStorage/main.js"></script>
     </body>
 </html>

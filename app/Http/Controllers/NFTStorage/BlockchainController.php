@@ -12,12 +12,14 @@ class BlockchainController extends Controller
     public function meta()
     {
         $meta = array(
-            'image'         => 'https://sealkingdom.xyz/nft-storage/image/alpha-response',
-            'description'   => 'Test',
             'name'          => 'Test EVE',
-            'external_url'  => 'https://sealkingdom.xyz/nft-storage/image/alpha-static', // the static image
+            // 'image'         => route('nftstorage.image.response'),
+            'image'         => 'https://sealkingdom.xyz/nft-storage/alpha-response-giga',
+            // 'image_data'    => 'https://sealkingdom.xyz/nft-storage/alpha-response-giga',
+            'description'   => 'Test',
+            'external_url'  => 'https://sealkingdom.xyz/nft-storage/alpha-static', // the static image
         );
 
-        dd(FileTool::createAFile(public_path("/myNFTStorage/Server/0.json"), json_encode($meta)), json_encode($meta));
+        dd(FileTool::createAFile(public_path("/myNFTStorage/Server/0.json"), json_encode($meta, JSON_UNESCAPED_SLASHES)));
     }
 }
