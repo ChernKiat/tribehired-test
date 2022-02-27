@@ -62,6 +62,13 @@ class Maneki extends Model
 
     const ZODIAC_ALL  = self::ZODIAC_RAT . self::ZODIAC_OX . self::ZODIAC_TIGER . self::ZODIAC_RABBIT . self::ZODIAC_DRAGON . self::ZODIAC_SNAKE . self::ZODIAC_HORSE . self::ZODIAC_GOAT . self::ZODIAC_MONKEY . self::ZODIAC_ROOSTER . self::ZODIAC_DOG . self::ZODIAC_PIG;
 
+    public function pending()
+    {
+        // the static image route
+
+        // the zodiac image
+    }
+
     public function getMetaNameAttribute()
     {
         return "{$this->project_name} #{$this->index}";
@@ -76,7 +83,7 @@ class Maneki extends Model
     {
         $filename = "0000000000000000000000000000000000000000000000000000000000000000{$this->index}"; // 64x0
         $filename = substr($filename, strlen($this->index));
-        return public_path("/myNFTStorage/Server/{$filename}.json")
+        return public_path("/myNFTStorage/Rinkeby Server (Ultimate NFT)/{$filename}.json")
     }
 
     public function getMetaAttribute()
