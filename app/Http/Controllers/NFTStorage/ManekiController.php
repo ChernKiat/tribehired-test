@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class ManekiController extends Controller
 {
+    public function main()
+    {
+        return view('modules.nft_storage.maneki');
+    }
+
     public function image(Request $request, $sha256, $index)
     {
         $maneki = Maneki::where('index', $index)->first();
@@ -16,5 +21,10 @@ class ManekiController extends Controller
         } else {
             abort(404);
         }
+    }
+
+    public function test()
+    {
+        return view('modules.nft_storage.test');
     }
 }

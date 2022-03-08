@@ -13,8 +13,8 @@ class Maneki extends Model
 
     // protected $guarded = [];
 
-    public $project_name  = 'Maneki Zodiac';
-    public $project_description  = '';
+    public static $project_name  = 'Maneki Zodiac';
+    public static $project_description  = '';
 
     const TYPE_ADAM     = 0;
     const TYPE_EVE      = 1;
@@ -71,7 +71,7 @@ class Maneki extends Model
 
     public function getMetaNameAttribute()
     {
-        return "{$this->project_name} #{$this->index}";
+        return self::$project_name . " #{$this->index}";
     }
 
     public function getMetaImageAttribute()
@@ -83,7 +83,7 @@ class Maneki extends Model
     {
         $filename = "0000000000000000000000000000000000000000000000000000000000000000{$this->index}"; // 64x0
         $filename = substr($filename, strlen($this->index));
-        return public_path("/myNFTStorage/Rinkeby Server (Ultimate NFT)/{$filename}.json")
+        return public_path("/myNFTStorage/Rinkeby Server (Ultimate NFT)/{$filename}.json");
     }
 
     public function getMetaAttribute()
@@ -92,7 +92,7 @@ class Maneki extends Model
             'name'          => $this->meta_name,
             'image'         => $this->meta_image,
             // 'image_data'    => $this->meta_image,
-            'description'   => $this->project_description,
+            'description'   => self::$project_description,
             'external_url'  => 'https://sealkingdom.xyz/nft-storage/alpha-static', // the static image
         );
     }
