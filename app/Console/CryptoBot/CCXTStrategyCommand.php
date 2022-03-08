@@ -20,7 +20,7 @@ class CCXTStrategyCommand extends Command
     {
         ini_set('memory_limit', '256M');
 
-        while (1) {
+        while (Config::get('bot.is_active.CCXTStrategyCommand:run')) {
             foreach (Strategy::with('pairs')->where('is_active', 1)->get() as $strategy) {
                 $strategy->run();
             }

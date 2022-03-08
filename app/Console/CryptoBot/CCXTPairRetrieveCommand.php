@@ -23,7 +23,7 @@ class CCXTPairRetrieveCommand extends Command
     {
         ini_set('memory_limit', '256M');
 
-        while (1) {
+        while (Config::get('bot.is_active.CCXTPairCommand:retrieve')) {
             // $ccxt = (new CCXTSkin(array('mode' => CCXTSkin::MODE_DYNAMIC)));
             $ccxt = (new CCXTSkin());
             foreach (Exchange::with('pairsActivated')->where('is_active', 1)->get() as $exchange) {

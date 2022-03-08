@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         CryptoBot\CCXTPairRetrieveCommand::class,
         CryptoBot\CCXTPairReviveCommand::class,
+        CryptoBot\CCXTStrategyCommand::class,
         All\DatabaseBackupCommand::class,
     ];
 
@@ -27,8 +28,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('CCXTPairCommand:retrieve')->withoutOverlapping()->everyMinute();
-        $schedule->command('DatabaseCommand:backup')->withoutOverlapping()->everyMinute();
         // $schedule->command('CCXTPairCommand:revive')->withoutOverlapping()->everyDay();
+        // $schedule->command('CCXTStrategyCommand:run')->withoutOverlapping()->everyMinute();
+        $schedule->command('DatabaseCommand:backup')->withoutOverlapping()->everyDay();
     }
 
     /**
