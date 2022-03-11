@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('CCXTPairCommand:retrieve')->withoutOverlapping()->everyMinute();
         // $schedule->command('CCXTPairCommand:revive')->withoutOverlapping()->everyDay();
         // $schedule->command('CCXTStrategyCommand:run')->withoutOverlapping()->everyMinute();
-        $schedule->command('DatabaseCommand:backup')->withoutOverlapping()->everyDay();
+        $schedule->command('DatabaseCommand:backup')->withoutOverlapping()->dailyAt('00:00');
     }
 
     /**
