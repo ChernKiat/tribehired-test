@@ -32,7 +32,7 @@ class Exchange extends Model
     protected static function boot()
     {
         parent::boot();
-        static::deleting(function(StoredFile $model) {
+        static::deleting(function($model) {
             $model->is_active   = 0;
             $model->deleted_at  = Carbon::now();
             $model->save();
