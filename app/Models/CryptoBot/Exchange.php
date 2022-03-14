@@ -1,11 +1,13 @@
 <?php
 namespace App\Models\CryptoBot;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Exchange extends Model
 {
+    use SoftDeletes;
+
     // protected $connection = 'mysql';
     protected $table = 'cryptobot_exchanges';
     // protected $table = 'exchanges';
@@ -34,7 +36,6 @@ class Exchange extends Model
         parent::boot();
         static::deleting(function($model) {
             $model->is_active   = 0;
-            $model->deleted_at  = Carbon::now();
             $model->save();
         });
     }
