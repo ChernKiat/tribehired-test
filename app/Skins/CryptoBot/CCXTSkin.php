@@ -563,7 +563,11 @@ class CCXTSkin
 
     public static function updateExchanges()
     {
-        // no delete
+        // delete old
+        foreach (array_diff(Exchange::pluck('exchange')->toArray(), ccxt\Exchange::$exchanges) as $exchange) {
+            $exchange = Exchange::where('exchange', $exchange)->first();
+            $exchange->delete();
+        }
 
         foreach (ccxt\Exchange::$exchanges as $exchange) {
             // try {
