@@ -1,6 +1,6 @@
 <?php
 
-namespace Vanguard;
+namespace App\Models\CryptoBot;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 

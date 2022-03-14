@@ -593,8 +593,6 @@ class CCXTSkin
             //     Log::error($e);
             // }
         }
-        // return array('status' => true);
-        return true;
     }
 
     public static function updatePairs()
