@@ -33,6 +33,7 @@
         "icheck": "^1.0.2",
         "puppeteer": "^5.5.0",
         "waifulabs": "^0.3.2",
+        "waifusocket": "^1.1.3",
         "yargs": "^16.2.0"
     },
     "browser": {

@@ -1,22 +1,12 @@
-(async function(){
-    // Setup the module
-    const waifulabs = require('waifulabs');
+import WaifuSocket from './index.js';
+import fs from 'fs/promises';
 
-    // Get some pretty waifus
-    const waifus = await waifulabs.generateWaifus();
+const ws = await new WaifuSocket().login();
 
-    // Extract one waifu
-    const waifu = waifus[0];
-
-    // Extract the image of the waifu
-    const imageData = waifu.image;
-
-    // Turn the Base64 image into a Buffer
-    const image = Buffer.from(imageData, 'base64');
-
-    // Use FS module and write the image to a file
-    const fs = require('fs');
-    fs.writeFile('waifu.png', image, console.error);
-
-    /* Done! */
-})()
+ws.once('ready', async () => {
+  const grid = await ws.genGrid();
+  console.log(grid.length);
+  const big = await ws.genBig(grid[0].seeds);
+  await fs.writeFile('./image.png', big.image);
+  ws.close();
+});
