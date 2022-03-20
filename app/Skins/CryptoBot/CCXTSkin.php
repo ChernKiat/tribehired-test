@@ -597,6 +597,10 @@ class CCXTSkin
 
     public static function updatePairs()
     {
+    }
+
+    public static function setupPairs()
+    {
         // no delete
 
         foreach(ccxt\Exchange::$exchanges as $exchange) {

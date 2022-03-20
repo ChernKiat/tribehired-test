@@ -44,7 +44,7 @@ class CreateAllCryptobotTables extends Migration
             $table->index(['cryptobot_exchange_id', 'pair'], 'exchange_pair');
         });
 
-        CCXTSkin::updatePairs();
+        CCXTSkin::setupPairs();
 
         Schema::create('cryptobot_tickers', function(Blueprint $table)
         {
