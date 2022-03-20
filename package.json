@@ -29,8 +29,17 @@
         "datatables.net-bs4": "^1.10.22",
         "datatables.net-buttons": "^1.6.5",
         "datatables.net-buttons-bs4": "^1.6.5",
+        "fs": "0.0.1-security",
         "icheck": "^1.0.2",
         "puppeteer": "^5.5.0",
+        "waifulabs": "^0.3.2",
         "yargs": "^16.2.0"
+    },
+    "browser": {
+        "fs": false,
+        "path": false,
+        "os": false,
+        "net": false,
+        "tls": false
     }
 }

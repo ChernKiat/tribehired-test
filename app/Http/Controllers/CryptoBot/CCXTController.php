@@ -13,14 +13,16 @@ class CCXTController extends Controller
 {
     public function test()
     {
-        // \Artisan::call('DatabaseCommand:backup');
-        // dd(\Artisan::output(), 'lol');
+        CCXTSkin::updatePairs();
+        dd('yay');
 
         // $strategy = Strategy::setupCrossPair(Exchange::BINANCE, false);
         $strategy = Strategy::first();
         // dd($strategy, 'lol');
         dd($strategy->run(), 'lol');
 
+        // \Artisan::call('DatabaseCommand:backup');
+        // dd(\Artisan::output(), 'lol');
 
         $ccxt = (new CCXTSkin());
         foreach (Exchange::with('pairsActivated')->where('is_active', 1)->get() as $exchange) {
