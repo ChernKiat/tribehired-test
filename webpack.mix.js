@@ -1,7 +1,6 @@
 const mix = require('laravel-mix');
 
 // mix.js('resources/js/myNFTStorage/main.js', 'public/myNFTStorage/');
-mix.js('resources/js/myNFTStorage/waifulabs.js', 'public/myNFTStorage/');
 
 // mix.js('resources/js/myHololiveFan/puppeteer/mySubtitlesDownloader.js', 'public/myHololiveFan');
 
