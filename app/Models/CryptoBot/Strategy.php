@@ -130,16 +130,16 @@ class Strategy extends Model
 
         $cryptobotExchange = Exchange::find($cryptobot_exchange_id);
         $cryptobot_currencies = Currency::pluck('name', 'id')->toArray();
-        // $cryptobot_pair_strategy = array();
         foreach ($groups as $key => $group) {
-            $cryptobotStrategy = self::updateOrCreate([
-                'name'        => strtoupper($cryptobotExchange->exchange) . "_{$cryptobot_currencies[$key]}",
+            $cryptobotStrategy  = self::updateOrCreate([
+                'name'                   => strtoupper($cryptobotExchange->exchange) . "_{$cryptobot_currencies[$key]}",
             ], [
-                'name'        => strtoupper($cryptobotExchange->exchange) . "_{$cryptobot_currencies[$key]}",
-                'type'        => self::TYPE_CROSS_PAIR,
-                'is_active'   => 1,
-                'created_at'  => Carbon::now(),
-                'updated_at'  => Carbon::now(),
+                'name'                   => strtoupper($cryptobotExchange->exchange) . "_{$cryptobot_currencies[$key]}",
+                'type'                   => self::TYPE_CROSS_PAIR,
+                'is_active'              => 0,
+                'cryptobot_currency_id'  => $key,
+                'created_at'             => Carbon::now(),
+                'updated_at'             => Carbon::now(),
             ]);
 
             foreach ($group as $row => $pair) {
@@ -184,51 +184,6 @@ class Strategy extends Model
         }
 
         return true;
-
-
-        // $json_connection = json_encode($connection);
-        // $log = 'unset';
-        // Log::info(json_encode(compact('key', 'currency', 'json_connection', 'row', 'pair', 'log')));
-
-        // $possible_connections = array();
-        // $cryptobot_currencies = Currency::pluck('name', 'id')->toArray();
-        // foreach ($cryptobot_currencies as $key => $currency) {
-        //     $possible_connections[] = array('strategy' => $currency, 'pair' => array(), 'start' => $key, 'end' => $key, 'continue' => true);
-        //     foreach ($possible_connections as $index => $connection) {
-        //         if ($connection['continue'] && $key == $connection['end'] && array_key_exists($key, $groups)) {
-        //             foreach ($groups[$key] as $row => $pair) {
-        //                 if (!in_array($key, $a)) {
-        //                     if ($row >= $key) {
-        //                         $temp = $connection;
-        //                         $temp['strategy'] .= "/{$cryptobot_currencies[$row]}";
-        //                         $temp['pair'][] = $pair;
-        //                         $temp['end'] = $row;
-        //                         $possible_connections[] = $temp;
-        //                     } elseif ($row == $connection['end'] && count($connection['pair']) > 2) {
-        //                         $possible_connections[$index]['continue'] = false;
-        //                     } else {
-        //                         // unset($possible_connections[$index]);
-        //                     }
-        //                 } else {
-        //                     if (in_array($row, $a)) {
-        //                         if ($row >= $key) {
-        //                             $temp = $connection;
-        //                             $temp['strategy'] .= "/{$cryptobot_currencies[$row]}";
-        //                             $temp['pair'][] = $pair;
-        //                             $temp['end'] = $row;
-        //                             $possible_connections[] = $temp;
-        //                         } elseif ($row == $connection['end'] && count($connection['pair']) > 2) {
-        //                             $temp['pair'][] = $pair;
-        //                             $possible_connections[$index]['continue'] = false;
-        //                         } else {
-        //                             // unset($possible_connections[$index]);
-        //                         }
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
     }
 
     public static function setupCrossPair($cryptobot_exchange_id)

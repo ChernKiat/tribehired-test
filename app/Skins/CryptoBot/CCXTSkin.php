@@ -598,7 +598,7 @@ class CCXTSkin
 
     public static function updatePairs()
     {
-        // $cryptobotCurrencies = Currency::pluck('id', 'name')->toArray();
+        // $cryptobot_currencies = Currency::pluck('id', 'name')->toArray();
         foreach (Exchange::with('pairs')->where('is_active', 1)->get() as $exchange) {
             $cryptobotPairs = array_column($exchange->pairs->all(), null, 'pair');
             $pairs = (new self())->initExchange($exchange->exchange)->load_markets();

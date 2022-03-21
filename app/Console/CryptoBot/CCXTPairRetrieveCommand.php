@@ -4,6 +4,7 @@ namespace App\Console\CryptoBot;
 
 use App\Models\CryptoBot\Exchange;
 use App\Skins\CryptoBot\CCXTSkin;
+use Config;
 use Illuminate\Console\Command;
 
 class CCXTPairRetrieveCommand extends Command

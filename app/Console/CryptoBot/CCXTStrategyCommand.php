@@ -3,6 +3,7 @@
 namespace App\Console\CryptoBot;
 
 use App\Models\CryptoBot\Strategy;
+use Config;
 use Illuminate\Console\Command;
 
 class CCXTStrategyCommand extends Command
