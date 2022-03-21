@@ -2,6 +2,7 @@
 
 namespace App\Skins\CryptoBot;
 
+use App\Models\CryptoBot\Currency;
 use App\Models\CryptoBot\DynamicTicker;
 use App\Models\CryptoBot\Exchange;
 use App\Models\CryptoBot\Ohclv;
@@ -597,6 +598,34 @@ class CCXTSkin
 
     public static function updatePairs()
     {
+        // $cryptobotCurrencies = Currency::pluck('id', 'name')->toArray();
+        foreach (Exchange::with('pairs')->where('is_active', 1)->get() as $exchange) {
+            $cryptobotPairs = array_column($exchange->pairs->all(), null, 'pair');
+            $pairs = (new self())->initExchange($exchange->exchange)->load_markets();
+            if (empty($pairs)) {
+                Log::info("{$exchange->exchange} pairs variable is empty.");
+                continue;
+            }
+
+            foreach ($pairs as $key => $pair) {
+                dd($pair, 'stop');
+                // try {
+                    if (array_key_exists($cryptobotPairs, $key)) {
+                        $cryptobotPair = $cryptobotPairs[$key];
+                    } else {
+                        Pair::updateOrCreate(['cryptobot_exchange_id' => $exchange->id, 'cryptobot_exchange_id' => $exchange->id, 'pair' => $key]);
+                    }
+                // } catch (ccxt\AuthenticationError $e) {
+                //     Log::error("{$exchange->id} needs auth (set this exchange to -1 in the database to disable it)..");
+                //     return false;
+                // } catch (ccxt\BaseError $e) {
+                //     Log::error("{$exchange->id} error (set this exchange to -1 in the database to disable it):\n{$e}");
+                //     return false;
+                // } catch (Exception $e) {
+                //     Log::error($e);
+                // }
+            }
+        }
     }
 
     public static function setupPairs()
