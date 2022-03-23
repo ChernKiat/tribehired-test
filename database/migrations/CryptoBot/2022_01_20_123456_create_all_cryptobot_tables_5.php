@@ -30,51 +30,14 @@ class CreateAllCryptobotTables5 extends Migration
         // });
 
 
-        Schema::table('cryptobot_currencies', function (Blueprint $table)
-        {
-            $table->primary('id');
-        });
-
         Schema::table('cryptobot_exchanges', function (Blueprint $table)
         {
-            $table->primary('id');
             $table->index(['deleted_at']);
-        });
-
-        Schema::table('cryptobot_ohlcvs', function (Blueprint $table)
-        {
-            $table->primary('id');
-        });
-
-        Schema::table('cryptobot_orders', function (Blueprint $table)
-        {
-            $table->primary('id');
         });
 
         Schema::table('cryptobot_pairs', function (Blueprint $table)
         {
-            $table->primary('id');
             $table->index(['deleted_at']);
-        });
-
-        Schema::table('cryptobot_pair_strategy', function (Blueprint $table)
-        {
-            $table->primary('id');
-        });
-
-        Schema::table('cryptobot_strategies', function (Blueprint $table)
-        {
-            $table->primary('id');
-        });
-
-        Schema::table('cryptobot_tickers', function (Blueprint $table)
-        {
-            $table->primary('id');
-        });
-
-        Schema::table('cryptobot_trades', function (Blueprint $table)
-        {
-            $table->primary('id');
         });
     }
 
