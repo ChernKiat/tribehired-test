@@ -4,13 +4,10 @@ namespace App\Models\CryptoBot;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Log;
 
 class Strategy extends Model
 {
-    use SoftDeletes;
-
     // protected $connection = 'mysql';
     protected $table = 'cryptobot_strategies';
     // protected $table = 'strategies';
@@ -100,10 +97,48 @@ class Strategy extends Model
         dd($actions, 'lol');
     }
 
-    public static function setupCrossExchange($cryptobot_pair_id)
+    public static function setupCrossExchange($cryptobot_currency_id)
     {
-        $cryptobotPair = Pair::find($cryptobot_pair_id);
-        $cryptobotExchanges = Exchange::where('is_active', 1)->where('cryptobot_exchange_id', $cryptobot_exchange_id)->whereNotNull('cryptobot_quote_currency_id')->whereNotNull('cryptobot_base_currency_id')->get();
+        $cryptobotCurrency = Currency::find($cryptobot_currency_id);
+        $cryptobotExchanges = Exchange::with(['pairsActivated' => function ($query) use ($cryptobot_currency_id) {
+                                        $query->where('cryptobot_quote_currency_id', $cryptobot_currency_id)->where('cryptobot_base_currency_id', $cryptobot_currency_id);
+                                    }])->where('is_active', 1)->get();
+
+        $groups = array();
+        foreach ($cryptobotExchanges as $exchange) {
+            foreach ($exchange->pairsActivated as $pair) {
+                if ($pair->cryptobot_base_currency_id == $cryptobot_currency_id) {
+                    $groups[$pair->cryptobot_quote_currency_id]['cryptobot_quote_currency_id'][$exchange->id] = $pair;
+                } else {
+                    $groups[$pair->cryptobot_base_currency_id]['cryptobot_base_currency_id'][$exchange->id] = $pair;
+                }
+            }
+        }
+        dd($groups);
+
+        foreach ($groups as $key => $group) {
+            foreach (['cryptobot_base_currency_id', 'cryptobot_quote_currency_id'] as $value) {
+                if (count($group[$value]) == 1) { // need at least 2 to be useful
+                    unset($groups[$value]);
+                }
+            }
+        }
+        dd($groups);
+
+        $cryptobot_pair_strategy = array();
+        foreach ($groups as $key => $group) {
+            $cryptobotStrategy  = self::updateOrCreate([
+                'name'                   => strtoupper($cryptobotExchange->exchange) . "_{$cryptobot_currencies[$key]}",
+            ], [
+                'name'                   => strtoupper($cryptobotExchange->exchange) . "_{$cryptobot_currencies[$key]}",
+                'type'                   => self::TYPE_CROSS_EXCHANGE,
+                'is_active'              => 0,
+                'cryptobot_currency_id'  => $cryptobot_currency_id,
+                'updated_at'             => Carbon::now(),
+            ]);
+        }
+
+        return true;
     }
 
     public static function setupCrossPair($cryptobot_exchange_id)
@@ -136,7 +171,6 @@ class Strategy extends Model
             }
         }
 
-        $cryptobotExchange = Exchange::find($cryptobot_exchange_id);
         $cryptobot_currencies = Currency::pluck('name', 'id')->toArray();
         $cryptobot_pair_strategy = array();
         foreach ($groups as $key => $group) {
