@@ -598,7 +598,8 @@ class CCXTSkin
 
     public static function updatePairs()
     {
-        // $cryptobot_currencies = Currency::pluck('id', 'name')->toArray();
+        $cryptobot_currencies = Currency::pluck('name', 'id')->toArray();
+
         foreach (Exchange::with('pairs')->where('is_active', 1)->get() as $exchange) {
             $cryptobotPairs = array_column($exchange->pairs->all(), null, 'pair');
             $pairs = (new self())->initExchange($exchange->exchange)->load_markets();
@@ -608,12 +609,19 @@ class CCXTSkin
             }
 
             foreach ($pairs as $key => $pair) {
-                dd($pair, 'stop');
                 // try {
-                    if (array_key_exists($cryptobotPairs, $key)) {
+                    if (array_key_exists($key, $cryptobotPairs)) {
                         $cryptobotPair = $cryptobotPairs[$key];
                     } else {
-                        Pair::updateOrCreate(['cryptobot_exchange_id' => $exchange->id, 'cryptobot_exchange_id' => $exchange->id, 'pair' => $key]);
+                        $currencies = explode('/', $key);
+                        foreach ($currencies as $index => $currency) {
+                            if (array_key_exists($currency, $cryptobot_currencies)) {
+                                $currencies[$index] = $cryptobot_currencies[$currency];
+                            } else {
+                                $currencies[$index] = Currency::updateOrCreate(['name' => $currency])->id;
+                            }
+                        }
+                        $cryptobotPair = Pair::updateOrCreate(['cryptobot_exchange_id' => $exchange->id, 'cryptobot_quote_currency_id' => $currencies[1], 'cryptobot_base_currency_id' => $currencies[0], 'pair' => $key, 'is_active' => $pair['active']]);
                     }
                 // } catch (ccxt\AuthenticationError $e) {
                 //     Log::error("{$exchange->id} needs auth (set this exchange to -1 in the database to disable it)..");

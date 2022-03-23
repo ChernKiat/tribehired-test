@@ -40,7 +40,7 @@ class Strategy extends Model
 
     public function pairs()
     {
-        return $this->belongsToMany(Pair::class, 'cryptobot_pair_strategy', 'cryptobot_strategy_id', 'cryptobot_pair_id')->withTimestamps(); // ->using(PairStrategy::class);
+        return $this->belongsToMany(Pair::class, 'cryptobot_pair_strategy', 'cryptobot_strategy_id', 'cryptobot_pair_id')->withPivot('is_base')->withTimestamps(); // ->using(PairStrategy::class);
     }
 
 
@@ -54,6 +54,7 @@ class Strategy extends Model
             case self::TYPE_P2P:
                 break;
             case self::TYPE_CROSS_EXCHANGE:
+                $this->runCrossExchange();
                 break;
             case self::TYPE_CROSS_PAIR:
                 $this->runCrossPair();
@@ -72,43 +73,50 @@ class Strategy extends Model
 
     private function runCrossPair()
     {
-        dd($this->pairs);
-        $group = array();
-        foreach ($this->pairs as $pair) {
-            $group[$pair->cryptobot_exchange_id][] = $pair;
+        $strategy = Strategy::with(['pairs.ticker'])->where('is_active', 1)->first();
+        $markets = array();
+        foreach ($strategy->pairs as $pair) {
+            if ($pair->pivot->is_base == 0) {
+                // from $strategy->cryptobot_currency_id's perspective [you want its partner, you want it]
+                if ($pair->cryptobot_quote_currency_id == $strategy->cryptobot_currency_id) {
+                    $markets[$pair->cryptobot_base_currency_id] = ['cryptobot_quote_currency_id', $pair->ticker->bid, $pair->ticker->ask, $pair->ticker->ask, $pair->pair, $pair];
+                } else {
+                    $markets[$pair->cryptobot_quote_currency_id] = ['cryptobot_base_currency_id', $pair->ticker->bid, $pair->ticker->ask, $pair->ticker->ask, $pair->pair, $pair];
+                }
+            }
         }
+        $actions = array();
+        foreach ($strategy->pairs as $pair) {
+            if ($pair->pivot->is_base == 1) {
+                    $actions[] = [$pair, $pair->pair, $pair->ticker->bid, $pair->ticker->ask, $markets[$pair->cryptobot_base_currency_id], $markets[$pair->cryptobot_quote_currency_id]];
+                // if ($markets[$pair->cryptobot_quote_currency_id]  $markets[$pair->cryptobot_base_currency_id]) {
+                // if ($markets[$pair->cryptobot_quote_currency_id][0] * $pair->ticker->ask > $markets[$pair->cryptobot_base_currency_id][0]) {
+                //     $actions['buy'] = [$pair, $pair->pair, $pair->ticker->bid, $pair->ticker->ask, $markets[$pair->cryptobot_base_currency_id], $markets[$pair->cryptobot_quote_currency_id]];
+                // } elseif ($markets[$pair->cryptobot_quote_currency_id][0] * $pair->ticker->bid > $markets[$pair->cryptobot_base_currency_id][0]) {
+                //     $actions['sell'] = [$pair, $pair->pair, $pair->ticker->bid, $pair->ticker->ask, $markets[$pair->cryptobot_base_currency_id], $markets[$pair->cryptobot_quote_currency_id]];
+                // }
+            }
+        }
+        dd($actions, 'lol');
+    }
+
+    public static function setupCrossExchange($cryptobot_pair_id)
+    {
+        $cryptobotPair = Pair::find($cryptobot_pair_id);
+        $cryptobotExchanges = Exchange::where('is_active', 1)->where('cryptobot_exchange_id', $cryptobot_exchange_id)->whereNotNull('cryptobot_quote_currency_id')->whereNotNull('cryptobot_base_currency_id')->get();
+    }
+
+    public static function setupCrossPair($cryptobot_exchange_id)
+    {
+
     }
 
     public static function updateCrossPair($cryptobot_exchange_id)
     {
         ini_set('max_execution_time', '300');
 
-        $cryptobotCurrencies = Currency::pluck('id', 'name')->toArray();
-
-        $cryptobotPairs = Pair::where(function ($query) {
-                                    $query->whereNull('cryptobot_quote_currency_id')->orWhereNull('cryptobot_base_currency_id');
-                                })->where('is_active', 1)->where('cryptobot_exchange_id', $cryptobot_exchange_id)->get();
-        foreach ($cryptobotPairs as $pair) {
-            $currencies = explode('/', $pair->pair);
-            foreach ($currencies as $key => $currency) {
-                if (array_key_exists($cryptobotCurrencies, $currency)) {
-                    $currencies[$key] = $cryptobotCurrencies[$currency];
-                } else {
-                    $currencies[$key] = Currency::updateOrCreate(['name' => $currency])->id;
-                }
-                if ($key == 0) {
-                    $cryptobot_currency_id = 'cryptobot_base_currency_id';
-                } elseif ($key == 1) {
-                    $cryptobot_currency_id = 'cryptobot_quote_currency_id';
-                }
-                if (is_null($pair->{$cryptobot_currency_id})) {
-                    $pair->{$cryptobot_currency_id} = $currencies[$key]->id;
-                    $pair->save();
-                }
-            }
-        }
-
-        $cryptobotPairs = Pair::where('is_active', 1)->where('cryptobot_exchange_id', $cryptobot_exchange_id)->get();
+        $cryptobotExchange = Exchange::find($cryptobot_exchange_id);
+        $cryptobotPairs = Pair::where('is_active', 1)->where('cryptobot_exchange_id', $cryptobot_exchange_id)->whereNotNull('cryptobot_quote_currency_id')->whereNotNull('cryptobot_base_currency_id')->get();
 
         $groups = array();
         foreach ($cryptobotPairs as $pair) {
@@ -130,65 +138,39 @@ class Strategy extends Model
 
         $cryptobotExchange = Exchange::find($cryptobot_exchange_id);
         $cryptobot_currencies = Currency::pluck('name', 'id')->toArray();
+        $cryptobot_pair_strategy = array();
         foreach ($groups as $key => $group) {
             $cryptobotStrategy  = self::updateOrCreate([
                 'name'                   => strtoupper($cryptobotExchange->exchange) . "_{$cryptobot_currencies[$key]}",
             ], [
                 'name'                   => strtoupper($cryptobotExchange->exchange) . "_{$cryptobot_currencies[$key]}",
                 'type'                   => self::TYPE_CROSS_PAIR,
-                'is_active'              => 0,
+                'is_active'              => 1,
                 'cryptobot_currency_id'  => $key,
-                'created_at'             => Carbon::now(),
                 'updated_at'             => Carbon::now(),
             ]);
 
             foreach ($group as $row => $pair) {
-                DB::table('cryptobot_pair_strategy')->updateOrInsert([
-                    'cryptobot_pair_id'      => $pair->id,
-                    'cryptobot_strategy_id'  => $cryptobotStrategy->id,
-                ], [
-                    'cryptobot_pair_id'      => $pair->id,
-                    'cryptobot_strategy_id'  => $cryptobotStrategy->id,
-                    'is_base'                => 0,
-                    'created_at'             => Carbon::now(),
-                    'updated_at'             => Carbon::now(),
-                ]);
-                // $cryptobot_pair_strategy[] = array('cryptobot_pair_id' => $pair->id, 'cryptobot_strategy_id' => $cryptobotStrategy->id, 'is_base' => 0);
+                $cryptobot_pair_strategy[$pair->id] = array('is_base' => 0);
             }
+
             $temp = array_keys($group);
             foreach ($temp as $row) {
                 foreach ($temp as $index) {
                     if ($row > $index) {
                         if (array_key_exists($row, $groups) && array_key_exists($index, $groups[$row])) {
-                            DB::table('cryptobot_pair_strategy')->updateOrInsert([
-                                'cryptobot_pair_id'      => $groups[$row][$index]->id,
-                                'cryptobot_strategy_id'  => $cryptobotStrategy->id,
-                            ], [
-                                'cryptobot_pair_id'      => $groups[$row][$index]->id,
-                                'cryptobot_strategy_id'  => $cryptobotStrategy->id,
-                                'is_base'                => 1,
-                                'created_at'             => Carbon::now(),
-                                'updated_at'             => Carbon::now(),
-                            ]);
-                            // $cryptobot_pair_strategy[] = array('cryptobot_pair_id' => $groups[$row][$index]->id, 'cryptobot_strategy_id' => $cryptobotStrategy->id, 'is_base' => 1);
+                            $cryptobot_pair_strategy[$groups[$row][$index]->id] = array('is_base' => 1);
                         }
                     }
                 }
             }
-
-            $cryptobotStrategy->cryptobot_currency_id = $key;
-            $cryptobotStrategy->save();
+            $cryptobotStrategy->pairs()->sync($cryptobot_pair_strategy);
 
             // DB::table('cryptobot_pair_strategy')->insert($cryptobot_pair_strategy);
             // DB::table('cryptobot_pair_strategy')->upsert($cryptobot_pair_strategy, ['cryptobot_pair_id', 'cryptobot_strategy_id'], ['is_base']);
         }
 
         return true;
-    }
-
-    public static function setupCrossPair($cryptobot_exchange_id)
-    {
-
     }
 
     public static function removeCrossPair($cryptobot_exchange_id)

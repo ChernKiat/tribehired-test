@@ -34,7 +34,8 @@ class CreateAllCryptobotTables3 extends Migration
             $table->timestamps();
         });
 
-        Schema::table('cryptobot_orders', function (Blueprint $table) {
+        Schema::table('cryptobot_orders', function (Blueprint $table)
+        {
             $table->unsignedInteger('cryptobot_strategy_id')->nullable()->after('id'); // ->index();
         });
     }
@@ -50,7 +51,8 @@ class CreateAllCryptobotTables3 extends Migration
 
         Schema::drop('cryptobot_pair_strategy');
 
-        Schema::table('cryptobot_orders', function (Blueprint $table) {
+        Schema::table('cryptobot_orders', function (Blueprint $table)
+        {
             $table->dropColumn(['cryptobot_strategy_id']);
         });
     }

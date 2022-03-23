@@ -42,11 +42,13 @@ class CreateAllCryptobotTables4 extends Migration
     {
         Schema::drop('cryptobot_currencies');
 
-        Schema::table('cryptobot_pairs', function (Blueprint $table) {
+        Schema::table('cryptobot_pairs', function (Blueprint $table)
+        {
             $table->dropColumn(['cryptobot_base_currency_id', 'cryptobot_quote_currency_id']);
         });
 
-        Schema::table('cryptobot_pair_strategy', function (Blueprint $table) {
+        Schema::table('cryptobot_pair_strategy', function (Blueprint $table)
+        {
             $table->dropColumn(['type']);
         });
     }

@@ -61,7 +61,8 @@ class CreateAllCryptobotTables2 extends Migration
             $table->unique(['cryptobot_exchange_id', 'cryptobot_pair_id', 'exchange_trade_id', 'exchange_order_id'], 'exchange_pair_trade_order');
         });
 
-        Schema::table('cryptobot_exchanges', function (Blueprint $table) {
+        Schema::table('cryptobot_exchanges', function (Blueprint $table)
+        {
             $table->dropColumn(['has_fetch_tickers', 'has_fetch_ohlcv']);
         });
     }
@@ -77,7 +78,8 @@ class CreateAllCryptobotTables2 extends Migration
 
         Schema::drop('cryptobot_trades');
 
-        Schema::table('cryptobot_exchanges', function (Blueprint $table) {
+        Schema::table('cryptobot_exchanges', function (Blueprint $table)
+        {
             $table->boolean('has_fetch_tickers')->default(0)->after('exchange');
             $table->boolean('has_fetch_ohlcv')->default(0)->after('has_fetch_tickers');
         });
