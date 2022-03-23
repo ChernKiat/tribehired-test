@@ -115,33 +115,54 @@ class Strategy extends Model
             foreach ($exchange->pairsActivated as $pair) {
                 // $groups[$pair->cryptobot_base_currency_id][$pair->cryptobot_quote_currency_id]['cryptobot_base_currency_id'][$exchange->id] = $pair;
                 // $groups[$pair->cryptobot_quote_currency_id][$pair->cryptobot_base_currency_id]['cryptobot_quote_currency_id'][$exchange->id] = $pair;
-                $groups[$pair->cryptobot_base_currency_id][$pair->cryptobot_quote_currency_id][$exchange->id] = $pair;
-                $groups[$pair->cryptobot_quote_currency_id][$pair->cryptobot_base_currency_id][$exchange->id] = $pair;
+                $groups[$pair->cryptobot_base_currency_id][$pair->cryptobot_quote_currency_id]['cryptobot_base_currency_id'][$exchange->id] = $pair;
+                $groups[$pair->cryptobot_quote_currency_id][$pair->cryptobot_base_currency_id]['cryptobot_quote_currency_id'][$exchange->id] = $pair;
             }
         }
 
         foreach ($groups as $key => $group) {
-            foreach ($group as $index => $inner) {
-                // foreach (['cryptobot_base_currency_id', 'cryptobot_quote_currency_id'] as $value) {
-                    if (count($inner) == 1) { // need at least 2 to be useful
-                        unset($groups[$key][$index]);
+            foreach ($group as $index => $partner) {
+                foreach ($partner as $value => $side) {
+                    if (count($groups[$key][$index][$value]) < 2) { // need at least 2 to be useful
+                        unset($groups[$key][$index][$value]);
                     }
-                // }
+                }
+                if (count($groups[$key][$index]) == 0) { // need at least 2 to be useful
+                    unset($groups[$key][$index]);
+                }
+            }
+            if (count($groups[$key]) == 0) { // need at least 2 to be useful
+                unset($groups[$key]);
             }
         }
-        dd($groups);
 
-        $cryptobot_pair_strategy = array();
+        $cryptobot_currencies = Currency::pluck('name', 'id')->toArray();
         foreach ($groups as $key => $group) {
-            $cryptobotStrategy  = self::updateOrCreate([
-                'name'                   => strtoupper($cryptobotExchange->exchange) . "_{$cryptobot_currencies[$key]}",
-            ], [
-                'name'                   => strtoupper($cryptobotExchange->exchange) . "_{$cryptobot_currencies[$key]}",
-                'type'                   => self::TYPE_CROSS_EXCHANGE,
-                'is_active'              => 0,
-                'cryptobot_currency_id'  => $cryptobot_currency_id,
-                'updated_at'             => Carbon::now(),
-            ]);
+            foreach ($group as $index => $partner) {
+                foreach ($partner as $value => $side) {
+                    $cryptobot_pair_strategy = array();
+
+                    $name = array($cryptobot_currencies[$key], $cryptobot_currencies[$index]);
+                    sort($name);
+                    $name = implode('_', $name) . '_' . ($value == 'cryptobot_quote_currency_id' ? 'QUOTE' : 'BASE');
+
+                    $cryptobotStrategy  = self::updateOrCreate([
+                        'name'                   => $name,
+                    ], [
+                        'name'                   => $name,
+                        'type'                   => self::TYPE_CROSS_EXCHANGE,
+                        'is_active'              => 0,
+                        // 'is_same'                => ==,
+                        'cryptobot_currency_id'  => $cryptobot_currency_id ?? $key,
+                        'updated_at'             => Carbon::now(),
+                    ]);
+
+                    foreach ($side as $pair) {
+                        $cryptobot_pair_strategy[$pair->id] = array('is_base' => 0);
+                    }
+                    $cryptobotStrategy->pairs()->sync($cryptobot_pair_strategy);
+                }
+            }
         }
 
         return true;
@@ -190,7 +211,7 @@ class Strategy extends Model
                 'updated_at'             => Carbon::now(),
             ]);
 
-            foreach ($group as $row => $pair) {
+            foreach ($group as $pair) {
                 $cryptobot_pair_strategy[$pair->id] = array('is_base' => 0);
             }
 
