@@ -97,30 +97,36 @@ class Strategy extends Model
         dd($actions, 'lol');
     }
 
-    public static function setupCrossExchange($cryptobot_currency_id)
+    public static function setupCrossExchange($cryptobot_currency_id = null)
     {
-        $cryptobotCurrency = Currency::find($cryptobot_currency_id);
-        $cryptobotExchanges = Exchange::with(['pairsActivated' => function ($query) use ($cryptobot_currency_id) {
-                                        $query->where('cryptobot_quote_currency_id', $cryptobot_currency_id)->where('cryptobot_base_currency_id', $cryptobot_currency_id);
-                                    }])->where('is_active', 1)->get();
+        if (!is_null($cryptobot_currency_id)) {
+            $cryptobotExchanges = Exchange::with(['pairsActivated' => function ($query) use ($cryptobot_currency_id) {
+                                            $query->where(function ($q) use ($cryptobot_currency_id) {
+                                                $q->where('cryptobot_quote_currency_id', $cryptobot_currency_id);
+                                                $q->orWhere('cryptobot_base_currency_id', $cryptobot_currency_id);
+                                            });
+                                        }])->where('is_active', 1)->get();
+        } else {
+            $cryptobotExchanges = Exchange::with(['pairsActivated'])->where('is_active', 1)->get();
+        }
 
         $groups = array();
         foreach ($cryptobotExchanges as $exchange) {
             foreach ($exchange->pairsActivated as $pair) {
-                if ($pair->cryptobot_base_currency_id == $cryptobot_currency_id) {
-                    $groups[$pair->cryptobot_quote_currency_id]['cryptobot_quote_currency_id'][$exchange->id] = $pair;
-                } else {
-                    $groups[$pair->cryptobot_base_currency_id]['cryptobot_base_currency_id'][$exchange->id] = $pair;
-                }
+                // $groups[$pair->cryptobot_base_currency_id][$pair->cryptobot_quote_currency_id]['cryptobot_base_currency_id'][$exchange->id] = $pair;
+                // $groups[$pair->cryptobot_quote_currency_id][$pair->cryptobot_base_currency_id]['cryptobot_quote_currency_id'][$exchange->id] = $pair;
+                $groups[$pair->cryptobot_base_currency_id][$pair->cryptobot_quote_currency_id][$exchange->id] = $pair;
+                $groups[$pair->cryptobot_quote_currency_id][$pair->cryptobot_base_currency_id][$exchange->id] = $pair;
             }
         }
-        dd($groups);
 
         foreach ($groups as $key => $group) {
-            foreach (['cryptobot_base_currency_id', 'cryptobot_quote_currency_id'] as $value) {
-                if (count($group[$value]) == 1) { // need at least 2 to be useful
-                    unset($groups[$value]);
-                }
+            foreach ($group as $index => $inner) {
+                // foreach (['cryptobot_base_currency_id', 'cryptobot_quote_currency_id'] as $value) {
+                    if (count($inner) == 1) { // need at least 2 to be useful
+                        unset($groups[$key][$index]);
+                    }
+                // }
             }
         }
         dd($groups);
