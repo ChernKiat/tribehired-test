@@ -34,6 +34,10 @@ Route::prefix('crypto-bot')->namespace('CryptoBot')->name('cryptobot.')->group(f
     });
 });
 
+Route::prefix('my')->namespace('HijackShowcase')->name('hijackshowcase.')->group(function() {
+    Route::get('{team}/showcase/{link}', 'PageController@show')->name('page.show');
+});
+
 Route::prefix('hololive-fan')->namespace('HololiveFan')->name('hololivefan.')->group(function() {
     Route::prefix('subtitles')->name('subtitle.')->group(function() {
         Route::get('test', 'SubtitleController@test')->name('test');
