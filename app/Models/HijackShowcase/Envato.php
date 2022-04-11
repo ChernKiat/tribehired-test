@@ -5,20 +5,47 @@ use Illuminate\Database\Eloquent\Model;
 
 class Envato extends Model
 {
-    const TEAM_CODETHISLAB  = 1;
-    // const TEAM_REDFOC       = 2;
+    const TEAM_DEMONISBLACK  = 1;
+    const TEAM_CODETHISLAB   = 2;
+    // const TEAM_REDFOC       = 3;
 
     const TEAM_DESCRIPTION_LIST = array(
-        self::TEAM_CODETHISLAB  => 'codethislab',
+        self::TEAM_DEMONISBLACK  => 'demonisblack.',
+        self::TEAM_CODETHISLAB   => 'codethislab',
         // self::TEAM_REDFOC       => 'redfoc',
     );
 
     const TEAM_DOMAIN_LIST = array(
-        self::TEAM_CODETHISLAB  => 'showcase.codethislab.com/games',
-        // self::TEAM_REDFOC       => 'cdn.redfoc.com/demo',
+        self::TEAM_DEMONISBLACK  => 'demonisblack.com/code',
+        self::TEAM_CODETHISLAB   => 'showcase.codethislab.com/games',
+        // self::TEAM_REDFOC        => 'cdn.redfoc.com/demo',
     );
 
-    const TEAM_DOMAIN_LIST = array(
+    const TEAM_PROJECT_LIST = array(
+        self::TEAM_DEMONISBLACK  => array(
+            'easterday'                       => '2022/easterday/app',
+            'findobjects'                     => '2022/findobjects/game',
+            'learndrawing'                    => '2022/learndrawing/game',
+            'superplinko'                     => '2021/superplinko/game',
+            'holidaygreetingcards_staysafe'   => '2021/holidaygreetingcards/app/cards/staysafe/index.html',
+            'holidaygreetingcards_valentine'  => '2021/holidaygreetingcards/app/cards/valentine/index.html',
+            'circlepuzzle'                    => '2020/circlepuzzle/game',
+            'superplinko'                     => '2021/superplinko/game',
+            'defusethebomb'                   => '2021/defusethebomb/game',
+            'fightvirus'                      => '2020/fightvirus/game',
+            'cubemove'                        => '2020/cubemove/game',
+            'calcudoku'                       => '2019/calcudoku/game',
+            'drumbeats'                       => '2019/drumbeats/game',
+            'survivalgame'                    => '2021/survivalgame/game',
+            'playmaze'                        => '2019/playmaze/game',
+            'rearrangeletters2'               => '2019/rearrangeletters2/game',
+            'junglescratch'                   => '2017/junglescratch/game',
+            'slotmachine'                     => '2019/slotmachine/game',
+            'linebright'                      => '2017/linebright/game',
+            'lotterynumbers'                  => '2017/lotterynumbers/game',
+            'drawaline'                       => '2017/drawaline/game',
+            'calcudoku'                       => '2017/junglescratch/game',
+        ),
         self::TEAM_CODETHISLAB  => array(
             'rugby_rush',
             'hurdles',
@@ -64,11 +91,27 @@ class Envato extends Model
             'flowers', // connect dots puzzle
             'miner_block', // take a block out puzzle
             'jumper_frog',
-            'jumper_frog',
-            'jumper_frog',
         ),
         // self::TEAM_CODETHISLAB  => array(
         //     'snake_ladder',
         // ),
     );
+
+    public static function link($team, $link)
+    {
+        if (array_key_exists($team, self::TEAM_DOMAIN_LIST) && array_key_exists($link, self::TEAM_PROJECT_LIST[$team])) {
+            switch ($team) {
+                case self::TEAM_DEMONISBLACK:
+                    return $project = 'https://' . self::TEAM_DOMAIN_LIST[$team] . '/' . self::TEAM_PROJECT_LIST[$team][$link];
+                    break;
+                case self::TEAM_CODETHISLAB:
+                // case self::TEAM_REDFOC:
+                default:
+                    return $project = 'https://' . self::TEAM_DOMAIN_LIST[$team] . '/' . $link;
+                    break;
+            }
+        } else {
+            abort(404);
+        }
+    }
 }
