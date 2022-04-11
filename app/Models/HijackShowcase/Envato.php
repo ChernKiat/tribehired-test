@@ -30,7 +30,6 @@ class Envato extends Model
             'holidaygreetingcards_staysafe'   => '2021/holidaygreetingcards/app/cards/staysafe/index.html',
             'holidaygreetingcards_valentine'  => '2021/holidaygreetingcards/app/cards/valentine/index.html',
             'circlepuzzle'                    => '2020/circlepuzzle/game',
-            'superplinko'                     => '2021/superplinko/game',
             'defusethebomb'                   => '2021/defusethebomb/game',
             'fightvirus'                      => '2020/fightvirus/game',
             'cubemove'                        => '2020/cubemove/game',
@@ -44,7 +43,22 @@ class Envato extends Model
             'linebright'                      => '2017/linebright/game',
             'lotterynumbers'                  => '2017/lotterynumbers/game',
             'drawaline'                       => '2017/drawaline/game',
-            'calcudoku'                       => '2017/junglescratch/game',
+            'connectaway'                     => '2017/connectaway/game',
+            'bingobash'                       => '2017/bingobash/game',
+            'monsterrush'                     => '2017/monsterrush/game', // TD
+            'elevatorball'                    => '2017/elevatorball/game',
+            'luckywheels'                     => '2017/luckywheels/game',
+            'thiefchallenge'                  => '2017/thiefchallenge/game',
+            'hackerchallenge'                 => '2017/hackerchallenge/game',
+            'spellscasting'                   => '2016/spellscasting/game',
+            'egggo'                           => '2016/egggo/game',
+            'guessnumber'                     => '2016/guessnumber/game', // speech to text
+            'plumberpipe'                     => '2016/plumberpipe/game',
+            'draggablepuzzle'                 => '2016/draggablepuzzle/game',
+            'dicegame'                        => '2016/dicegame/game',
+            'findthecat'                      => '2016/findthecat/game',
+            'mypuki'                          => '2015/mypuki/game',
+            'funphoto'                        => '2015/funphoto/app',
         ),
         self::TEAM_CODETHISLAB  => array(
             'rugby_rush',
@@ -91,6 +105,7 @@ class Envato extends Model
             'flowers', // connect dots puzzle
             'miner_block', // take a block out puzzle
             'jumper_frog',
+            'brick_out',
         ),
         // self::TEAM_CODETHISLAB  => array(
         //     'snake_ladder',
@@ -99,7 +114,17 @@ class Envato extends Model
 
     public static function link($team, $link)
     {
-        if (array_key_exists($team, self::TEAM_DOMAIN_LIST) && array_key_exists($link, self::TEAM_PROJECT_LIST[$team])) {
+        switch ($team) {
+            case self::TEAM_DEMONISBLACK:
+                $validate = array_key_exists($team, self::TEAM_DOMAIN_LIST) && array_key_exists($link, self::TEAM_PROJECT_LIST[$team]);
+                break;
+            case self::TEAM_CODETHISLAB:
+            // case self::TEAM_REDFOC:
+            default:
+                $validate = array_key_exists($team, self::TEAM_DOMAIN_LIST) && in_array($link, self::TEAM_PROJECT_LIST[$team]);
+                break;
+        }
+        if ($validate) {
             switch ($team) {
                 case self::TEAM_DEMONISBLACK:
                     return $project = 'https://' . self::TEAM_DOMAIN_LIST[$team] . '/' . self::TEAM_PROJECT_LIST[$team][$link];
@@ -113,5 +138,7 @@ class Envato extends Model
         } else {
             abort(404);
         }
+
+        // demonisblack.com/code/cross/cross.js
     }
 }
