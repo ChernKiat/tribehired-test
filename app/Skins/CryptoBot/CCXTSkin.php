@@ -5,6 +5,7 @@ namespace App\Skins\CryptoBot;
 use App\Models\CryptoBot\Currency;
 use App\Models\CryptoBot\DynamicTicker;
 use App\Models\CryptoBot\Exchange;
+use App\Models\CryptoBot\Log AS CryptoLog;
 use App\Models\CryptoBot\Ohclv;
 use App\Models\CryptoBot\Order;
 use App\Models\CryptoBot\Pair;
@@ -161,7 +162,7 @@ class CCXTSkin
                 $data = $this->exchange->fetch_tickers($this->cryptobotPair->pluck('pair')->toArray());
                 if ($this->mode != self::MODE_REVIVE) {
                     foreach ($this->cryptobotPair as $pair) {
-                        if (array_key_exists($pair->pair, $data) ||
+                        if (!array_key_exists($pair->pair, $data) ||
                             $data[$pair->pair]['bid'] == 0 || $data[$pair->pair]['bidVolume'] == 0 ||
                             $data[$pair->pair]['ask'] == 0 || $data[$pair->pair]['askVolume'] == 0) {
                             if ($data[$pair->pair]['bid'] == 0 || $data[$pair->pair]['bidVolume'] == 0 ||

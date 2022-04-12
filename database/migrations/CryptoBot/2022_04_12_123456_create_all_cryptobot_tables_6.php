@@ -21,6 +21,11 @@ class CreateAllCryptobotTables6 extends Migration
             $table->boolean('is_read')->default(false);
             $table->timestamps();
         });
+
+        Schema::table('cryptobot_pairs', function (Blueprint $table)
+        {
+            $table->text('reported_on')->nullable()->after('is_active');
+        });
     }
 
     /**
@@ -31,5 +36,10 @@ class CreateAllCryptobotTables6 extends Migration
     public function down()
     {
         Schema::drop('cryptobot_logs');
+
+        Schema::table('cryptobot_pairs', function (Blueprint $table)
+        {
+            $table->dropColumn(['reported_on']);
+        });
     }
 }

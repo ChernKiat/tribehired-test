@@ -54,6 +54,9 @@ class Handler extends ExceptionHandler
     {
         if ($exception instanceof QueryException) {
             Log::info("\n{$request->path()}\n {$exception}");
+        // } elseif ($exception instanceof ErrorException) {
+        //     if (strpos($exception->getMessage(), 'Undefined index: bidVolume')) {
+        //     }
         }
         return parent::render($request, $exception);
     }
