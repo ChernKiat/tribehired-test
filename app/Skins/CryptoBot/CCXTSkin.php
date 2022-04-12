@@ -106,6 +106,13 @@ class CCXTSkin
         try {
             if ($this->exchange->has['fetchTicker']) {
                 $data = $this->exchange->fetch_ticker($this->cryptobotPair->pair);
+                foreach (['bid_volume' => 'bidVolume', 'ask_volume' => 'askVolume', 'base_volume' => 'baseVolume', 'quote_volume' => 'quoteVolume'] as $key => $value) {
+                    if (array_key_exists($value, $data[$pair->pair])) {
+                        $data[$pair->pair][$key] = $data[$pair->pair][$value];
+                        unset($data[$pair->pair][$value]);
+                    }
+                }
+
                 unset($data['symbol']);
                 unset($data['previousClose']);
                 unset($data['info']);
@@ -113,15 +120,6 @@ class CCXTSkin
                 $data['cryptobot_pair_id'] = $this->cryptobotPair->id;
                 $data['timestamp'] = intval($data['timestamp'] / 1000);
                 $data['datetime'] = explode('.', $data['datetime'])[0];
-
-                $data['bid_volume'] = $data['bidVolume'];
-                unset($data['bidVolume']);
-                $data['ask_volume'] = $data['askVolume'];
-                unset($data['askVolume']);
-                $data['base_volume'] = $data['baseVolume'];
-                unset($data['baseVolume']);
-                $data['quote_volume'] = $data['quoteVolume'];
-                unset($data['quoteVolume']);
 
                 // $cryptobotTicker = Ticker::updateOrCreate([
                 Ticker::updateOrCreate([
@@ -162,15 +160,21 @@ class CCXTSkin
                 $data = $this->exchange->fetch_tickers($this->cryptobotPair->pluck('pair')->toArray());
                 if ($this->mode != self::MODE_REVIVE) {
                     foreach ($this->cryptobotPair as $pair) {
+                        foreach (['bid_volume' => 'bidVolume', 'ask_volume' => 'askVolume', 'base_volume' => 'baseVolume', 'quote_volume' => 'quoteVolume'] as $key => $value) {
+                            if (array_key_exists($value, $data[$pair->pair])) {
+                                $data[$pair->pair][$key] = $data[$pair->pair][$value];
+                                unset($data[$pair->pair][$value]);
+                            }
+                        }
+
                         if (!array_key_exists($pair->pair, $data) ||
-                            $data[$pair->pair]['bid'] == 0 || $data[$pair->pair]['bidVolume'] == 0 ||
-                            $data[$pair->pair]['ask'] == 0 || $data[$pair->pair]['askVolume'] == 0) {
-                            if ($data[$pair->pair]['bid'] == 0 || $data[$pair->pair]['bidVolume'] == 0 ||
-                                $data[$pair->pair]['ask'] == 0 || $data[$pair->pair]['askVolume'] == 0) {
+                            $data[$pair->pair]['bid'] == 0 || $data[$pair->pair]['bid_volume'] == 0 ||
+                            $data[$pair->pair]['ask'] == 0 || $data[$pair->pair]['ask_volume'] == 0) {
+                            if (!array_key_exists($pair->pair, $data)) {
+                                Log::error("CCXTSkin > fetchTickers > {$this->exchange->id} > {$pair->pair} stopped");
+                            } else {
                                 $pair->latest_ticked_at  = explode('.', $data[$pair->pair]['datetime'])[0];
                                 Log::error("CCXTSkin > fetchTickers > {$this->exchange->id} > {$pair->pair} last ticked");
-                            } else {
-                                Log::error("CCXTSkin > fetchTickers > {$this->exchange->id} > {$pair->pair} stopped");
                             }
                             $pair->is_active         = 0;
                             $pair->save();
@@ -184,15 +188,6 @@ class CCXTSkin
                         $data[$pair->pair]['cryptobot_pair_id'] = $pair->id;
                         $data[$pair->pair]['timestamp'] = intval($data[$pair->pair]['timestamp'] / 1000);
                         $data[$pair->pair]['datetime'] = explode('.', $data[$pair->pair]['datetime'])[0];
-
-                        $data[$pair->pair]['bid_volume'] = $data[$pair->pair]['bidVolume'];
-                        unset($data[$pair->pair]['bidVolume']);
-                        $data[$pair->pair]['ask_volume'] = $data[$pair->pair]['askVolume'];
-                        unset($data[$pair->pair]['askVolume']);
-                        $data[$pair->pair]['base_volume'] = $data[$pair->pair]['baseVolume'];
-                        unset($data[$pair->pair]['baseVolume']);
-                        $data[$pair->pair]['quote_volume'] = $data[$pair->pair]['quoteVolume'];
-                        unset($data[$pair->pair]['quoteVolume']);
                     }
                 } else {
                     foreach ($this->cryptobotPair as $pair) {

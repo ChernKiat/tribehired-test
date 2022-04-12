@@ -14,8 +14,16 @@ class CCXTController extends Controller
 {
     public function test()
     {
+        // $ccxt = (new CCXTSkin());
+        // $ccxt->setCryptobotExchange(Exchange::find(Exchange::BINANCE));
+        // $ccxt->setCryptobotPair(Pair::where('pair', 'XNO/USDT')->first());
+        // dd($ccxt->fetchTicker(), 'wtf');
+
+        // \Artisan::call('CCXTPairCommand:retrieve');
+        // dd(\Artisan::output(), 'lol');
+
         CCXTSkin::updatePairs();
-        dd('yay');
+        dddd('wtf');
 
         // $strategy = Strategy::setupCrossPair(Exchange::BINANCE, false);
         $strategy = Strategy::first();
@@ -30,7 +38,7 @@ class CCXTController extends Controller
             $ccxt->setCryptobotExchange($exchange);
 
             $ccxt->setCryptobotPair($exchange->pairsActivated);
-            dd($ccxt->fetchTickers(CCXTSkin::MODE_DYNAMIC));
+            dd($ccxt->fetchTickers());
             // dd(self::accessLatestDynamicTable()->get(), 'lol');
             foreach ($exchange->pairsActivated as $pair) {
                 $ccxt->setCryptobotPair($pair);
