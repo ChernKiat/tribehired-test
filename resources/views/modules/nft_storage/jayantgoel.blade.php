@@ -6,8 +6,7 @@
     <link rel=canonical href=https://jayantgoel001.github.io/ >
     <meta name=viewport content="width=device-width,initial-scale=1.0">
     <link rel=manifest href=manifest.json>
-    <title>
-    Jayant Goel (JayantGoel001)'s Personal Portfolio</title>
+    <title>Jayant Goel (JayantGoel001)'s Personal Portfolio</title>
     <meta name=DC.title content="Jayant Goel (JayantGoel001)'s Personal Portfolio">
     <meta name=description content="Jayant Goel (JayantGoel001) - A programming Enthusiast eager to learn new skills and contribute to team success through hard work, innovative ideas, and great organizational skills.">
     <link rel=apple-touch-icon sizes=180x180 href=./apple-touch-icon.png>

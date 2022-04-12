@@ -76,6 +76,10 @@ Route::prefix('nft-storage')->namespace('NFTStorage')->name('nftstorage.')->grou
 Route::get('{sha256}/maneki/{index}', 'NFTStorage\ManekiController@image')->name('nftstorage.maneki.image');
 Route::get('/', 'NFTStorage\ManekiController@main')->name('nftstorage.maneki.main');
 
+Route::prefix('profile-landing')->namespace('ProfileLanding')->name('profilelanding.')->group(function() {
+    Route::get('test', 'PageController@test')->name('test');
+});
+
 Route::prefix('research-development')->namespace('ResearchDevelopment')->name('researchdevelopment.')->group(function() {
     Route::get('test', 'TestController@test')->name('test');
 });
