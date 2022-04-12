@@ -102,7 +102,7 @@ class CCXTSkin
     {
         if (!$this->passPreValidationsPreparations()) { throw new Exception('Please setup ccxt dependencies.'); }
 
-        // try {
+        try {
             if ($this->exchange->has['fetchTicker']) {
                 $data = $this->exchange->fetch_ticker($this->cryptobotPair->pair);
                 unset($data['symbol']);
@@ -138,9 +138,15 @@ class CCXTSkin
         // } catch (ccxt\BaseError $e) {
         //     Log::error("{$this->exchange->id} error (set this exchange to -1 in the database to disable it):\n{$e}");
         //     return false;
-        // } catch (Exception $e) {
-        //     Log::error($e);
-        // }
+        } catch (Exception $e) {
+            if (strpos($e->getMessage(), 'Undefined index:')) {
+                $this->cryptobotPair->is_active  = 0;
+                $this->cryptobotPair->save();
+                Log::error($e);
+            } else {
+                throw $e;
+            }
+        }
 
         // return $cryptobotTicker;
         return $this;
@@ -155,9 +161,17 @@ class CCXTSkin
                 $data = $this->exchange->fetch_tickers($this->cryptobotPair->pluck('pair')->toArray());
                 if ($this->mode != self::MODE_REVIVE) {
                     foreach ($this->cryptobotPair as $pair) {
-                        if ($data[$pair->pair]['bid'] == 0 && $data[$pair->pair]['bidVolume'] == 0 && $data[$pair->pair]['ask'] == 0 && $data[$pair->pair]['askVolume'] == 0) {
+                        if (array_key_exists($pair->pair, $data) ||
+                            $data[$pair->pair]['bid'] == 0 || $data[$pair->pair]['bidVolume'] == 0 ||
+                            $data[$pair->pair]['ask'] == 0 || $data[$pair->pair]['askVolume'] == 0) {
+                            if ($data[$pair->pair]['bid'] == 0 || $data[$pair->pair]['bidVolume'] == 0 ||
+                                $data[$pair->pair]['ask'] == 0 || $data[$pair->pair]['askVolume'] == 0) {
+                                $pair->latest_ticked_at  = explode('.', $data[$pair->pair]['datetime'])[0];
+                                Log::error("CCXTSkin > fetchTickers > {$this->exchange->id} > {$pair->pair} last ticked");
+                            } else {
+                                Log::error("CCXTSkin > fetchTickers > {$this->exchange->id} > {$pair->pair} stopped");
+                            }
                             $pair->is_active         = 0;
-                            $pair->latest_ticked_at  = explode('.', $data[$pair->pair]['datetime'])[0];
                             $pair->save();
                             // mail
                             continue;
@@ -233,7 +247,7 @@ class CCXTSkin
     {
         if (!$this->passPreValidationsPreparations()) { throw new Exception('Please setup ccxt dependencies.'); }
 
-        // try {
+        try {
             if ($this->exchange->has['fetchOHLCV']) {
                 foreach ($this->exchange->fetch_ohlcv($this->cryptobotPair->pair, $this->timeframe, $this->since, $this->limit, $params) as $ohlcv) {
                     $data = [];
@@ -266,9 +280,15 @@ class CCXTSkin
         // } catch (ccxt\BaseError $e) {
         //     Log::error("{$this->exchange->id} error (set this exchange to -1 in the database to disable it):\n{$e}");
         //     return false;
-        // } catch (Exception $e) {
-        //     Log::error($e);
-        // }
+        } catch (Exception $e) {
+            if (strpos($e->getMessage(), 'Undefined index:')) {
+                $this->cryptobotPair->is_active  = 0;
+                $this->cryptobotPair->save();
+                Log::error($e);
+            } else {
+                throw $e;
+            }
+        }
 
         // return $cryptobotOhclv;
         return $this;

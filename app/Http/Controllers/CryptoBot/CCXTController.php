@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CryptoBot;
 use App\Http\Controllers\Controller;
 use App\Models\CryptoBot\Exchange;
 use App\Models\CryptoBot\Order;
+use App\Models\CryptoBot\Pair;
 use App\Models\CryptoBot\Strategy;
 use App\Skins\CryptoBot\CCXTSkin;
 use Illuminate\Http\Request;
