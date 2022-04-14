@@ -160,6 +160,14 @@ class CCXTSkin
                 $data = $this->exchange->fetch_tickers($this->cryptobotPair->pluck('pair')->toArray());
                 if ($this->mode != self::MODE_REVIVE) {
                     foreach ($this->cryptobotPair as $pair) {
+                        if (!array_key_exists($pair->pair, $data)) {
+                            Log::error("CCXTSkin > fetchTickers > {$this->exchange->id} > {$pair->pair} stopped");
+                            $pair->is_active         = 0;
+                            $pair->save();
+                            // mail
+                            continue;
+                        }
+
                         foreach (['bid_volume' => 'bidVolume', 'ask_volume' => 'askVolume', 'base_volume' => 'baseVolume', 'quote_volume' => 'quoteVolume'] as $key => $value) {
                             if (array_key_exists($value, $data[$pair->pair])) {
                                 $data[$pair->pair][$key] = $data[$pair->pair][$value];
@@ -167,20 +175,16 @@ class CCXTSkin
                             }
                         }
 
-                        if (!array_key_exists($pair->pair, $data) ||
-                            $data[$pair->pair]['bid'] == 0 || $data[$pair->pair]['bid_volume'] == 0 ||
+                        if ($data[$pair->pair]['bid'] == 0 || $data[$pair->pair]['bid_volume'] == 0 ||
                             $data[$pair->pair]['ask'] == 0 || $data[$pair->pair]['ask_volume'] == 0) {
-                            if (!array_key_exists($pair->pair, $data)) {
-                                Log::error("CCXTSkin > fetchTickers > {$this->exchange->id} > {$pair->pair} stopped");
-                            } else {
-                                $pair->latest_ticked_at  = explode('.', $data[$pair->pair]['datetime'])[0];
-                                Log::error("CCXTSkin > fetchTickers > {$this->exchange->id} > {$pair->pair} last ticked");
-                            }
+                            Log::error("CCXTSkin > fetchTickers > {$this->exchange->id} > {$pair->pair} last ticked");
                             $pair->is_active         = 0;
+                            $pair->latest_ticked_at  = explode('.', $data[$pair->pair]['datetime'])[0];
                             $pair->save();
                             // mail
                             continue;
                         }
+
                         unset($data[$pair->pair]['symbol']);
                         unset($data[$pair->pair]['previousClose']);
                         unset($data[$pair->pair]['info']);
@@ -413,46 +417,17 @@ class CCXTSkin
 
         // try {
             if ($this->exchange->has['fetchBalance']) {
-                dd($this->exchange->fetch_balance($params)['info']['permissions']);
-                dd($this->exchange->fetch_balance($params));
-                foreach ($this->exchange->fetch_balance($params) as $trade) {
-                    $data = [];
-                    $data['cryptobot_exchange_id']  = $this->cryptobotExchange->id;
-                    $data['cryptobot_pair_id']      = $this->cryptobotPair->id;
-                    $data['exchange_trade_id']      = $trade['id'];
-                    $data['exchange_order_id']      = $trade['order'];
-                    $data['timestamp']              = intval($trade['timestamp'] / 1000);
-                    $data['datetime']               = Carbon::createFromTimestamp($data['timestamp'])->toDateTimeString();
-                    if (!empty($trade['type']) && in_array($trade['type'], array(self::TYPE_MARKET, self::TYPE_LIMIT))) {
-                        $data['type']               = $trade['type'];
-                    } else {
-                        $data['type']               = (!empty($trade['takerOrMaker']) && in_array($trade['takerOrMaker'],
-                                                            array(self::TYPE_TAKER, self::TYPE_MAKER))) ? $trade['takerOrMaker'] :
-                                                                null;
-                    }
-                    $data['side']                   = (!empty($trade['side']) && in_array($trade['side'],
-                                                            array(self::SIDE_BUY, self::SIDE_BUY))) ? $trade['side'] : null;
-                    $data['price']                  = $trade['price'];
-                    $data['amount']                 = $trade['amount'];
-                    $data['fee_cost']               = $trade['fee']['cost'] ?? null;
-                    $data['fee_rate']               = $trade['fee']['rate'] ?? null;
-                    $data['fee_currency']           = $trade['fee']['currency'] ?? null;
-                    $data['is_own']                 = true;
-                    // $trade['fees'] = an array with a list of fees I think
-
-                    // $cryptobotTrades[] = Trade::updateOrCreate([
-                    Trade::updateOrCreate([
-                        'cryptobot_exchange_id'  => $data['cryptobot_exchange_id'],
-                        'cryptobot_pair_id'      => $data['cryptobot_pair_id'],
-                        'exchange_trade_id'      => $data['exchange_trade_id'],
-                        'exchange_order_id'      => $data['exchange_order_id']
-                    ], $data);
+                $data = $this->exchange->fetch_balance($params);
+                $balances = [];
+                foreach ($this->cryptobotPair->pluck('pair')->toArray() as $pair) {
+                    $balances[$pair]['free']        = $data[$pair]['free'];
+                    $balances[$pair]['used']        = $data[$pair]['used'];
                 }
-                unset($trade);
                 unset($params);
                 unset($data);
+                unset($pair);
             } else {
-                Log::info("{$this->exchange->id} doesnt have fetchMyTrades.");
+                Log::info("{$this->exchange->id} doesnt have fetchBalance.");
             }
         // } catch (ccxt\AuthenticationError $e) {
         //     Log::error("{$this->exchange->id} needs auth (set this exchange to -1 in the database to disable it)..");
@@ -464,8 +439,9 @@ class CCXTSkin
         //     Log::error($e);
         // }
 
-        // return $cryptobotTrades;
-        return $this;
+        // return $cryptobotBalances;
+        // return $this;
+        return $balances;
     }
 
     // public function createMarketBuyOrder($amount, $price = null, $params = array())

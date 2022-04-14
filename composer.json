@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.2.5",
         "ccxt/ccxt": "^1.64",
+        "chernkiat/moralis-laravel": "dev-main",
         "doctrine/dbal": "^2",
         "drupol/phpermutations": "^1.4",
         "facebook/graph-sdk": "^5.7",

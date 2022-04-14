@@ -5,11 +5,13 @@ namespace App\Http\Controllers\NFTStorage;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Skins\NFTStorage\MoralisSkin;
 
 class ImageController extends Controller
 {
     public function alpha()
     {
+        MoralisSkin::uploadFolder(public_path('\myNFTStorage\Rinkeby Server (Ultimate NFT)'));
         return view('modules.nft_storage.test');
     }
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e4e6171cf7029a2072e73c487ee3cebe",
+    "content-hash": "687be6aaf8e757c397b79f917d169ecd",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -405,6 +405,57 @@
                 }
             ],
             "time": "2022-03-10T22:33:14+00:00"
+        },
+        {
+            "name": "chernkiat/moralis-laravel",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ChernKiat/Moralis.git",
+                "reference": "cf89caab2284f692219fb7851e7f413ff3fef7d4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ChernKiat/Moralis/zipball/cf89caab2284f692219fb7851e7f413ff3fef7d4",
+                "reference": "cf89caab2284f692219fb7851e7f413ff3fef7d4",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "*"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "ChernKiat\\Moralis\\MoralisServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/Helpers/moralis.php"
+                ],
+                "psr-4": {
+                    "ChernKiat\\Moralis\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chern Kiat",
+                    "email": "Kid1450@live.com"
+                }
+            ],
+            "description": "Laravel wrapper package for the moralis.io API",
+            "support": {
+                "issues": "https://github.com/ChernKiat/Moralis/issues",
+                "source": "https://github.com/ChernKiat/Moralis/tree/main"
+            },
+            "time": "2022-04-13T12:21:38+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -8213,12 +8264,14 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "chernkiat/moralis-laravel": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^7.2.5"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.1.0"
 }
