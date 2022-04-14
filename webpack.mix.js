@@ -1,12 +1,12 @@
 const mix = require('laravel-mix');
 
-// mix.js('resources/js/myNFTStorage/main.js', 'public/myNFTStorage/');
-
-// mix.js('resources/js/myHololiveFan/puppeteer/mySubtitlesDownloader.js', 'public/myHololiveFan');
-
 // mix.js('resources/js/app.js', 'public/js')
 //     .sass('resources/sass/app.scss', 'public/css')
 //     .js('resources/js/bootstrap.js', 'public/js');
+
+// mix.js('resources/js/myNFTStorage/main.js', 'public/myNFTStorage/');
+
+// mix.js('resources/js/myHololiveFan/puppeteer/mySubtitlesDownloader.js', 'public/myHololiveFan');
 
 // mix.js('resources/js/plugin.js', 'public/js')
 //     .copy('node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css',

@@ -106,6 +106,10 @@ Route::namespace('Tesseract')->group(function() {
     });
 });
 
+Route::prefix('vanguard-system')->namespace('VanguardSystem')->name('vanguardsystem.')->group(function() {
+    Route::get('/', 'IPFSController@show')->name('ipfs.show');
+});
+
 Route::prefix('vengeance-mail')->namespace('VengeanceMail')->name('vengeancemail.')->group(function() {
     Route::get('send', 'EmailController@sendSpamMail')->name('send.spam.mail');
 });
