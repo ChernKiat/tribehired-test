@@ -1,6 +1,7 @@
 <?php
 namespace App\Models\NFTStorage;
 
+use App\Tools\FileTool;
 use App\Tools\ImageTool;
 use Illuminate\Database\Eloquent\Model;
 use Log;
@@ -93,7 +94,7 @@ class Maneki extends Model
             'image'         => $this->meta_image,
             // 'image_data'    => $this->meta_image,
             'description'   => self::$project_description,
-            'external_url'  => 'https://sealkingdom.xyz/nft-storage/alpha-static', // the static image
+            'external_url'  => route('nftstorage.maneki.static', ['maneki' => $this->maneki]), // the static image
         );
     }
 

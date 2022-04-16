@@ -23,8 +23,21 @@ class ManekiController extends Controller
         }
     }
 
+    public function static(Request $request, $maneki)
+    {
+
+    }
+
+    public function seed()
+    {
+        Maneki::seed();
+        dd('lol');
+    }
+
     public function test()
     {
+        Maneki::generateBaseMetas();
+        dd('yay');
         return view('modules.nft_storage.test');
     }
 }

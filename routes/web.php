@@ -73,7 +73,10 @@ Route::prefix('nft-storage')->namespace('NFTStorage')->name('nftstorage.')->grou
 
     Route::get('test', 'ManekiController@test')->name('test');
 });
-Route::get('{sha256}/maneki/{index}', 'NFTStorage\ManekiController@image')->name('nftstorage.maneki.image');
+Route::domain('sealkingdom.xyz')->namespace('NFTStorage')->name('nftstorage.')->group(function() {
+    Route::get('{sha256}/maneki/{index}', 'ManekiController@image')->name('maneki.image');
+    Route::get('{maneki}/static', 'ManekiController@static')->name('maneki.static');
+});
 Route::get('/', 'NFTStorage\ManekiController@main')->name('nftstorage.maneki.main');
 
 Route::prefix('profile-landing')->namespace('ProfileLanding')->name('profilelanding.')->group(function() {
