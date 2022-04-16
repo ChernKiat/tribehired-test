@@ -11,7 +11,7 @@ class Maneki extends Model
     protected $table = 'nftstorage_manekis';
     // protected $table = 'manekis';
 
-    // protected $guarded = [];
+    protected $guarded = [];
 
     public static $project_name  = 'Maneki Zodiac';
     public static $project_description  = '';
@@ -186,10 +186,16 @@ class Maneki extends Model
             for ($i = 0; $i < $value; $i++) {
                 switch ($key) {
                     case self::TYPE_ADAM:
+                        $maneki = 'adam';
+                        $sha256 = hash('sha256', 'adam');
+                        break;
                     case self::TYPE_EVE:
+                        $maneki = 'eve';
+                        $sha256 = hash('sha256', 'eve');
+                        break;
                     case self::TYPE_SERPENT:
-                        $maneki = null;
-                        $sha256 = null;
+                        $maneki = 'serpent';
+                        $sha256 = hash('sha256', 'serpent');
                         break;
                     case self::TYPE_ZODIAC:
                         $maneki = self::ZODIAC_ORDER_LIST[$i];

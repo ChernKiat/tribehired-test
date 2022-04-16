@@ -19,7 +19,7 @@ class CreateAllNftstorageTables extends Migration
             $table->increments('id');
             $table->unsignedInteger('index')->index();
             $table->text('sha256');
-            $table->tinyInteger('type')->nullable()->after('updated_user_id');
+            $table->tinyInteger('type')->nullable();
             $table->unsignedInteger('unit')->default(1);
             $table->string('maneki', 6)->unique();
             $table->timestamps();
