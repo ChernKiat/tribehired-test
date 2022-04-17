@@ -17,7 +17,7 @@ class ManekiController extends Controller
     {
         $maneki = Maneki::where('index', $index)->first();
         if ($maneki->sha256 == $sha256) {
-            return response()->file($maneki->image);
+            return response()->file($maneki->image_demo);
         } else {
             abort(404);
         }

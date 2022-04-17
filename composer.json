@@ -21,7 +21,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "laravelcollective/html": "^6.3",
-        "spatie/pdf-to-image": "^2.0"
+        "spatie/pdf-to-image": "^2.0",
+        "vanguardapp/plugins": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

@@ -20,7 +20,7 @@
             </li>
 
             <li class="list-inline-item">
-                <a href="{{ route('auth.logout') }}" class="text-custom" title="@lang('Logout')">
+                <a href="{{-- route('auth.logout') --}}" class="text-custom" title="@lang('Logout')">
                     <i class="fas fa-sign-out-alt"></i>
                 </a>
             </li>

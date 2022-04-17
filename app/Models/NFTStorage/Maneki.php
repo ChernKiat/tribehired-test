@@ -98,19 +98,39 @@ class Maneki extends Model
         );
     }
 
+    public function getImageDemoAttribute()
+    {
+        switch ($this->index) {
+            case self::TYPE_ADAM:
+                return public_path('/myNFTStorage/Rinkeby Server (Ultimate NFT)/0.png');
+                break;
+            case self::TYPE_EVE:
+                return public_path("/myNFTStorage/Rinkeby Server (Ultimate NFT)/2.png");
+                break;
+            case self::TYPE_SERPENT:
+                return public_path("/myNFTStorage/Rinkeby Server (Ultimate NFT)/3.png");
+                break;
+            case $this->index > 2:
+                return public_path("/myNFTStorage/Rinkeby Server (Ultimate NFT)/b.png");
+                break;
+            default:
+                break;
+        }
+    }
+
     public function getImageAttribute()
     {
         switch ($this->type) {
             case self::TYPE_ADAM:
-                return response()->file(public_path('/myNFTStorage/input/adam.png'));
+                return public_path('/myNFTStorage/input/adam.png');
                 break;
             case self::TYPE_EVE:
                 $randomCharacter = $this->generateARandomCharacter();
-                return response()->file(public_path("/myNFTStorage/input/eve_{$randomCharacter}.png"));
+                return public_path("/myNFTStorage/input/eve_{$randomCharacter}.png");
                 break;
             case self::TYPE_SERPENT:
                 $randomCharacter = $this->generateARandomCharacter();
-                return response()->file(public_path("/myNFTStorage/input/serpent_{$randomCharacter}.png"));
+                return public_path("/myNFTStorage/input/serpent_{$randomCharacter}.png");
                 break;
             case self::TYPE_ZODIAC:
                 // ?
@@ -119,12 +139,12 @@ class Maneki extends Model
                 $rightCharacter = $this->maneki[0];
                 $leftCharacter = $this->maneki[1];
                 $topRandomCharacter = $this->generateARandomCharacter();
-                return response()->file(public_path("/myNFTStorage/input/couple_{$rightCharacter}_{$leftCharacter}_{$topRandomCharacter}.png"));
+                return public_path("/myNFTStorage/input/couple_{$rightCharacter}_{$leftCharacter}_{$topRandomCharacter}.png");
                 break;
             case self::TYPE_GENESIS:
                 $rightRandomCharacter = $this->generateARandomCharacter($this->maneki);
                 $leftRandomCharacter = $this->generateARandomCharacter($this->maneki . $rightRandomCharacter);
-                return response()->file(public_path("/myNFTStorage/input/genesis_{$rightRandomCharacter}_{$leftRandomCharacter}.png"));
+                return public_path("/myNFTStorage/input/genesis_{$rightRandomCharacter}_{$leftRandomCharacter}.png");
                 break;
             default:
                 break;

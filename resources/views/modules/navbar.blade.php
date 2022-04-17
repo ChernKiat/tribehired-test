@@ -48,7 +48,7 @@
             @hook('navbar:items')
 
             <li class="nav-item d-flex align-items-center visible-lg">
-                @if ($user->hasPermission('support.sendemail') ?? null)
+                @if (false && $user->hasPermission('support.sendemail'))
                     <a class="btn text-danger" data-toggle="modal" data-target="#supportModal" onclick="support_form()">
                         <i class="fas fa-question-circle"></i>
                         @lang('Support')
@@ -63,19 +63,19 @@
                    data-toggle="dropdown"
                    aria-haspopup="true"
                    aria-expanded="false">
-                    <img src="{{ $user->present()->avatar ?? null }}"
+                    <img src="{{ false && $user->present()->avatar }}"
                          width="50"
                          height="50"
                          class="rounded-circle img-thumbnail img-responsive">
                 </a>
                 <div class="dropdown-menu dropdown-menu-right position-absolute p-0" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item py-2" href="{{ route('profile') }}">
+                    <a class="dropdown-item py-2" href="{{-- route('profile') --}}">
                         <i class="fas fa-user text-muted mr-2"></i>
                         @lang('My Profile')
                     </a>
 
                     @if (config('session.driver') == 'database')
-                        <a href="{{ route('profile.sessions') }}" class="dropdown-item py-2">
+                        <a href="{{-- route('profile.sessions') --}}" class="dropdown-item py-2">
                             <i class="fas fa-list text-muted mr-2"></i>
                             @lang('Active Sessions')
                         </a>
@@ -85,7 +85,7 @@
 
                     <div class="dropdown-divider m-0"></div>
 
-                    <a class="dropdown-item py-2" href="{{ route('auth.logout') }}">
+                    <a class="dropdown-item py-2" href="{{-- route('auth.logout') --}}">
                         <i class="fas fa-sign-out-alt text-muted mr-2"></i>
                         @lang('Logout')
                     </a>
@@ -102,7 +102,7 @@
                 <h4 class="modal-title" style="color:white;"><strong>@lang('Contact Support')</strong></h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <form method="post" action="{{ route('support.sendemail') }}" enctype="multipart/form-data">
+            <form method="post" action="{{-- route('support.sendemail') --}}" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <div class="modal-body">
                     <div class="row">
@@ -159,7 +159,7 @@
         // showLoading();
         $.ajax({
             type: "GET",
-            url: "{{ route('support.form') }}",
+            url: "{{-- route('support.form') --}}",
             data: {
                 _token  : $('input[name=_token]').val()
             },
