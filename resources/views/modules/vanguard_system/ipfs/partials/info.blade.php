@@ -41,16 +41,6 @@
             <textarea id="delivery_address" class="form-control input-solid"
                    name="delivery_address" {{ $edit ? 'readonly' : '' }}>{{ $edit && !empty($order->delivery_details) ? $order->delivery_details->delivery_address : old('delivery_address', '') }}</textarea>
         </div>
-
-        <div class="form-group">
-            <label for="delivery_state">@lang('Customer State') <span class="required-icon">*</span></label>
-            <select id="delivery_state" class=" form-control input-solid" name="delivery_state" {{ $edit ? 'disabled' : '' }}>
-                <option value="" {{ $edit ? 'disabled' : '' }}>Please Select</option>
-                @foreach ($states as $key => $state)
-                    <option value="{{ $key }}" {{ $edit && !empty($order->delivery_details) && $order->delivery_details->delivery_state != $key ? 'disabled' : '' }} {{ ($edit && !empty($order->delivery_details) ? $order->delivery_details->delivery_state : old('delivery_state', '')) == $key ? 'selected' : '' }}>{{ $state }}</option>
-                @endforeach
-            </select>
-        </div>
     </div>
 </div>
 

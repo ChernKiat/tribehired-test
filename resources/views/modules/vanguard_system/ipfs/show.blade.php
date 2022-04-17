@@ -58,14 +58,14 @@
                             id="infos"
                             role="tabpanel"
                             aria-labelledby="nav-info-tab">
-                            @include('modules.vanguard_system.ipfs.partials.info', ['edit' => true])
+                            @include('modules.vanguard_system.ipfs.partials.info', ['edit' => false])
                         </div>
 
                         <div class="tab-pane fade px-2"
                             id="statuses"
                             role="tabpanel"
                             aria-labelledby="nav-status-tab">
-                            @include('modules.vanguard_system.ipfs.partials.status', ['edit' => true])
+                            @include('modules.vanguard_system.ipfs.partials.status', ['edit' => false])
                         </div>
                     </div>
                 </div>

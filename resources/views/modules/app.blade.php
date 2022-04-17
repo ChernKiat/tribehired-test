@@ -27,11 +27,11 @@
     @yield('styles')
 </head>
 <body>
-    @include('navbar')
+    @include('modules.navbar')
 
     <div class="container-fluid">
         <div class="row">
-            @include('sidebar')
+            @include('modules.sidebar')
 
             <div class="content-page">
                 <main role="main" class="px-4">

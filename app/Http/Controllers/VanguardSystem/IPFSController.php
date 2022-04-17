@@ -9,7 +9,7 @@ class IPFSController extends Controller
 {
     public function show(Request $request)
     {
-        $user = auth()->user();
+        $user = auth()->user() ?? null;
 
         return view('modules.vanguard_system.ipfs.show', compact('user'));
     }

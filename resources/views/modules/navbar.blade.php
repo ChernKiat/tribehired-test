@@ -1,19 +1,13 @@
 <nav class="navbar fixed-top align-items-start navbar-expand-lg pl-0 pr-0 py-0" >
 
     <div class="navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand mr-0" href="{{ route('main') }}">
+        <a class="navbar-brand mr-0" href="{{-- route('main') --}}">
             <img src="https://mttsolutions.com.my/img/logo.png" class="logo-lg" width="140" />
             <img src="https://mttsolutions.com.my/img/logo.png" class="logo-sm" width="140" />
         </a>
     </div>
 
     <div>
-        @if (app('impersonate')->isImpersonating())
-            <a href="{{ route('impersonate.leave') }}" class="navbar-toggler text-danger hidden-md">
-                <i class="fas fa-user-secret"></i>
-            </a>
-        @endif
-
         <button type="button" id="sidebar-toggle" data-target="#sidebar-nav">
             <small>Navigation</small>
             <i class="fas fa-align-right text-muted"></i>
@@ -40,7 +34,7 @@
 
                 <ol class="breadcrumb mb-0 font-weight-light">
                     <li class="breadcrumb-item">
-                        <a href="{{ route('main') }}" class="text-muted">
+                        <a href="{{-- route('main') --}}" class="text-muted">
                             <i class="fa fa-home"></i>
                         </a>
                     </li>
@@ -51,19 +45,10 @@
         </div>
 
         <ul class="navbar-nav ml-auto pr-3 flex-row">
-            @if (app('impersonate')->isImpersonating())
-                <li class="nav-item d-flex align-items-center visible-lg">
-                    <a href="{{ route('impersonate.leave') }}" class="btn text-danger">
-                        <i class="fas fa-user-secret mr-2"></i>
-                        @lang('Stop Impersonating')
-                    </a>
-                </li>
-            @endif
-
             @hook('navbar:items')
 
             <li class="nav-item d-flex align-items-center visible-lg">
-                @if (auth()->user()->hasPermission('support.sendemail'))
+                @if ($user->hasPermission('support.sendemail') ?? null)
                     <a class="btn text-danger" data-toggle="modal" data-target="#supportModal" onclick="support_form()">
                         <i class="fas fa-question-circle"></i>
                         @lang('Support')
@@ -78,7 +63,7 @@
                    data-toggle="dropdown"
                    aria-haspopup="true"
                    aria-expanded="false">
-                    <img src="{{ auth()->user()->present()->avatar }}"
+                    <img src="{{ $user->present()->avatar ?? null }}"
                          width="50"
                          height="50"
                          class="rounded-circle img-thumbnail img-responsive">
@@ -132,7 +117,7 @@
                                 <label for="item_sku">Contact No. (Contact No. Of Who Is Requesting This Support)</label>
                                 <input type="text" class="form-control input-solid" id="contact_no"
                                     name="contact_no" value="">
-                            </div>  
+                            </div>
 
                             <div class="form-group">
                                 <label for="item_width">@lang('Subject') (Support Title/What Is The Problem)</label>
@@ -150,7 +135,7 @@
                                 <label for="item_sku">Company Name</label>
                                 <input type="text" class="form-control input-solid" id="company_name"
                                     name="company_name" value="">
-                            </div>  
+                            </div>
 
                             <!-- <div class="form-group">
                                 <label for="screenshot">@lang('Screenshot') </label>
@@ -184,7 +169,7 @@
                 $('#company_name').val(response['data']['company_name']);
             },
             complete: function (data) {
-                // hideLoading(); 
+                // hideLoading();
             }
         });
     }

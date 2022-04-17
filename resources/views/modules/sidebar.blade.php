@@ -2,14 +2,14 @@
     <?php /*
     <div class="user-box text-center pt-5 pb-3">
         <div class="user-img">
-            <img src="{{ auth()->user()->present()->avatar }}"
+            <img src="{{ $user->present()->avatar }}"
                  width="90"
                  height="90"
                  alt="user-img"
                  class="rounded-circle img-thumbnail img-responsive">
         </div>
         <h5 class="my-3">
-            <a href="{{ route('profile') }}">{{ auth()->user()->present()->nameOrEmail }}</a>
+            <a href="{{ route('profile') }}">{{ $user->present()->nameOrEmail }}</a>
         </h5>
 
         <ul class="list-inline mb-2">
