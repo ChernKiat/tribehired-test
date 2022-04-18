@@ -11,4 +11,8 @@ contract NFTBulkMintContract is ERC1155 {
             _mint(msg.sender, i, 1, "");
         }
     }
+
+    function contractURI() public view returns (string memory) {
+        return "ipfs://QmX1xfbKoUEHtnoiVY9uEtH3X6YuJx2yzPg6ggp3zrFUzz/metadata/contract.json";
+    }
 }

@@ -36,7 +36,8 @@ class ManekiController extends Controller
 
     public function test()
     {
-        Maneki::generateBaseMetas();
+        // Maneki::generateMetas();
+        // Maneki::generateContractMeta();
         dd('yay');
         return view('modules.nft_storage.test');
     }

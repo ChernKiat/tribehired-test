@@ -29,4 +29,8 @@ contract NFTFullCourseContract is ERC1155, Ownable {
     //     require(msg.sender == address);
     //  _burn(from, id, amount, "");
     // }
+
+    function contractURI() public view returns (string memory) {
+        return "https://tacrcvv49znq.usemoralis.com/contract.json";
+    }
 }

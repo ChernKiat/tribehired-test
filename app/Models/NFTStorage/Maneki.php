@@ -4,6 +4,7 @@ namespace App\Models\NFTStorage;
 use App\Tools\FileTool;
 use App\Tools\ImageTool;
 use Illuminate\Database\Eloquent\Model;
+use Config;
 use Log;
 
 class Maneki extends Model
@@ -14,8 +15,19 @@ class Maneki extends Model
 
     protected $guarded = [];
 
-    public static $project_name  = 'Maneki Zodiac';
-    public static $project_description  = '';
+    const PROJECT_NAME             = 'Maneki Zodiac';
+    const PROJECT_DESCRIPTION      = '12 maneki chinese zodiac spirits who come from another dimension which destined for bringing good fortune to the correct wallet!';
+    const PROJECT_TRANSACTION_FEE  = 0; // 100 = a 1% seller fee
+
+    // const NETWORK_ETHEREUM_MAINNET  = 0;
+    // const NETWORK_RINKEBY_TESTNET   = 1;
+
+    // const WALLET_DEPLOY_ADDRESS_LIST = array(
+    //     self::NETWORK_ETHEREUM_MAINNET  => '0xaa43e38158d656e2B366f4D25274606962c09D72',
+    //     self::NETWORK_RINKEBY_TESTNET   => '0xaa43e38158d656e2B366f4D25274606962c09D72',
+    // );
+
+    const WALLET_DEPLOY_ADDRESS  = '0xaa43e38158d656e2B366f4D25274606962c09D72';
 
     const TYPE_ADAM     = 0;
     const TYPE_EVE      = 1;
@@ -70,34 +82,6 @@ class Maneki extends Model
         // the zodiac image
     }
 
-    public function getMetaNameAttribute()
-    {
-        return self::$project_name . " #{$this->index}";
-    }
-
-    public function getMetaImageAttribute()
-    {
-        return route('nftstorage.maneki.image', ['sha256' => $this->sha256, 'index' => $this->index]);
-    }
-
-    public function getMetaFilenameAttribute()
-    {
-        $filename = "0000000000000000000000000000000000000000000000000000000000000000{$this->index}"; // 64x0
-        $filename = substr($filename, strlen($this->index));
-        return public_path("/myNFTStorage/Rinkeby Server (Ultimate NFT)/{$filename}.json");
-    }
-
-    public function getMetaAttribute()
-    {
-        return array(
-            'name'          => $this->meta_name,
-            'image'         => $this->meta_image,
-            // 'image_data'    => $this->meta_image,
-            'description'   => self::$project_description,
-            'external_url'  => route('nftstorage.maneki.static', ['maneki' => $this->maneki]), // the static image
-        );
-    }
-
     public function getImageDemoAttribute()
     {
         switch ($this->index) {
@@ -105,13 +89,13 @@ class Maneki extends Model
                 return public_path('/myNFTStorage/Rinkeby Server (Ultimate NFT)/0.png');
                 break;
             case self::TYPE_EVE:
-                return public_path("/myNFTStorage/Rinkeby Server (Ultimate NFT)/2.png");
+                return public_path('/myNFTStorage/Rinkeby Server (Ultimate NFT)/2.png');
                 break;
             case self::TYPE_SERPENT:
-                return public_path("/myNFTStorage/Rinkeby Server (Ultimate NFT)/3.png");
+                return public_path('/myNFTStorage/Rinkeby Server (Ultimate NFT)/3.png');
                 break;
             case $this->index > 2:
-                return public_path("/myNFTStorage/Rinkeby Server (Ultimate NFT)/b.png");
+                return public_path('/myNFTStorage/Rinkeby Server (Ultimate NFT)/b.png');
                 break;
             default:
                 break;
@@ -158,21 +142,52 @@ class Maneki extends Model
         return $characters[rand(0, $charactersLength - 1)];
     }
 
-    public static function generateBaseImages()
+    public function getMetaNameAttribute()
     {
-        for ($i = 0; $i < self::ZODIAC_ORDER_LIST; $i++) {
-            // TYPE_EVE
+        return self::PROJECT_NAME . " #{$this->index}";
+    }
 
-            // TYPE_SERPENT
+    public function getMetaImageAttribute()
+    {
+        return route('nftstorage.maneki.image', ['sha256' => $this->sha256, 'index' => $this->index]);
+    }
 
-            for ($j = 0; $j < self::ZODIAC_ORDER_LIST; $j++) {
-                ImageTool::combine2Images(public_path("myNFTStorage\input\right_{$i}.png"), public_path("myNFTStorage\input\left_{$j}.png"), public_path("myNFTStorage\output\genesis_{$i}_{$j}.png"));
+    public function getMetaFilenameAttribute()
+    {
+        $filename = "0000000000000000000000000000000000000000000000000000000000000000{$this->index}"; // 64x0
+        $filename = substr($filename, strlen($this->index));
+        return public_path("/myNFTStorage/Rinkeby Server (Ultimate NFT)/{$filename}.json");
+    }
 
-                for ($k = 0; $k < self::ZODIAC_ORDER_LIST; $k++) {
-                    ImageTool::combine2Images(public_path("myNFTStorage\input\genesis_{$i}_{$j}.png"), public_path("myNFTStorage\input\top_{$k}.png"), public_path("myNFTStorage\output\couple_{$i}_{$j}_{$k}.png"));
-                }
-            }
+    public function getMetaAttribute()
+    {
+        return array(
+            'name'          => $this->meta_name,
+            'description'   => self::PROJECT_DESCRIPTION,
+            'image'         => $this->meta_image,
+            // 'image_data'    => $this->meta_image,
+            'external_url'  => route('nftstorage.maneki.static', ['maneki' => $this->maneki]), // the static image
+        );
+    }
+
+    public static function generateMetas()
+    {
+        $manekis = self::get();
+        foreach ($manekis as $maneki) {
+            FileTool::createAFile($maneki->meta_filename, json_encode($maneki->meta, JSON_UNESCAPED_SLASHES));
         }
+    }
+
+    public static function generateContractMeta()
+    {
+        FileTool::createAFile(public_path('/myNFTStorage/Rinkeby Server (Ultimate NFT)/contract.json'), json_encode(array(
+            'name'                     => self::PROJECT_NAME,
+            'description'              => self::PROJECT_DESCRIPTION,
+            'image'                    => route('nftstorage.maneki.main') . '/myNFTStorage/Rinkeby Server (Ultimate NFT)/contract.png',
+            'external_url'             => route('nftstorage.maneki.main'),
+            'seller_fee_basis_points'  => self::PROJECT_TRANSACTION_FEE,
+            'fee_recipient'            => self::WALLET_DEPLOY_ADDRESS,
+        ), JSON_UNESCAPED_SLASHES));
     }
 
     public static function seed()
@@ -247,11 +262,21 @@ class Maneki extends Model
         }
     }
 
-    public static function generateBaseMetas()
+    public static function generateBaseImages()
     {
-        $manekis = self::get();
-        foreach ($manekis as $maneki) {
-            FileTool::createAFile($maneki->meta_filename, json_encode($maneki->meta, JSON_UNESCAPED_SLASHES));
+        for ($i = 0; $i < self::ZODIAC_ORDER_LIST; $i++) {
+            // TYPE_EVE
+
+            // TYPE_SERPENT
+
+            for ($j = 0; $j < self::ZODIAC_ORDER_LIST; $j++) {
+                ImageTool::combine2Images(public_path("myNFTStorage\input\right_{$i}.png"), public_path("myNFTStorage\input\left_{$j}.png"), public_path("myNFTStorage\output\genesis_{$i}_{$j}.png"));
+
+                for ($k = 0; $k < self::ZODIAC_ORDER_LIST; $k++) {
+                    ImageTool::combine2Images(public_path("myNFTStorage\input\genesis_{$i}_{$j}.png"), public_path("myNFTStorage\input\top_{$k}.png"), public_path("myNFTStorage\output\couple_{$i}_{$j}_{$k}.png"));
+                }
+            }
         }
     }
 }
+
