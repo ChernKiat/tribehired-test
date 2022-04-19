@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Skins\CryptoBot\CCXTSkin;
 
 class CreateAllNftstorageTables extends Migration
 {
@@ -18,10 +17,11 @@ class CreateAllNftstorageTables extends Migration
         {
             $table->increments('id');
             $table->unsignedInteger('index')->index();
-            $table->text('sha256');
-            $table->tinyInteger('type')->nullable();
+            $table->string('hex');
             $table->unsignedInteger('unit')->default(1);
             $table->string('maneki', 6)->unique();
+            $table->text('sha256');
+            $table->tinyInteger('type')->nullable();
             $table->timestamps();
         });
     }

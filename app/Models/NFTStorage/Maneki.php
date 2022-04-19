@@ -163,7 +163,7 @@ class Maneki extends Model
     {
         return array(
             'name'          => $this->meta_name,
-            'description'   => self::PROJECT_DESCRIPTION,
+            'description'   => '', // self::PROJECT_DESCRIPTION,
             'image'         => $this->meta_image,
             // 'image_data'    => $this->meta_image,
             'external_url'  => route('nftstorage.maneki.static', ['maneki' => $this->maneki]), // the static image
@@ -252,11 +252,12 @@ class Maneki extends Model
                 $maneki = self::updateOrCreate([
                     'index'  => $index,
                 ], [
-                    'index'   => $index++,
-                    'sha256'  => $sha256,
-                    'type'    => $key,
+                    'index'   => $index,
+                    'hex'     => dechex($index++),
                     'unit'    => $i,
                     'maneki'  => $maneki,
+                    'sha256'  => $sha256,
+                    'type'    => $key,
                 ]);
             }
         }
