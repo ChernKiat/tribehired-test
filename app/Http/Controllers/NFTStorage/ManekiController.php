@@ -25,7 +25,6 @@ class ManekiController extends Controller
 
     public function static(Request $request, $maneki)
     {
-        'https://api.opensea.io/api/v1/asset/<your_contract_address>/<token_id>/?force_update=true';
     }
 
     public function seed()
@@ -36,9 +35,9 @@ class ManekiController extends Controller
 
     public function test()
     {
-        Maneki::seed();
         // Maneki::generateMetas();
         // Maneki::generateContractMeta();
+        Maneki::refreshMetas();
         dd('yay');
         return view('modules.nft_storage.test');
     }

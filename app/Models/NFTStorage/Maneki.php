@@ -4,6 +4,7 @@ namespace App\Models\NFTStorage;
 use App\Tools\FileTool;
 use App\Tools\ImageTool;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Http;
 use Config;
 use Log;
 
@@ -154,7 +155,7 @@ class Maneki extends Model
 
     public function getMetaFilenameAttribute()
     {
-        $filename = "0000000000000000000000000000000000000000000000000000000000000000{$this->index}"; // 64x0
+        $filename = "0000000000000000000000000000000000000000000000000000000000000000{$this->hex}"; // 64x0
         $filename = substr($filename, strlen($this->index));
         return public_path("/myNFTStorage/Rinkeby Server (Ultimate NFT)/{$filename}.json");
     }
@@ -170,14 +171,6 @@ class Maneki extends Model
         );
     }
 
-    public static function generateMetas()
-    {
-        $manekis = self::get();
-        foreach ($manekis as $maneki) {
-            FileTool::createAFile($maneki->meta_filename, json_encode($maneki->meta, JSON_UNESCAPED_SLASHES));
-        }
-    }
-
     public static function generateContractMeta()
     {
         FileTool::createAFile(public_path('/myNFTStorage/Rinkeby Server (Ultimate NFT)/contract.json'), json_encode(array(
@@ -188,6 +181,25 @@ class Maneki extends Model
             'seller_fee_basis_points'  => self::PROJECT_TRANSACTION_FEE,
             'fee_recipient'            => self::WALLET_DEPLOY_ADDRESS,
         ), JSON_UNESCAPED_SLASHES));
+    }
+
+    public static function generateMetas()
+    {
+        $manekis = self::get();
+        foreach ($manekis as $maneki) {
+            FileTool::createAFile($maneki->meta_filename, json_encode($maneki->meta, JSON_UNESCAPED_SLASHES));
+        }
+    }
+
+    public static function refreshMetas()
+    {
+        $manekis = self::get();
+        foreach ($manekis as $maneki) {
+            $response = Http::get("https://testnets-api.opensea.io/api/v1/asset/0x15e1a50b319864144d92ce281c68f4a176ae69a9/{$maneki->index}", [
+            // $response = Http::get("https://api.opensea.io/api/v1/asset/0x15e1a50b319864144d92ce281c68f4a176ae69a9/{$maneki->index}", [
+                'force_update' => 'true',
+            ]);
+        }
     }
 
     public static function seed()
