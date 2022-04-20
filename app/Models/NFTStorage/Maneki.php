@@ -156,7 +156,7 @@ class Maneki extends Model
     public function getMetaFilenameAttribute()
     {
         $filename = "0000000000000000000000000000000000000000000000000000000000000000{$this->hex}"; // 64x0
-        $filename = substr($filename, strlen($this->index));
+        $filename = substr($filename, strlen($this->hex));
         return public_path("/myNFTStorage/Rinkeby Server (Ultimate NFT)/{$filename}.json");
     }
 
@@ -195,8 +195,8 @@ class Maneki extends Model
     {
         $manekis = self::get();
         foreach ($manekis as $maneki) {
-            $response = Http::get("https://testnets-api.opensea.io/api/v1/asset/0x15e1a50b319864144d92ce281c68f4a176ae69a9/{$maneki->index}", [
-            // $response = Http::get("https://api.opensea.io/api/v1/asset/0x15e1a50b319864144d92ce281c68f4a176ae69a9/{$maneki->index}", [
+            Http::get("https://testnets-api.opensea.io/api/v1/asset/0x15e1a50b319864144d92ce281c68f4a176ae69a9/{$maneki->index}", [
+            // Http::get("https://api.opensea.io/api/v1/asset/0x15e1a50b319864144d92ce281c68f4a176ae69a9/{$maneki->index}", [
                 'force_update' => 'true',
             ]);
         }
