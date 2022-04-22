@@ -3,15 +3,15 @@ mix.webpackConfig({
     resolve: {
         fallback: {
             fs: false,
-            http: false,
-            // http: require.resolve('stream-http'),
-            https: false,
-            // https: require.resolve('https-browserify'),
-            crypto: false,
-            // crypto: require.resolve('crypto-browserify'),
+            // http: false,
+            http: require.resolve('stream-http'),
+            // https: false,
+            https: require.resolve('https-browserify'),
+            // crypto: false,
+            crypto: require.resolve('crypto-browserify'),
             stream: require.resolve('stream-browserify'),
-            zlib: false,
-            // zlib: require.resolve('browserify-zlib'),
+            // zlib: false,
+            zlib: require.resolve('browserify-zlib'),
         },
     },
 });

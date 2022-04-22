@@ -6,6 +6,7 @@ use App\Skins\NFTStorage\Gip;
 use App\Skins\NFTStorage\GipImage;
 use App\Skins\NFTStorage\GipMask;
 use App\Skins\NFTStorage\GipSkin;
+use App\Tools\ImageTool;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class DemoController extends Controller
 {
     public function main()
     {
-        $gipSkin = GipSkin::test('a.jpg', public_path('myNFTStorage'));
+        $gipSkin = ImageTool::changeAColorInBulk('nice.png', public_path('myNFTStorage'), 209, 209, 209, 0, 0, 0);
         dd('lol');
 
         // $gip = new Gip(public_path('myNFTStorage\a.jpg'));

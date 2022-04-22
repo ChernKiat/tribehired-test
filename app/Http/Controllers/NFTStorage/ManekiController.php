@@ -35,9 +35,9 @@ class ManekiController extends Controller
 
     public function test()
     {
-        // Maneki::generateMetas();
+        Maneki::generateMetas();
         // Maneki::generateContractMeta();
-        Maneki::refreshMetas();
+        // Maneki::refreshMetas();
         dd('yay');
         return view('modules.nft_storage.test');
     }
