@@ -3,6 +3,7 @@
 namespace App\Skins\NFTStorage;
 
 use App\Models\CryptoBot\Exchange;
+use App\Tools\ImageTool;
 use Carbon\Carbon;
 use Exception;
 use Log;
@@ -23,29 +24,41 @@ class GipSkin
         $this->limit = 5;
     }
 
-    public static function test($image, $directory)
+    public static function demo($image, $directory, $x = 2, $y = 2)
     {
-        $image = imagecreatefromjpeg("{$directory}\\{$image}");
+        list($width, $height) = getimagesize("{$directory}\\{$image}");
 
-        $red = imagecolorallocate($image, 255, 0, 0);
+        $min_x = floor($width / $x);
+        $min_y = floor($height / $y);
 
-        imagecolortransparent($image, $red);
+        $array_x = array(0);
+        $temp = 0;
+        $balance = $width - ($min_x * $x);
+        for ($i = 0; $i < $x; $i++) {
+            $temp += $min_x;
+            if ($i < $balance) {
+                $temp++;
+            }
+            $array_x[] = $temp;
+        }
+        $array_y = array(0);
+        $temp = 0;
+        $balance = $height - ($min_y * $y);
+        for ($i = 0; $i < $y; $i++) {
+            $temp += $min_y;
+            if ($i < $balance) {
+                $temp++;
+            }
+            $array_y[] = $temp;
+        }
 
-        imagefilledrectangle($image, 40, 40, 500, 25, $red);
+        // $x = rand(0, $x - 1);
+        // $y = rand(0, $y - 1);
 
-        // header('Content-Type: image/png');
-
-        imagepng($image, "{$directory}\\nice.png");
-        imagedestroy($image);
-        dd($image);
-    }
-
-    public function createOrder($type, $side, $amount, $price = null, $params = array())
-    {
-        if (!$this->passPreValidationsPreparations()) { throw new Exception('Please setup ccxt dependencies.'); }
-
-
-        // return $cryptobotTrades;
-        return $this;
+        for ($i=0; $i < $x; $i++) {
+            for ($j=0; $j < $y; $j++) {
+                ImageTool::maskARectangle($image, $directory, $array_x[$i], $array_y[$j], $array_x[$i + 1], $array_y[$j + 1]);
+            }
+        }
     }
 }

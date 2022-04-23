@@ -39,6 +39,24 @@ class ImageTool
         dd($image);
     }
 
+    public static function maskARectangle($image, $directory, $x1, $y1, $x2, $y2, $red = 0, $green = 0, $blue = 0)
+    {
+        list($width, $height) = getimagesize("{$directory}\\{$image}");
+
+        $mask = imagecreatetruecolor($width, $height);
+        $black = imagecolorallocate($mask, $red, $green, $blue);
+
+        $image = imagecreatefromjpeg("{$directory}\\{$image}");
+        // $image = imagecreatefrompng("{$directory}\\{$image}");
+
+        imagefilledrectangle($image, $x1, $y1, $x2, $y2, $black);
+
+        header('Content-Type: image/png');
+        imagepng($image, "{$directory}\\input\\nice_{$x1}_{$y1}.png");
+        imagedestroy($image);
+        // dd($image);
+    }
+
     public static function changeAColorInBulk($image, $directory, $red1, $green1, $blue1, $red2, $green2, $blue2)
     {
         // $image = imagecreatefromjpeg("{$directory}\\{$image}");

@@ -14,7 +14,7 @@ class DemoController extends Controller
 {
     public function main()
     {
-        $gipSkin = ImageTool::changeAColorInBulk('nice.png', public_path('myNFTStorage'), 209, 209, 209, 0, 0, 0);
+        $gipSkin = GipSkin::demo('a.jpg', public_path('myNFTStorage'), 3, 4);
         dd('lol');
 
         // $gip = new Gip(public_path('myNFTStorage\a.jpg'));
