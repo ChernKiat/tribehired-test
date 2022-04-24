@@ -45,8 +45,6 @@
         </div>
 
         <ul class="navbar-nav ml-auto pr-3 flex-row">
-            @hook('navbar:items')
-
             <li class="nav-item d-flex align-items-center visible-lg">
                 @if (false && $user->hasPermission('support.sendemail'))
                     <a class="btn text-danger" data-toggle="modal" data-target="#supportModal" onclick="support_form()">

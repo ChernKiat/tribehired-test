@@ -30,6 +30,7 @@ mix.scripts([
     'public/assets/js/moment.min.js',
     'public/assets/js/sweetalert.min.js',
     'public/assets/js/delete.handler.js',
+    'public/assets/js/all.min.js',
     // 'public/assets/plugins/js-cookie/js.cookie.js',
     'public/vendor/jsvalidation/js/jsvalidation.js',
     'public/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js',
@@ -37,7 +38,7 @@ mix.scripts([
 ], 'public/assets/js/vendor.js');
 
 mix.styles([
-    'public/assets/css/fontawesome-all.min.css',
+    'public/assets/css/all.min.css',
     'public/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css',
     'public/assets/plugins/croppie/croppie.css',
 ], 'public/assets/css/vendor.css');
