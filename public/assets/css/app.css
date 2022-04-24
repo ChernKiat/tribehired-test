@@ -10295,7 +10295,6 @@ label {
 }
 .sidebar .nav-item .nav-link[aria-expanded=false]::after {
   content: "";
-  font-family: "Font Awesome 5 Free";
   display: inline;
   text-align: right;
   padding-left: 5px;
@@ -10306,7 +10305,6 @@ label {
 }
 .sidebar .nav-item .nav-link[aria-expanded=true]::after {
   content: "";
-  font-family: "Font Awesome 5 Free";
   display: inline;
   text-align: right;
   padding-left: 5px;

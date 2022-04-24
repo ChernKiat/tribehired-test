@@ -61,7 +61,7 @@
                    data-toggle="dropdown"
                    aria-haspopup="true"
                    aria-expanded="false">
-                    <img src="{{ false && $user->present()->avatar }}"
+                    <img src="{{ '/assets/img/profile.png' /* $user->present()->avatar */ }}"
                          width="50"
                          height="50"
                          class="rounded-circle img-thumbnail img-responsive">
@@ -78,8 +78,6 @@
                             @lang('Active Sessions')
                         </a>
                     @endif
-
-                    @hook('navbar:dropdown')
 
                     <div class="dropdown-divider m-0"></div>
 
