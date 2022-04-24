@@ -1,4 +1,4 @@
-@extends('modules.app')
+@extends('layouts.app')
 
 @section('page-title', __('View IPFS'))
 @section('page-heading', __('View IPFS'))
@@ -14,7 +14,7 @@
 @stop
 
 @section('content')
-@include('modules.message')
+@include('layouts.message')
 
 <div class="row">
     <div class="col-12 mb-3">
