@@ -72,6 +72,8 @@ Route::prefix('nft-storage')->namespace('NFTStorage')->name('nftstorage.')->grou
     Route::get('nft', 'WalletController@nft')->name('wallet.nft');
 
     Route::get('test', 'ManekiController@test')->name('test');
+
+    Route::get('codecanyon', 'ManekiController@codecanyon')->name('codecanyon');
 });
 Route::domain(Config::get('app.url'))->namespace('NFTStorage')->name('nftstorage.')->group(function() {
 Route::get('/', 'ManekiController@main')->name('maneki.main');
