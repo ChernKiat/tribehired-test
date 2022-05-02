@@ -3,13 +3,13 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" href="img/favicon.png">
+        <link rel="shortcut icon" href="/myNFTStorage/codecanyon/img/favicon.png">
         <title>Frizerie</title>
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/line-awesome.min.css">
-        <link rel="stylesheet" href="css/magnific-popup.css">
-        <link rel="stylesheet" href="css/swiper.min.css">
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="/myNFTStorage/codecanyon/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/myNFTStorage/codecanyon/css/line-awesome.min.css">
+        <link rel="stylesheet" href="/myNFTStorage/codecanyon/css/magnific-popup.css">
+        <link rel="stylesheet" href="/myNFTStorage/codecanyon/css/swiper.min.css">
+        <link rel="stylesheet" href="/myNFTStorage/codecanyon/css/style.css">
     </head>
     <body>
 
@@ -27,7 +27,7 @@
         <!-- navbar -->
         <div id="navbar" class="navbar navbar-expand-lg">
             <div class="container">
-                <a href="#" class="navbar-brand"><img src="img/logo.png" alt=""></a>
+                <a href="#" class="navbar-brand"><img src="/myNFTStorage/codecanyon/img/logo.png" alt=""></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="la la-bars"></i>
                 </button>
@@ -35,10 +35,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#about">Why</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#pricing">How</a></li>
                         <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
                         <li class="nav-item"><a class="nav-link" href="#testimonial">Testimonial</a></li>
                         <li class="nav-item"><a class="nav-link" href="#contact">Contact us</a></li>
                     </ul>
@@ -54,14 +53,14 @@
                 <div class="row g-5 align-items-center reverse">
                     <div class="col-md">
                         <div class="content-img">
-                            <img src="img/intro.png" alt="">
+                            <img src="/myNFTStorage/codecanyon/img/maneki_intro.png" alt="">
                         </div>
                     </div>
                     <div class="col-md-7">
                         <div class="content">
-                            <h1>Professional And Experienced Barbershop</h1>
-                            <p>Lorem ipsum, dolor sit amet consectetur, adipisicing elit. Assumenda, provident ratione quidem iste consequuntur, error, nam saepe unde odit molestiae repellat.</p>
-                            <button class="button">Get Started</button>
+                            <h1>Multiverse NFT</h1>
+                            <p>Multiverse NFT is a new concept of NFTs where character image combinations are being sold rather than unique character images. Our aim is to protect the underlying asset of NFTs while at the same time providing awareness to the public about what people are actually buying.</p>
+                            <button class="button">Visit Us at OpenSea</button>
                         </div>
                     </div>
 
@@ -77,19 +76,23 @@
             <div class="container">
                 <div class="row g-5">
                     <div class="col-md">
-                        <h2>We are certified barbers who have been established ten years ago</h2>
+                        <h2>Why Multiverse NFT?</h2>
                         <div class="content">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime eius autem illum aliquam repellendus voluptatibus officia id magni corporis neque repellat, beatae.</p>
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat iusto, et officia commodi minus nobis illum, similique quas officiis, at provident voluptate nisi libero, repudiandae</p>
-                           <button class="button">Contact us</button>
+                            <p>Whenever people ask us why we buy NFTs, we provide different levels of explanations. From the most complex explanation which is about exclusivity and economy to the simplest conversation as follows:</p>
+                            <p>Person A: Why you buy this NFT? I can easily steal its image by simply right clicking it. That's so dumb.</p>
+                            <p>Person B: So you steal my NFT huh?! Try sells it at OpenSea then...</p>
+                            <p>Which, technically speaking, is not wrong, but maybe not good enough. A secret source is lacking.</p>
                         </div>
                     </div>
                     <div class="col-md">
                         <div class="content-right">
-                            <img src="img/about.png" alt="">
+                            <img src="/myNFTStorage/codecanyon/img/maneki_about.png" alt="">
                             <div class="ceo">
-                                <p>Lore dolor sit amet consectetur adipisicing elit. Corporis corrupti dignissimos neque tempore</p>
-                                <span>John Doe | CEO</span>
+                                <p>The question is,
+                                    <br/>
+                                    <strong>Why Don't We Just Make It Impossible For Them To Steal?</strong>
+                                </p>
+                                <span>PapaSeal</span>
                             </div>
                         </div>
                     </div>
@@ -97,6 +100,64 @@
             </div>
         </div>
         <!-- end about -->
+
+        <!-- pricing -->
+        <div id="pricing" class="pricing">
+            <div class="container">
+                <div class="row g-5">
+                    <div class="col-md-6">
+                        <h2>How does Multiverse NFT works?</h2>
+                        <div class="content">
+                            <p>Take these 2 images as examples.</p>
+                            <p>The one on the left is called ADAM whereas the one on the right is called EVE. They both represent 2 exclusive NFTs for the first batch of Multiverse NFTs, which are not for sale.</p>
+                            <p>Now, try downloading them onto your own computer. Great, now try refreshing the page. Did you see any difference between them with the images you just downloaded? Correct, they are not the same.</p>
+                            <p>You can try to do the same thing again and again, and yes, if you are lucky enough, you will get the same image, but that's not the whole point of this form of NFTs.</p>
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <a href="/myNFTStorage/codecanyon/img/gallery2.png" class="popup-image"><img src="/myNFTStorage/codecanyon/img/gallery2.png" alt="" class="img2"></a>
+                    </div>
+                    <div class="col-md">
+                        <a href="/myNFTStorage/codecanyon/img/gallery1.png" class="popup-image"><img src="/myNFTStorage/codecanyon/img/gallery1.png" alt="" class="img1"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end  pricing -->
+
+                <!-- testimonial -->
+                <div id="testimonial" class="testimonial">
+                    <div class="container">
+                        <div class="swiper mySwiper">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="content">
+                                        <p></p>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="content">
+                                        <p></p>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="content">
+                                        <p></p>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="content">
+                                        <p></p>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="swiper-button-prev prev-slide"></div>
+                            <div class="swiper-button-next next-slide"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end testimonial -->
 
         <!-- team -->
         <div id="team" class="team">
@@ -106,45 +167,41 @@
                 <div class="row g-5">
                     <div class="col-md">
                         <div class="content">
-                            <img src="img/team1.png" alt="">
-                            <h5>John Doe</h5>
+                            <img src="/myNFTStorage/codecanyon/img/team1.png" alt="">
+                            <h5>PapaSeal</h5>
+                            <h6>Developer</h6>
                             <ul>
-                                <li><a href=""><i class="la la-facebook"></i></a></li>
                                 <li><a href=""><i class="la la-twitter"></i></a></li>
-                                <li><a href=""><i class="la la-instagram"></i></a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-md">
                         <div class="content">
-                            <img src="img/team2.png" alt="">
-                            <h5>Jeff Reine</h5>
+                            <img src="/myNFTStorage/codecanyon/img/team2.png" alt="">
+                            <h5>Camper</h5>
+                            <h6>Blockchain Developer</h6>
                             <ul>
-                                <li><a href=""><i class="la la-facebook"></i></a></li>
                                 <li><a href=""><i class="la la-twitter"></i></a></li>
-                                <li><a href=""><i class="la la-instagram"></i></a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-md">
                         <div class="content">
-                            <img src="img/team3.png" alt="">
-                            <h5>Jude B.</h5>
+                            <img src="/myNFTStorage/codecanyon/img/team3.png" alt="">
+                            <h5>Alisa</h5>
+                            <h6>Artist</h6>
                             <ul>
-                                <li><a href=""><i class="la la-facebook"></i></a></li>
                                 <li><a href=""><i class="la la-twitter"></i></a></li>
-                                <li><a href=""><i class="la la-instagram"></i></a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-md">
                         <div class="content">
-                            <img src="img/team4.png" alt="">
+                            <img src="/myNFTStorage/codecanyon/img/team4.png" alt="">
                             <h5>Kimpembe</h5>
+                            <h6>Social Media Manager</h6>
                             <ul>
-                                <li><a href=""><i class="la la-facebook"></i></a></li>
                                 <li><a href=""><i class="la la-twitter"></i></a></li>
-                                <li><a href=""><i class="la la-instagram"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -152,125 +209,6 @@
             </div>
         </div>
         <!-- end team -->
-
-        <!-- pricing -->
-        <div id="pricing" class="pricing">
-            <div class="container">
-                <div class="row g-5">
-                    <div class="col-md-5">
-                        <h2>Our Pricing Plans</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem dicta, corporis culpa numquam iste voluptatem corrupti unde necessitatibus labore aliquam, aspernatur et quibusdam</p>
-                        <button class="button">Get Started</button>
-                    </div>
-                    <div class="col-md">
-                        <div class="content">
-                            <h5>Haircut</h5>
-                            <h2>$10</h2>
-                            <ul>
-                                <li><i class="la la-check"></i> Choose Models</li>
-                                <li><i class="la la-check"></i> Free Shampoo</li>
-                                <li><i class="la la-check"></i> Wifi</li>
-                                <li><i class="la la-check"></i> Free Drink</li>
-                                <li><i class="la la-check"></i> And more</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md">
-                        <div class="content">
-                            <h5>Haircut + Message</h5>
-                            <h2>$15</h2>
-                            <ul>
-                                <li><i class="la la-check"></i> Choose Models</li>
-                                <li><i class="la la-check"></i> Free Shampoo</li>
-                                <li><i class="la la-check"></i> Wifi</li>
-                                <li><i class="la la-check"></i> Free Drink</li>
-                                <li><i class="la la-check"></i> And more</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- end  pricing -->
-
-        <!-- gallery -->
-        <div id="gallery" class="gallery">
-            <div class="container">
-                <span>Gallery</span>
-                <h2>Our Gallery Latest Work</h2>
-                <div class="row g-5">
-                    <div class="col-md-4">
-                        <a href="img/gallery1.png" class="popup-image"><img src="img/gallery1.png" alt="" class="img1"></a>
-                    </div>
-                    <div class="col-md-4">
-                        <a href="img/gallery2.png" class="popup-image"><img src="img/gallery2.png" alt="" class="img2"></a>
-                    </div>
-                    <div class="col-md-4">
-                        <a href="img/gallery3.png" class="popup-image"><img src="img/gallery3.png" alt="" class="img3"></a>
-                    </div>
-                    <div class="col-md-4">
-                        <a href="img/gallery4.png" class="popup-image"><img src="img/gallery4.png" alt="" class="img4"></a>
-                    </div>
-                    <div class="col-md-4">
-                        <a href="img/gallery5.png" class="popup-image"><img src="img/gallery5.png" alt="" class="img5"></a>
-                    </div>
-                    <div class="col-md-4">
-                        <a href="img/gallery6.png" class="popup-image"><img src="img/gallery6.png" alt="" class="img6"></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- end gallery -->
-
-        <!-- testimonial -->
-        <div id="testimonial" class="testimonial">
-            <div class="container">
-                <div class="swiper mySwiper">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div class="content">
-                                <p>Lorem ipsum, dolor sit amet consectetur, adipisicing elit. Voluptas quis vel asperiores incidunt illum placeat ab, ex iste reprehenderit ipsa commodi reicien ipsum, dolor sit amet consectetur, adipisicing elit. Voluptas quis vel asperiores incidunt illum Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi quod culpa placeat accusamus nemo soluta minima assumenda voluptatem nisi architecto tempore facilis aut inventore sunt dolorum aperiam voluptatum, quae! Aliquid.</p>
-                                <div class="text">
-                                    <h5>John Doe</h5>
-                                    <span>Directur</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="content">
-                                <p>Lorem ipsum, dolor sit amet consectetur, adipisicing elit. Voluptas quis vel asperiores incidunt illum placeat ab, ex iste reprehenderit ipsa commodi reicien ipsum, dolor sit amet consectetur, adipisicing elit. Voluptas quis vel asperiores incidunt illum Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est hic quae libero, magni suscipit nihil odio dignissimos sed amet quis temporibus repellat consectetur porro dolores quia aliquam nam aperiam ipsam.</p>
-                                <div class="text">
-                                    <h5>Mario</h5>
-                                    <span>Marketing</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="content">
-                                <p>Lorem ipsum, dolor sit amet consectetur, adipisicing elit. Voluptas quis vel asperiores incidunt illum placeat ab, ex iste reprehenderit ipsa commodi reicien ipsum, dolor sit amet consectetur, adipisicing elit. Voluptas quis vel asperiores incidunt illum Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae sit consequatur odio vitae deserunt. Reiciendis, ea natus id consequatur harum facere mollitia ullam dolorem beatae voluptatibus! Ab nobis, porro pariatur.</p>
-                                <div class="text">
-                                    <h5>Wesley</h5>
-                                    <span>Programming</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="content">
-                                <p>Lorem ipsum, dolor sit amet consectetur, adipisicing elit. Voluptas quis vel asperiores incidunt illum placeat ab, ex iste reprehenderit ipsa commodi reicien ipsum, dolor sit amet consectetur, adipisicing elit. Voluptas quis vel asperiores incidunt illum Lorem, ipsum dolor, sit amet consectetur adipisicing elit. Blanditiis dolorem facilis quia doloremque quibusdam itaque voluptates ex, error, ducimus. Praesentium eveniet tempora tempore id sapiente! In accusamus quod, dolorum odio.</p>
-                                <div class="text">
-                                    <h5>Rami</h5>
-                                    <span>Designer</span>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="swiper-button-prev prev-slide"></div>
-                    <div class="swiper-button-next next-slide"></div>
-                </div>
-            </div>
-        </div>
-        <!-- end testimonial -->
 
         <!-- contact -->
         <div id="contact" class="contact">
@@ -334,11 +272,11 @@
         <!-- end contact -->
 
         <!-- script -->
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.bundle.min.js"></script>
-        <script src="js/magnific-popup.min.js"></script>
-        <script src="js/swiper.min.js"></script>
-        <script src="js/main.js"></script>
+        <script src="/myNFTStorage/codecanyon/js/jquery.min.js"></script>
+        <script src="/myNFTStorage/codecanyon/js/bootstrap.bundle.min.js"></script>
+        <script src="/myNFTStorage/codecanyon/js/magnific-popup.min.js"></script>
+        <script src="/myNFTStorage/codecanyon/js/swiper.min.js"></script>
+        <script src="/myNFTStorage/codecanyon/js/main.js"></script>
 
 
     </body>
