@@ -35,11 +35,12 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#about">Why</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#pricing">How</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#testimonial">Testimonial</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact">Contact us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#why">Why</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#how">How</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#what">What</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#who">Who</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#what">what</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#where">Where</a></li>
                     </ul>
                 </div>
             </div>
@@ -71,8 +72,8 @@
 
 
 
-        <!-- about -->
-        <div id="about" class="about">
+        <!-- why -->
+        <div id="why" class="why">
             <div class="container">
                 <div class="row g-5">
                     <div class="col-md">
@@ -86,7 +87,7 @@
                     </div>
                     <div class="col-md">
                         <div class="content-right">
-                            <img src="/myNFTStorage/codecanyon/img/maneki_about.png" alt="">
+                            <img src="/myNFTStorage/codecanyon/img/maneki_why.png" alt="">
                             <div class="ceo">
                                 <p>The question is,
                                     <br/>
@@ -99,12 +100,18 @@
                 </div>
             </div>
         </div>
-        <!-- end about -->
+        <!-- end why -->
 
-        <!-- pricing -->
-        <div id="pricing" class="pricing">
+        <!-- how -->
+        <div id="how" class="how">
             <div class="container">
                 <div class="row g-5">
+                    <div class="col-md">
+                        <a href="/myNFTStorage/codecanyon/img/how1.png" class="popup-image"><img src="/myNFTStorage/codecanyon/img/how1.png" alt="" class="img1"></a>
+                    </div>
+                    <div class="col-md">
+                        <a href="/myNFTStorage/codecanyon/img/how2.png" class="popup-image"><img src="/myNFTStorage/codecanyon/img/how2.png" alt="" class="img2"></a>
+                    </div>
                     <div class="col-md-6">
                         <h2>How does Multiverse NFT works?</h2>
                         <div class="content">
@@ -114,60 +121,83 @@
                             <p>You can try to do the same thing again and again, and yes, if you are lucky enough, you will get the same image, but that's not the whole point of this form of NFTs.</p>
                         </div>
                     </div>
-                    <div class="col-md">
-                        <a href="/myNFTStorage/codecanyon/img/gallery2.png" class="popup-image"><img src="/myNFTStorage/codecanyon/img/gallery2.png" alt="" class="img2"></a>
+                </div>
+            </div>
+        </div>
+        <!-- end  how -->
+
+        <!-- what -->
+        <div id="what" class="what">
+            <div class="container">
+                <div class="row g-5">
+                    <div class="col-md-7">
+                        <h2>How does Multiverse NFT works?</h2>
+                        <div class="content">
+                            <p>Why are these images not the same?</p>
+                            <p>This is because each Multiverse NFT has more than one what we called the State.</p>
+                            <p>Take ADAM as an example, it has 25 states, which also means if you want to "steal" this NFT completely, you need to first at least refresh this page 25 times and you need to be lucky enough to get all 25 unique states of the collection. After that, find a way to combine them so that you are not wasting your local memory spaces. Pretty cool, wasn't it?</p>
+                            <p>The EVE here has only 12 states, but unlike ADAM, which is originated from 1 single image, EVE originated from a custom number of images uploaded by creators. In this case, it is us.</p>
+                            <p>This shows the potential of how the Multiverse NFTs can change the perspectives of people who buy any NFT. We are not buying the underlying asset actually. We are buying the credits promised by the sellers, the exclusivity provided by the creators, and the perspectives shared by the community, and this is what an NFT is. It is a code, on chain.</p>
+                        </div>
                     </div>
                     <div class="col-md">
-                        <a href="/myNFTStorage/codecanyon/img/gallery1.png" class="popup-image"><img src="/myNFTStorage/codecanyon/img/gallery1.png" alt="" class="img1"></a>
+                        <a href="/myNFTStorage/codecanyon/img/what.png" class="popup-image"><img src="/myNFTStorage/codecanyon/img/gallery1.png" alt="" class="img1"></a>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- end  pricing -->
+        <!-- end  what -->
 
-                <!-- testimonial -->
-                <div id="testimonial" class="testimonial">
-                    <div class="container">
-                        <div class="swiper mySwiper">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <div class="content">
-                                        <p></p>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="content">
-                                        <p></p>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="content">
-                                        <p></p>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="content">
-                                        <p></p>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="swiper-button-prev prev-slide"></div>
-                            <div class="swiper-button-next next-slide"></div>
-                        </div>
+        <!-- what -->
+        <div id="what" class="what">
+            <div class="row g-5">
+                <div class="col-md-7">
+                    <h2>What is Multiverse NFT trying to solve?</h2>
+                    <div class="content">
+                        <p>We break down each batch of Multiverse NFTs into different problems that we are trying and most importantly are able to solve. Coins generated by these NFTs represent credits for using those solutions for free.</p>
                     </div>
                 </div>
-                <!-- end testimonial -->
-
-        <!-- team -->
-        <div id="team" class="team">
+            </div>
             <div class="container">
-                <span>Our Team</span>
-                <h2>Our Professional Team</h2>
+                <div class="swiper mySwiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div class="content">
+                                <p></p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="content">
+                                <p></p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="content">
+                                <p></p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="content">
+                                <p></p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="swiper-button-prev prev-slide"></div>
+                    <div class="swiper-button-next next-slide"></div>
+                </div>
+            </div>
+        </div>
+        <!-- end what -->
+
+        <!-- who -->
+        <div id="who" class="who">
+            <div class="container">
+                <h2>Multiverse NFT Team</h2>
                 <div class="row g-5">
                     <div class="col-md">
                         <div class="content">
-                            <img src="/myNFTStorage/codecanyon/img/team1.png" alt="">
+                            <img src="/myNFTStorage/codecanyon/img/who1.png" alt="">
                             <h5>PapaSeal</h5>
                             <h6>Developer</h6>
                             <ul>
@@ -177,7 +207,7 @@
                     </div>
                     <div class="col-md">
                         <div class="content">
-                            <img src="/myNFTStorage/codecanyon/img/team2.png" alt="">
+                            <img src="/myNFTStorage/codecanyon/img/who2.png" alt="">
                             <h5>Camper</h5>
                             <h6>Blockchain Developer</h6>
                             <ul>
@@ -187,7 +217,7 @@
                     </div>
                     <div class="col-md">
                         <div class="content">
-                            <img src="/myNFTStorage/codecanyon/img/team3.png" alt="">
+                            <img src="/myNFTStorage/codecanyon/img/who3.png" alt="">
                             <h5>Alisa</h5>
                             <h6>Artist</h6>
                             <ul>
@@ -197,7 +227,7 @@
                     </div>
                     <div class="col-md">
                         <div class="content">
-                            <img src="/myNFTStorage/codecanyon/img/team4.png" alt="">
+                            <img src="/myNFTStorage/codecanyon/img/who4.png" alt="">
                             <h5>Kimpembe</h5>
                             <h6>Social Media Manager</h6>
                             <ul>
@@ -208,16 +238,11 @@
                 </div>
             </div>
         </div>
-        <!-- end team -->
+        <!-- end who -->
 
-        <!-- contact -->
-        <div id="contact" class="contact">
+        <!-- where -->
+        <div id="where" class="where">
             <div class="container">
-                <div class="row">
-                    <div class="col-md">
-                        <h2>Get in touch with us <br> & follow me</h2>
-                    </div>
-                </div>
                 <div class="row g-5 align-items-center">
                     <div class="col-md">
                         <div class="open">
@@ -232,8 +257,7 @@
                             <div class="col">
                                 <div class="icon"><i class="la la-phone"></i></div>
                                 <div class="text">
-                                    <h5>Phone</h5>
-                                    <span>+61 3 8376 6284 </span>
+                                    <h5>Terms and Conditions</h5>
                                 </div>
                             </div>
                         </div>
@@ -241,8 +265,7 @@
                             <div class="col">
                                 <div class="icon"><i class="la la-envelope"></i></div>
                                 <div class="text">
-                                    <h5>Email</h5>
-                                    <span> contact@domain.com </span>
+                                    <h5>Privacy Policy</h5>
                                 </div>
                             </div>
                         </div>
@@ -250,18 +273,16 @@
                             <div class="col">
                                 <div class="icon"><i class="la la-university"></i></div>
                                 <div class="text">
-                                    <h5>Barcelona</h5>
-                                    <span>121 King Street, Melbourne Victoria 3000</span>
+                                    <h5>OpenSea</h5>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
                                 <ul>
-                                    <li><a href=""><i class="la la-facebook"></i></a></li>
+                                    <li><a href=""><i class="lab la-discord"></i></a></li>
                                     <li><a href=""><i class="la la-twitter"></i></a></li>
-                                    <li><a href=""><i class="la la-instagram"></i></a></li>
-                                    <li><a href=""><i class="la la-youtube"></i></a></li>
+                                    <li><a href=""><i class="las la-shopping-cart"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -269,7 +290,7 @@
                 </div>
             </div>
         </div>
-        <!-- end contact -->
+        <!-- end where -->
 
         <!-- script -->
         <script src="/myNFTStorage/codecanyon/js/jquery.min.js"></script>

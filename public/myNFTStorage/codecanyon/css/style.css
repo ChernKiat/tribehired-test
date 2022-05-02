@@ -252,22 +252,22 @@ img {
 }
 
 /* ------------------------------
-  about
+  why
 ---------------------------------*/
-.about {
+.why {
   padding-top: 120px;
 }
-.about .content {
+.why .content {
   padding-top: 16px;
   padding-left: 100px;
 }
-.about .content p {
+.why .content p {
   margin-bottom: 20px;
 }
-.about .content .button {
+.why .content .button {
   margin-top: 30px;
 }
-.about .ceo {
+.why .ceo {
   background: #5a6a8c;
   padding: 25px;
   width: 300px;
@@ -275,7 +275,7 @@ img {
   margin-top: -165px;
   position: relative;
 }
-.about .ceo span {
+.why .ceo span {
   font-size: 17px;
   font-weight: 600;
   border-top: 2px solid #fff;
@@ -283,40 +283,40 @@ img {
   display: inline-block;
   padding-top: 10px;
 }
-.about img {
+.why img {
   padding-left: 60px;
 }
 
 /* ------------------------------
-  team
+  who
 ---------------------------------*/
-.team {
+.who {
   padding-top: 120px;
   text-align: center;
 }
-.team h2 {
+.who h2 {
   margin-bottom: 40px;
 }
-.team span {
+.who span {
   font-size: 20px;
   font-weight: 500;
 }
-.team .content {
+.who .content {
   background: #5a6a8c;
   padding-bottom: 25px;
   border-radius: 0 0 3px 3px;
 }
-.team .content h5 {
+.who .content h5 {
   margin-top: 10px;
 }
-.team .content h6 {
+.who .content h6 {
   margin-bottom: 12px;
 }
-.team .content ul li {
+.who .content ul li {
   display: inline-block;
   padding: 0 5px;
 }
-.team .content ul li i {
+.who .content ul li i {
   color: #5a6a8c;
   height: 30px;
   width: 30px;
@@ -326,17 +326,17 @@ img {
   background: #fff;
   font-size: 18px;
 }
-.team .content ul li i:hover {
+.who .content ul li i:hover {
   background: #f5f5f5;
 }
 
 /* ------------------------------
-  pricing
+  how
 ---------------------------------*/
-.pricing {
+.how {
   padding-top: 140px;
 }
-.pricing .content p {
+.how .content p {
   margin-bottom: 20px;
 }
 
@@ -377,76 +377,76 @@ img {
 }
 
 /* ------------------------------
-  testimonial
+  what
 ---------------------------------*/
-.testimonial {
+.what {
   padding-top: 150px;
 }
-.testimonial .swiper-button-next {
+.what .swiper-button-next {
   right: 10px;
   left: 25%;
   position: relative;
   margin-left: 42px;
   top: -22px;
 }
-.testimonial .swiper-button-prev {
+.what .swiper-button-prev {
   position: relative;
   left: 25%;
 }
-.testimonial .swiper .content {
+.what .swiper .content {
   text-align: center;
   padding: 32px 25%;
   text-align: justify;
   text-justify: inter-word;
 }
-.testimonial .swiper .content span {
+.what .swiper .content span {
   font-weight: 600;
   font-size: 14px;
   position: relative;
   top: -12px;
   color: #aaa;
 }
-.testimonial .swiper .content h5 {
+.what .swiper .content h5 {
   color: #fff;
 }
-.testimonial .swiper-button-next::after, .testimonial .swiper-button-prev::after {
+.what .swiper-button-next::after, .what .swiper-button-prev::after {
   color: #5a6a8c;
 }
 
 /* ------------------------------
-  contact
+  where
 ---------------------------------*/
-.contact {
+.where {
   margin-top: 120px;
   padding-top: 70px;
   padding-bottom: 100px;
   background: linear-gradient(270deg, #5a6a8c 71%, transparent 29%);
 }
-.contact h2 {
+.where h2 {
   color: #fff;
   margin-bottom: 40px;
 }
-.contact .open {
+.where .open {
   padding: 160px 0 120px;
-  background: linear-gradient(rgba(90, 106, 140, 0.1), rgba(90, 106, 140, 0.1)), url(../img/contact.png) center no-repeat;
+  background: linear-gradient(rgba(90, 106, 140, 0.1), rgba(90, 106, 140, 0.1)), url(../img/where.png) center no-repeat;
   background-size: cover;
   color: #090909;
   height: 100%;
   text-align: center;
   padding-top: 22%;
 }
-.contact .open span {
+.where .open span {
   font-size: 22px;
   margin-bottom: 30px;
   display: block;
 }
-.contact .row .row .col {
+.where .row .row .col {
   margin-top: 25px;
 }
-.contact ul li {
+.where ul li {
   display: inline-block;
 }
-.contact ul li i {
+.where ul li i {
   color: #fff;
   background: #5a6a8c;
   height: 30px;
@@ -454,20 +454,20 @@ img {
   margin-right: 10px;
 }
 
-.contact .icon {
+.where .icon {
   float: left;
   margin-right: 20px;
 }
 
-.contact .text {
+.where .text {
   overflow: hidden;
 }
 
-.contact .content-map {
+.where .content-map {
   margin-bottom: 40px;
 }
 
-.contact i {
+.where i {
   height: 60px;
   width: 60px;
   background: #fff;
@@ -478,7 +478,7 @@ img {
   margin-bottom: 20px;
 }
 
-.contact h5 {
+.where h5 {
   margin-top: -11px;
 }
 
@@ -512,45 +512,45 @@ img {
     flex-direction: column-reverse !important;
   }
 
-  .about .col-md {
+  .why .col-md {
     width: 100%;
     flex: 100%;
   }
 
-  .about .content {
+  .why .content {
     padding-left: 0;
   }
 
-  .about img {
+  .why img {
     padding-left: 0;
   }
 
-  .team .col-md {
+  .who .col-md {
     flex: 50%;
     width: 50%;
   }
 
-  .pricing .col-md-6 {
+  .how .col-md-6 {
     flex: 100%;
   }
-  .pricing .col-md {
+  .how .col-md {
     flex: 50%;
   }
 
-  .contact .open {
+  .where .open {
     padding-top: 38%;
   }
 
-  .testimonial .swiper .content {
+  .what .swiper .content {
     padding-left: 15%;
     padding-right: 15%;
   }
 
-  .testimonial .swiper-button-next {
+  .what .swiper-button-next {
     left: 15%;
   }
 
-  .testimonial .swiper-button-prev {
+  .what .swiper-button-prev {
     left: 15%;
   }
 }
@@ -577,25 +577,25 @@ img {
     margin-top: 25px;
   }
 
-  .team .g-5, .team .gy-5 {
+  .who .g-5, .who .gy-5 {
     --bs-gutter-y: 2rem;
   }
-  .team .g-5, .team .gx-5 {
+  .who .g-5, .who .gx-5 {
     --bs-gutter-x: 2rem;
   }
 
-  .pricing .g-5, .pricing .gy-5 {
+  .how .g-5, .how .gy-5 {
     --bs-gutter-y: 2rem;
   }
-  .pricing .g-5, .pricing .gx-5 {
+  .how .g-5, .how .gx-5 {
     --bs-gutter-x: 2rem;
   }
 
-  .contact {
+  .where {
     background: linear-gradient(270deg, #242524 71%, #242524 29%);
   }
 
-  .contact ul li i {
+  .where ul li i {
     color: #fff;
     background: #5a6a8c;
     height: 50px;
@@ -619,21 +619,21 @@ img {
     margin-right: 0;
   }
 
-  .about .ceo {
+  .why .ceo {
     margin-top: -90px;
     width: 100%;
   }
 
-  .about img {
+  .why img {
     margin-bottom: 30px;
   }
 
-  .team .col-md {
+  .who .col-md {
     flex: 100%;
     margin-top: 30px;
   }
 
-  .pricing .col-md {
+  .how .col-md {
     margin-top: 30px;
   }
 
@@ -641,28 +641,28 @@ img {
     margin-top: 30px;
   }
 
-  .testimonial .swiper .content {
+  .what .swiper .content {
     padding-left: 0;
     padding-right: 0;
   }
 
-  .testimonial .swiper-button-next {
+  .what .swiper-button-next {
     left: 0;
   }
 
-  .testimonial .swiper-button-prev {
+  .what .swiper-button-prev {
     left: 0;
   }
 
-  .testimonial {
+  .what {
     padding-top: 90px;
   }
 
-  .contact {
+  .where {
     margin-top: 30px;
   }
 
-  .contact .open {
+  .where .open {
     height: 360px;
   }
 }

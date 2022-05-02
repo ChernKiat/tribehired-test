@@ -1,5 +1,6 @@
 Multiverse NFT is a new concept of NFTs where character image combinations are being sold rather than unique character images. Our aim is to protect the underlying asset of NFTs while at the same time providing awareness to the public about what people are actually buying.
 
+
 Whenever people ask us why we buy NFTs, we provide different levels of explanations. From the most complex explanation which is about exclusivity and economy to the simplest conversation as follows:
 Person A: Why you buy this NFT? I can easily steal its image by simply right clicking it. That's so dumb.
 Person B: So you steal my NFT huh?! Try sells it at OpenSea then...
@@ -7,7 +8,9 @@ Which, technically speaking, is not wrong, but maybe not good enough. A secret s
 
 The question is, Why Don't We Just Make It Impossible For Them To Steal?
 
+
 Take these 2 images as examples. The one on the left is called ADAM whereas the one on the right is called EVE. They both represent 2 exclusive NFTs for the first batch of Multiverse NFTs, which are not for sale. Now, try downloading them onto your own computer. Great, now try refreshing the page. Did you see any difference between them with the images you just downloaded? Correct, they are not the same. You can try to do the same thing again and again, and yes, if you are lucky enough, you will get the same image, but that's not the whole point of this form of NFTs.
+
 
 Why are these images not the same? This is because each Multiverse NFT has more than one what we called the State. Take ADAM as an example, it has 25 states, which also means if you want to "steal" this NFT completely, you need to first at least refresh this page 25 times and you need to be lucky enough to get all 25 unique states of the collection. After that, find a way to combine them so that you are not wasting your local memory spaces. Pretty cool, wasn't it? The EVE here has only 12 states, but unlike ADAM, which is originated from 1 single image, EVE originated from a custom number of images uploaded by creators. In this case, it is us. This shows the potential of how the Multiverse NFTs can change the perspectives of people who buy any NFT. We are not buying the underlying asset actually. We are buying the credits promised by the sellers, the exclusivity provided by the creators, and the perspectives shared by the community, and this is what an NFT is. It is a code, on chain.
 
