@@ -43,6 +43,7 @@
 
     <script src="{{ mix('assets/js/vendor.js') }}"></script>
     <script src="/assets/js/as/app.js"></script>
+
     @yield('scripts')
 </body>
 </html>

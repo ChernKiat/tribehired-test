@@ -6925,77 +6925,10 @@ function hasOwnProperty(obj, prop) {
 /*!************************************************!*\
   !*** ./resources/js/myNFTStorage/waifulabs.js ***!
   \************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ (() => {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var fs_promises__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! fs/promises */ "?d312");
-/* harmony import */ var fs_promises__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(fs_promises__WEBPACK_IMPORTED_MODULE_1__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-// import WaifuSocket from './index.js';
-
-
-var WaifuSocket = __webpack_require__(/*! waifusocket */ "./node_modules/waifusocket/index.js"); // let fs = require('fs/promises');
-
-
-_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-  var ws;
-  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
-    while (1) {
-      switch (_context2.prev = _context2.next) {
-        case 0:
-          _context2.next = 2;
-          return new WaifuSocket().login('SFMyNTY.g2gDbQAAACBYkXCBc7hS676XBwDeoCVxSBR0nJkhI45vu583VwcgT24GAERvH6x_AWIATxoA.I6Yh1lNFZRoJw5Nofsq0C2Qndqwdl10VjVFTiJ5GpJQ');
-
-        case 2:
-          ws = _context2.sent;
-          ws.once('ready', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-            var grid, big;
-            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-              while (1) {
-                switch (_context.prev = _context.next) {
-                  case 0:
-                    _context.next = 2;
-                    return ws.genGrid();
-
-                  case 2:
-                    grid = _context.sent;
-                    console.log(grid.length);
-                    _context.next = 6;
-                    return ws.genBig(grid[0].seeds);
-
-                  case 6:
-                    big = _context.sent;
-                    _context.next = 9;
-                    return fs_promises__WEBPACK_IMPORTED_MODULE_1___default().writeFile('./image.png', big.image);
-
-                  case 9:
-                    ws.close();
-
-                  case 10:
-                  case "end":
-                    return _context.stop();
-                }
-              }
-            }, _callee);
-          })));
-
-        case 4:
-        case "end":
-          return _context2.stop();
-      }
-    }
-  }, _callee2);
-}))()["catch"](function (e) {
-  console.log(e);
-});
+throw new Error("Module parse failed: The top-level-await experiment is not enabled (set experiments.topLevelAwait: true to enabled it)\nFile was processed with these loaders:\n * ./node_modules/babel-loader/lib/index.js\nYou may need an additional loader to handle the result of these loaders.\nError: The top-level-await experiment is not enabled (set experiments.topLevelAwait: true to enabled it)\n    at C:\\Users\\Kid14\\Desktop\\Laravel Project\\seal\\node_modules\\webpack\\lib\\dependencies\\HarmonyDetectionParserPlugin.js:54:11\n    at Hook.eval [as call] (eval at create (C:\\Users\\Kid14\\Desktop\\Laravel Project\\seal\\node_modules\\tapable\\lib\\HookCodeFactory.js:19:10), <anonymous>:7:16)\n    at Hook.CALL_DELEGATE [as _call] (C:\\Users\\Kid14\\Desktop\\Laravel Project\\seal\\node_modules\\tapable\\lib\\Hook.js:14:14)\n    at JavascriptParser.walkAwaitExpression (C:\\Users\\Kid14\\Desktop\\Laravel Project\\seal\\node_modules\\webpack\\lib\\javascript\\JavascriptParser.js:2320:29)\n    at JavascriptParser.walkExpression (C:\\Users\\Kid14\\Desktop\\Laravel Project\\seal\\node_modules\\webpack\\lib\\javascript\\JavascriptParser.js:2250:10)\n    at JavascriptParser.walkVariableDeclaration (C:\\Users\\Kid14\\Desktop\\Laravel Project\\seal\\node_modules\\webpack\\lib\\javascript\\JavascriptParser.js:2104:33)\n    at JavascriptParser.walkStatement (C:\\Users\\Kid14\\Desktop\\Laravel Project\\seal\\node_modules\\webpack\\lib\\javascript\\JavascriptParser.js:1598:10)\n    at JavascriptParser.walkStatements (C:\\Users\\Kid14\\Desktop\\Laravel Project\\seal\\node_modules\\webpack\\lib\\javascript\\JavascriptParser.js:1459:9)\n    at JavascriptParser.parse (C:\\Users\\Kid14\\Desktop\\Laravel Project\\seal\\node_modules\\webpack\\lib\\javascript\\JavascriptParser.js:3353:9)\n    at C:\\Users\\Kid14\\Desktop\\Laravel Project\\seal\\node_modules\\webpack\\lib\\NormalModule.js:1087:26");
 
 /***/ }),
 
@@ -85649,18 +85582,6 @@ module.exports = JSON.parse('{"2.16.840.1.101.3.4.1.1":"aes-128-ecb","2.16.840.1
 /******/ 				}
 /******/ 			}
 /******/ 			return result;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
 /******/ 		};
 /******/ 	})();
 /******/ 	
