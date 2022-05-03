@@ -39,7 +39,7 @@
                         <li class="nav-item"><a class="nav-link" href="#how">How</a></li>
                         <li class="nav-item"><a class="nav-link" href="#what">What</a></li>
                         <li class="nav-item"><a class="nav-link" href="#who">Who</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#what">what</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#testimonial">Testimonial</a></li>
                         <li class="nav-item"><a class="nav-link" href="#where">Where</a></li>
                     </ul>
                 </div>

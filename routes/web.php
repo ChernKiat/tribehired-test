@@ -72,13 +72,14 @@ Route::prefix('nft-storage')->namespace('NFTStorage')->name('nftstorage.')->grou
     Route::get('nft', 'WalletController@nft')->name('wallet.nft');
 
     Route::get('test', 'ManekiController@test')->name('test');
-
-    Route::get('codecanyon', 'ManekiController@codecanyon')->name('codecanyon');
 });
 Route::domain(Config::get('app.url'))->namespace('NFTStorage')->name('nftstorage.')->group(function() {
-Route::get('/', 'ManekiController@main')->name('maneki.main');
+// Route::get('/', 'ManekiController@main')->name('maneki.main');
     Route::get('{sha256}/maneki/{index}', 'ManekiController@image')->name('maneki.image');
     Route::get('{maneki}/static', 'ManekiController@static')->name('maneki.static');
+
+Route::get('/', 'MultiverseController@main')->name('multiverse.main');
+    Route::get('{sha256}/multiverse/{multiverse}', 'MultiverseController@image')->name('multiverse.image');
 });
 
 Route::prefix('profile-landing')->namespace('ProfileLanding')->name('profilelanding.')->group(function() {
