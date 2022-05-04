@@ -19,6 +19,7 @@ class CreateAllNftstorageTables2 extends Migration
             $table->string('name')->unique();
             $table->text('description')->nullable();
             $table->smallInteger('transaction_fee')->default(0);
+            $table->string('wallet_address')->nullable();
             $table->timestamps();
         });
 
@@ -31,7 +32,9 @@ class CreateAllNftstorageTables2 extends Migration
             $table->unsignedInteger('unit')->default(1);
             $table->unsignedInteger('states_total')->default(1);
             $table->string('random')->nullable();
+            $table->string('extension', 8);
             $table->text('sha256');
+            $table->tinyInteger('type')->default(1);
             $table->timestamps();
         });
     }

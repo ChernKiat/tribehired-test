@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\NFTStorage;
 
 use App\Http\Controllers\Controller;
-use App\Models\NFTStorage\Maneki;
+use App\Models\NFTStorage\Multiverse;
 use Illuminate\Http\Request;
 
 class MultiverseController extends Controller
@@ -13,11 +13,13 @@ class MultiverseController extends Controller
         return view('modules.nft_storage.c');
     }
 
-    public function image(Request $request, $sha256, $index)
+    public function image(Request $request, $sha256, $multiverse)
     {
-        $maneki = Maneki::where('index', $index)->first();
-        if ($maneki->sha256 == $sha256) {
-            return response()->file($maneki->image_demo);
+        $multiverse = Multiverse::with(['asset' => function ($query) use ($sha256) {
+                            $query->where('sha256', $sha256);
+                        }])->where('name', $multiverse)->first();
+        if (!empty($multiverse->asset)) {
+            return response()->file($multiverse->asset->image);
         } else {
             abort(404);
         }
@@ -25,10 +27,10 @@ class MultiverseController extends Controller
 
     public function test()
     {
-        Maneki::generateMetas();
-        // Maneki::generateContractMeta();
-        // Maneki::refreshMetas();
+        $multiverse = Multiverse::with(['asset'])->where('name', 'Maneki Zodiac')->first();
+        $multiverse->generateMetas();
+        // $multiverse->getMetaAttribute();
+        // $multiverse->refreshMetas();
         dd('yay');
-        return view('modules.nft_storage.test');
     }
 }

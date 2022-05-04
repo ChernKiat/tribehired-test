@@ -23,12 +23,16 @@ class Maneki extends Model
     // const NETWORK_ETHEREUM_MAINNET  = 0;
     // const NETWORK_RINKEBY_TESTNET   = 1;
 
-    // const WALLET_DEPLOY_ADDRESS_LIST = array(
+    // const WALLET_DEFAULT_DEPLOY_ADDRESS_LIST = array(
     //     self::NETWORK_ETHEREUM_MAINNET  => '0xaa43e38158d656e2B366f4D25274606962c09D72',
     //     self::NETWORK_RINKEBY_TESTNET   => '0xaa43e38158d656e2B366f4D25274606962c09D72',
     // );
 
-    const WALLET_DEPLOY_ADDRESS  = '0xaa43e38158d656e2B366f4D25274606962c09D72';
+    const WALLET_DEFAULT_DEPLOY_ADDRESS  = '0xaa43e38158d656e2B366f4D25274606962c09D72';
+
+    const PATH_INPUT_FOLDER           = '/myNFTStorage/input/';
+    const PATH_OUTPUT_FOLDER          = '/myNFTStorage/output/';
+    const PATH_RINKEBY_SERVER_FOLDER  = '/myNFTStorage/Rinkeby Server (Ultimate NFT)/';
 
     const TYPE_ADAM     = 0;
     const TYPE_EVE      = 1;
@@ -87,16 +91,16 @@ class Maneki extends Model
     {
         switch ($this->index) {
             case self::TYPE_ADAM:
-                return public_path('/myNFTStorage/Rinkeby Server (Ultimate NFT)/0.png');
+                return public_path(self::PATH_RINKEBY_SERVER_FOLDER . '0.png');
                 break;
             case self::TYPE_EVE:
-                return public_path('/myNFTStorage/Rinkeby Server (Ultimate NFT)/2.png');
+                return public_path(self::PATH_RINKEBY_SERVER_FOLDER . '2.png');
                 break;
             case self::TYPE_SERPENT:
-                return public_path('/myNFTStorage/Rinkeby Server (Ultimate NFT)/3.png');
+                return public_path(self::PATH_RINKEBY_SERVER_FOLDER . '3.png');
                 break;
             case $this->index > 2:
-                return public_path('/myNFTStorage/Rinkeby Server (Ultimate NFT)/b.png');
+                return public_path(self::PATH_RINKEBY_SERVER_FOLDER . 'b.png');
                 break;
             default:
                 break;
@@ -107,15 +111,15 @@ class Maneki extends Model
     {
         switch ($this->type) {
             case self::TYPE_ADAM:
-                return public_path('/myNFTStorage/input/adam.png');
+                return public_path(self::PATH_INPUT_FOLDER . 'adam.png');
                 break;
             case self::TYPE_EVE:
                 $randomCharacter = $this->generateARandomCharacter();
-                return public_path("/myNFTStorage/input/eve_{$randomCharacter}.png");
+                return public_path(self::PATH_INPUT_FOLDER . "eve_{$randomCharacter}.png");
                 break;
             case self::TYPE_SERPENT:
                 $randomCharacter = $this->generateARandomCharacter();
-                return public_path("/myNFTStorage/input/serpent_{$randomCharacter}.png");
+                return public_path(self::PATH_INPUT_FOLDER . "serpent_{$randomCharacter}.png");
                 break;
             case self::TYPE_ZODIAC:
                 // ?
@@ -124,12 +128,12 @@ class Maneki extends Model
                 $rightCharacter = $this->maneki[0];
                 $leftCharacter = $this->maneki[1];
                 $topRandomCharacter = $this->generateARandomCharacter();
-                return public_path("/myNFTStorage/input/couple_{$rightCharacter}_{$leftCharacter}_{$topRandomCharacter}.png");
+                return public_path(self::PATH_INPUT_FOLDER . "couple_{$rightCharacter}_{$leftCharacter}_{$topRandomCharacter}.png");
                 break;
             case self::TYPE_GENESIS:
                 $rightRandomCharacter = $this->generateARandomCharacter($this->maneki);
                 $leftRandomCharacter = $this->generateARandomCharacter($this->maneki . $rightRandomCharacter);
-                return public_path("/myNFTStorage/input/genesis_{$rightRandomCharacter}_{$leftRandomCharacter}.png");
+                return public_path(self::PATH_INPUT_FOLDER . "genesis_{$rightRandomCharacter}_{$leftRandomCharacter}.png");
                 break;
             default:
                 break;
@@ -137,7 +141,8 @@ class Maneki extends Model
         return route('nftstorage.maneki.image', ['sha256' => $this->sha256, 'index' => $this->index]);
     }
 
-    public function generateARandomCharacter($offset = '') {
+    public function generateARandomCharacter($offset = '')
+    {
         $characters = preg_replace("/[{$offset}]/", '', self::ZODIAC_ALL);
         $charactersLength = strlen($characters);
         return $characters[rand(0, $charactersLength - 1)];
@@ -157,7 +162,7 @@ class Maneki extends Model
     {
         $filename = "0000000000000000000000000000000000000000000000000000000000000000{$this->hex}"; // 64x0
         $filename = substr($filename, strlen($this->hex));
-        return public_path("/myNFTStorage/Rinkeby Server (Ultimate NFT)/{$filename}.json");
+        return public_path(self::PATH_RINKEBY_SERVER_FOLDER . "{$filename}.json");
     }
 
     public function getMetaAttribute()
@@ -167,34 +172,32 @@ class Maneki extends Model
             'description'   => '', // self::PROJECT_DESCRIPTION,
             'image'         => $this->meta_image,
             // 'image_data'    => $this->meta_image,
-            'external_url'  => route('nftstorage.maneki.static', ['maneki' => $this->maneki]), // the static image
+            'external_url'  => route('nftstorage.maneki.static', ['sha256' => $this->sha256, 'index' => $this->index]), // the static image
         );
     }
 
     public static function generateContractMeta()
     {
-        FileTool::createAFile(public_path('/myNFTStorage/Rinkeby Server (Ultimate NFT)/contract.json'), json_encode(array(
+        FileTool::createAFile(public_path(self::PATH_RINKEBY_SERVER_FOLDER . 'contract.json'), json_encode(array(
             'name'                     => self::PROJECT_NAME,
             'description'              => self::PROJECT_DESCRIPTION,
-            'image'                    => route('nftstorage.maneki.main') . '/myNFTStorage/Rinkeby Server (Ultimate NFT)/contract.png',
+            'image'                    => route('nftstorage.maneki.main') . self::PATH_RINKEBY_SERVER_FOLDER . 'contract.png',
             'external_url'             => route('nftstorage.maneki.main'),
             'seller_fee_basis_points'  => self::PROJECT_TRANSACTION_FEE,
-            'fee_recipient'            => self::WALLET_DEPLOY_ADDRESS,
+            'fee_recipient'            => self::WALLET_DEFAULT_DEPLOY_ADDRESS,
         ), JSON_UNESCAPED_SLASHES));
     }
 
     public static function generateMetas()
     {
-        $manekis = self::get();
-        foreach ($manekis as $maneki) {
+        foreach (self::get() as $maneki) {
             FileTool::createAFile($maneki->meta_filename, json_encode($maneki->meta, JSON_UNESCAPED_SLASHES));
         }
     }
 
     public static function refreshMetas()
     {
-        $manekis = self::get();
-        foreach ($manekis as $maneki) {
+        foreach (self::get() as $maneki) {
             Http::get("https://testnets-api.opensea.io/api/v1/asset/0x15e1a50b319864144d92ce281c68f4a176ae69a9/{$maneki->index}", [
             // Http::get("https://api.opensea.io/api/v1/asset/0x15e1a50b319864144d92ce281c68f4a176ae69a9/{$maneki->index}", [
                 'force_update' => 'true',
@@ -283,10 +286,10 @@ class Maneki extends Model
             // TYPE_SERPENT
 
             for ($j = 0; $j < self::ZODIAC_ORDER_LIST; $j++) {
-                ImageTool::combine2Images(public_path("myNFTStorage\input\right_{$i}.png"), public_path("myNFTStorage\input\left_{$j}.png"), public_path("myNFTStorage\output\genesis_{$i}_{$j}.png"));
+                ImageTool::combine2Images(public_path(self::PATH_INPUT_FOLDER . "right_{$i}.png"), public_path(self::PATH_INPUT_FOLDER . "left_{$j}.png"), public_path(self::PATH_OUTPUT_FOLDER . "genesis_{$i}_{$j}.png"));
 
                 for ($k = 0; $k < self::ZODIAC_ORDER_LIST; $k++) {
-                    ImageTool::combine2Images(public_path("myNFTStorage\input\genesis_{$i}_{$j}.png"), public_path("myNFTStorage\input\top_{$k}.png"), public_path("myNFTStorage\output\couple_{$i}_{$j}_{$k}.png"));
+                    ImageTool::combine2Images(public_path(self::PATH_INPUT_FOLDER . "genesis_{$i}_{$j}.png"), public_path(self::PATH_INPUT_FOLDER . "top_{$k}.png"), public_path(self::PATH_OUTPUT_FOLDER . "couple_{$i}_{$j}_{$k}.png"));
                 }
             }
         }
