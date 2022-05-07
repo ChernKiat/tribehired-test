@@ -1,0 +1,359 @@
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+html,button,input,select,textarea {
+color:#222;
+}
+html {
+font-size:1em;
+line-height:1.4;
+}
+/*
+ * Remove text-shadow in selection highlight: h5bp.com/i
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+::-moz-selection {
+background: #b3d4fc;
+text-shadow: none;
+}
+::selection {
+background: #b3d4fc;
+text-shadow: none;
+}
+/*
+ * A better looking default horizontal rule
+ */
+hr {
+display: block;
+height: 1px;
+border: 0;
+border-top: 1px solid #ccc;
+margin: 1em 0;
+padding: 0;
+}
+/*
+ * Remove the gap between images, videos, audio and canvas and the bottom of
+ * their containers: h5bp.com/i/440
+ */
+audio,canvas,img,video {
+vertical-align:middle;
+}
+/*
+ * Remove default fieldset styles.
+ */
+fieldset {
+border:0;
+margin:0;
+padding:0;
+}
+/*
+ * Allow only vertical resizing of textareas.
+ */
+textarea {
+resize:vertical;
+}
+
+/* ==========================================================================
+   Main styles
+   ========================================================================== */
+
+@font-face {
+    font-family: 'schluberregular';
+    src: url('fonts/schluber-webfont.woff2') format('woff2'),
+         url('fonts/schluber-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html{-webkit-tap-highlight-color: rgba(0,0,0,0);-webkit-user-select: none;-webkit-touch-callout:none; background: #187acd url(../assets/bg_pattern.svg) no-repeat center center fixed; background-size:cover; }
+
+/*-- Percent Loader -- */
+#mainLoader{position:absolute; z-index:5; display:none; font-size:20px; line-height:20px; color:#fff; text-align:center; width:100%; font-family: 'schluberregular';}
+
+/*-- Content Wrapper -- */
+#mainHolder{position:relative; width:100%;height:100%; display:none; }
+#option{ position:absolute; right:0; z-index:5; margin:15px; width:7%; min-width:30px; max-width:50px; }
+.buttonFullscreen, .buttonSound, .buttonExit{ margin:5px 0px;}
+.buttonSoundOn .soundOff{ display:block;}
+.buttonSoundOn .soundOn{ display:none;}
+.buttonSoundOff .soundOn{ display:block;}
+.buttonSoundOff .soundOff{ display:none;}
+
+.buttonOptionOn .optionOff{ display:block;}
+.buttonOptionOn .optionOn{ display:none;}
+.buttonOptionOff .optionOn{ display:block;}
+.buttonOptionOff .optionOff{ display:none;}
+
+.buttonIcon{ width:100%;}
+.fontLoader{font-family: 'schluberregular', cursive; font-size:25px; line-height:25px; color:#fff;}
+
+/*-- Logo Wrapper -- */
+#logoHolder{display: table; position: absolute; height: 100%; width: 100%; color:#FFF; text-align:center;}
+
+#logoHolder .gameLogo{ position:absolute; width:80%; top:20%; left:10%; }
+#logoHolder .action{ position:absolute; top:60%; width:100%; }
+#logoHolder .button{ width:15%; margin:auto; margin-bottom: 1.5%; }
+#logoHolder .level{ top: 53%; }
+
+/*-- Confirm Wrapper -- */
+#confirmHolder{ width:100%; height:100%; margin:auto; position:absolute; overflow: hidden; z-index:1000;}
+.confirmContent .message{ position:absolute; background:#00b6bc; width:50%; height:30%; left:25%; top:30%; text-align:center; border-radius: 10px; color:#FFF; padding:5% 5%; box-shadow: 0px 8px rgba(0, 0, 0, .2);}
+.confirmContent .okImg{ position:absolute; width:18%; top:63%; left:31%;}
+.confirmContent .cancelImg{ position:absolute; width:18%; top:63%; right:31%;}
+.overlayBg{ background: rgba(0,0,0,0.3); }
+
+/*-- Confirm Wrapper -- */
+#tutorialHolder{ width:100%; height:100%; margin:auto; position:absolute; overflow: hidden; z-index:1000;}
+.tutorialContent .message{ position:absolute; background:#00b6bc; width:80%; height:70%; left:10%; top:6%; text-align:left; border-radius: 10px; color:#FFF; padding:5% 5%; box-shadow: 0px 8px rgba(0, 0, 0, .2);}
+.tutorialContent .okImg{ position:absolute; width:18%; top:79%; left:41%;}
+.tutorialContent ol{ margin: 2% 0 0 5%; padding: 0; }
+
+/*-- Game Wrapper -- */
+#gameHolder{ width:100%; height:100%; margin:auto; position:relative; overflow: hidden;}
+#gameStatus{ position:absolute; top:0; left:0; width:100%; height:100%;}
+#gameStatus .gameTimerHolder{ position:absolute; top:10%; left:57%; width:20%;}
+#gameStatus .gameTimerWrapper{ position:relative; width:100%; height: 100%;}
+#gameStatus .gameTimerStatus{ position:absolute; top:0; left:48%; text-align:center;}
+
+#gameStatus .gameChoiceHolder{ position:absolute; top:26%; left:61%; width: 25%; background: #002c46; padding: 2%; border-radius: 10px; text-align: center; }
+#gameStatus .gameChoiceWrapper ul{ list-style: none; margin: 0; padding: 0; }
+#gameStatus .gameChoiceWrapper ul:after { content: ''; display: block; clear: both; }
+#gameStatus .gameChoiceWrapper li{ width: 29%; margin: 2%; position: relative; float: left; justify-content:center; }
+#gameStatus .gameChoiceWrapper .gameGuideStatus{ margin-bottom: 5%; }
+#gameStatus .gameChoiceWrapper .gameButtonGuideStatus{ margin-top: 5%; color:#ffff00; }
+#gameStatus .gameChoiceWrapper .gameChoiceNumber{ position: absolute; width: 100%; height: 100%; text-align: center; color: #fb7800; margin-top: 15%; }
+
+#gameStatus .gameTutorialWrapper{ width: 100%; border-top: 1px solid #999; margin-top:10%; padding-top: 5%;}
+
+#gameStatus .gameResultHolder{ position:absolute; top:26%; left:61%; width: 25%; background: #002c46; padding: 2%; border-radius: 10px; text-align: center; }
+#gameStatus .gameResultHolder ul{ list-style: none; margin:8% 0; padding: 0; display:flex; flex-wrap:wrap; justify-content:center; }
+#gameStatus .gameResultHolder ul:after { content: ''; display: block; clear: both; }
+#gameStatus .gameResultHolder li{ width: 29%; margin: 2%; position: relative; float: left; justify-content:center; }
+#gameStatus .gameResultHolder .gameShareStatus{ width: 100%; color: #ccc; }
+#gameStatus .button{ width:70%; margin:auto; }
+
+/*-- Puzzle Wrapper -- */
+#puzzleHolder{ position: absolute; width:50%; left: 10%; top: 7%; background: #000; display: block; }
+#puzzleTable{ position: relative; width: 100%; height: 100%; border: none; border-collapse: collapse;}
+#puzzleTable .cell { height: 100px; width: 100px; position: relative; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+#puzzleTable .sol { position: absolute; bottom: 10px; right: 10px; }
+#puzzleTable .ruleWrapper{ position:absolute; top:5%; left:5%; }
+#puzzleTable .bgWrapper{ position:absolute; width:100%; height:100%; top:0; left:0; }
+#puzzleTable .numberWrapper{ position:absolute; width:100%; height:100%; top:0; left:0; align-items: center; transition: background-color .2s linear; text-align: center; }
+#puzzleTable .numberWrapper input{ background:none; border:none; width:100%; height:100%; text-align:center; font-size:50px; }
+#puzzleTable .error .numberWrapper{ background:#F00; }
+#puzzleTable .currentFocus .bgWrapper, #puzzleTable .currentFocus .numberWrapper{ animation: opacityfading 1s infinite; }
+
+@-webkit-keyframes opacityfading {
+    0%   { opacity: .8; }
+    50%  { opacity: 1; }
+    100%  { opacity: .8; }
+}
+
+.portrait #option{ width:10%; }
+.portrait #logoHolder .gameLogo{ width:90%; top:30%; left:5%; }
+.portrait #logoHolder .action{ top:55%; }
+.portrait #logoHolder .button{ width:35%; }
+
+.portrait .confirmContent .message{ width:90%; height:20%; left:5%; top:30%; padding:8% 10%; }
+.portrait .confirmContent .okImg{ width:40%; top:52%; left:8%;}
+.portrait .confirmContent .cancelImg{ width:40%; top:52%; right:8%;}
+
+.portrait .tutorialContent .message{ width:90%; height:60%; left:5%; top:15%; padding:8% 10%; }
+.portrait .tutorialContent .okImg{ width:40%; top:79%; left:30%;}
+
+.portrait #gameStatus .gameTimerHolder{ top:2%; left:0; width:50%;}
+.portrait #puzzleHolder{ width:90%; left: 5%; top: 15%;  }
+
+.portrait  #gameStatus .gameChoiceWrapper .gameGuideStatus{ margin:0; }
+.portrait #gameStatus .gameChoiceHolder{ top:70%; left:5%; width:90%; padding: 5%; }
+.portrait #gameStatus .gameChoiceWrapper ul{display: flex; flex-wrap:wrap; justify-content:center; }
+.portrait #gameStatus .gameChoiceWrapper li{ width: 18%; margin: 1%; }
+.portrait #gameStatus .gameTutorialWrapper{ margin-top:3%; padding-top: 5%;}
+.portrait #gameStatus .gameResultHolder{ top:70%; left:5%; width:90%; padding: 5%; }
+.portrait #gameStatus .gameResultHolder ul{ margin: 3% 0; }
+.portrait #gameStatus .gameResultHolder li{ width: 16%; margin: 2%; }
+.portrait #gameStatus .button{ width:40%; }
+
+.fontGeneral{font-family: 'schluberregular'; }
+.fontStatus{font-family: 'schluberregular'; color:#fff;}
+
+.buttonClick{ cursor:pointer;}
+.fitImg img{ width:100%; height:auto;}
+.ignorePadding{border:none; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+
+@-webkit-viewport{width:device-width}
+@-moz-viewport{width:device-width}
+@-ms-viewport{width:device-width}
+@-o-viewport{width:device-width}
+@viewport{width:device-width}
+
+
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+/*
+ * Image replacement
+ */
+.ir {
+background-color: transparent;
+border: 0;
+overflow: hidden;
+/* IE 6/7 fallback */
+*text-indent: -9999px;
+}
+
+.ir:before {
+content: "";
+display: block;
+width: 0;
+height: 150%;
+}
+
+/*
+ * Hide from both screenreaders and browsers: h5bp.com/u
+ */
+.hidden {
+display: none !important;
+visibility: hidden;
+}
+
+/*
+ * Hide only visually, but have it available for screenreaders: h5bp.com/v
+ */
+.visuallyhidden {
+border: 0;
+clip: rect(0 0 0 0);
+height: 1px;
+margin: -1px;
+overflow: hidden;
+padding: 0;
+position: absolute;
+width: 1px;
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element to be focusable
+ * when navigated to via the keyboard: h5bp.com/p
+ */
+.visuallyhidden.focusable:active,.visuallyhidden.focusable:focus {
+clip: auto;
+height: auto;
+margin: 0;
+overflow: visible;
+position: static;
+width: auto;
+}
+
+/*
+ * Hide visually and from screenreaders, but maintain layout
+ */
+.invisible {
+visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.clearfix:before,.clearfix:after{
+content: " "; /* 1 */
+display: table; /* 2 */
+}
+
+.clearfix:after{
+clear: both;
+}
+
+/*
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.clearfix{
+*zoom: 1;
+}
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+    /* Style adjustments for viewports that meet the condition */
+}
+
+@media print,
+       (-o-min-device-pixel-ratio: 5/4),
+       (-webkit-min-device-pixel-ratio: 1.25),
+       (min-resolution: 120dpi) {
+    /* Style adjustments for high resolution devices */
+}
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid required HTTP connection: h5bp.com/r
+   ========================================================================== */
+@media print{
+* {
+background:transparent!important;
+color:#000!important;
+box-shadow:none!important;
+text-shadow:none!important;
+}
+
+a,a:visited {
+text-decoration:underline;
+}
+
+a[href]:after {
+content:" (" attr(href) ")";
+}
+
+abbr[title]:after {
+content:" (" attr(title) ")";
+}
+
+.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after {
+content:"";
+}
+
+pre,blockquote {
+border:1px solid #999;
+page-break-inside:avoid;
+}
+
+thead {
+display:table-header-group;
+}
+
+tr,img {
+page-break-inside:avoid;
+}
+
+img {
+max-width:100%!important;
+}
+
+@page {
+margin:.5cm;
+}
+
+p,h2,h3 {
+orphans:3;
+widows:3;
+}
+
+h2,h3 {
+page-break-after:avoid;
+}
+}
