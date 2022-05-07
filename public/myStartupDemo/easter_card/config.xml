@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<options>
+		<colors>
+			<text>#fff</text>
+			<background></background>
+			<background_image>/myStartupDemo/easter_card/assets/easteregg/bg.png</background_image>
+		</colors>
+		<loader>/myStartupDemo/easter_card/assets/easteregg/loader.png</loader>
+		<shadow scaleX=".02" scaleY=".02" alpha=".2" x="0" y="20"></shadow>
+		<dim openLeft="0" openRight=".05" closeLeft=".4" closeRight=".5"></dim>
+		<music audio="/myStartupDemo/easter_card/assets/easteregg/easterday.ogg">true</music>
+		<fullscreen>true</fullscreen>
+	</options>
+
+	<landscape enable="true" width="1920" height="1080" contentWidth="1600" contentHeight="850" cardX="960" cardY="864">
+		<greeting_cover openSpeed=".5" closeY="0" closeX="100" openScaleX="1" closeScaleX=".8" openScaleY="1" closeScaleY=".8" closeSpeed=".5" openRegY="700" closeRegY="700" openSkewX="-10" closeSkewX="-60" openSkewY="-90" closeSkewY="-40" openInnerRegX="0" closeInnerRegX="0" openInnerRegY="700" closeInnerRegY="700" openInnerSkewX="0" closeInnerSkewX="-10" openInnerSkewY="-175" closeInnerSkewY="-90" openInnerScaleY=".2" openInnerAlpha="0" closeInnerDelay=".5" >
+			<item id="cover" type="base" dim="left">/myStartupDemo/easter_card/assets/easteregg/cover.png</item>
+
+			<!--START ADD ITEM HERE-->
+			<item id="message" type="text" font="25px Fredoka One" lineHeight="32" color="#5E3694" align="center" openX="250" closeX="250" openY="320" closeY="320"><![CDATA[ Dear friend,
+
+			Wishing you a season filled with
+			peace, joy, and beautiful weather.
+			Happy Easter! ]]></item>
+			<item id="button" type="text" font="30px Fredoka One" lineHeight="30" color="#fff" align="center" openX="250" closeX="250" openY="500" closeY="500"><![CDATA[ TAP FOR SURPRISE! ]]></item>
+		</greeting_cover>
+
+		<greeting_popup closeDelay=".5" openSpeed=".5" closeSpeed=".5" >
+			<item id="baseL" type="base" closeDelay=".5" openRegX="500" closeRegX="500" openRegY="700" closeRegY="700" openSkewX="0" closeSkewX="-10" openSkewY="5" closeSkewY="90" openScaleY=".2" dim="left">/myStartupDemo/easter_card/assets/easteregg/base_left.png</item>
+			<item id="baseR" type="base" closeDelay=".5" openRegX="0" closeRegX="0" openRegY="700" closeRegY="700" openSkewX="0" closeSkewX="-10" openSkewY="-5" closeSkewY="-90" openScaleY=".2" dim="right">/myStartupDemo/easter_card/assets/easteregg/base_right.png</item>
+
+			<!--START ADD ITEM HERE-->
+			<item id="grass" closeDelay=".5" openY="-190" openRegX="469" closeRegX="469" openRegY="359" closeRegY="750" openSkewX="0" closeSkewX="-10" openSkewY="5" closeSkewY="90" closeScaleY=".5">/myStartupDemo/easter_card/assets/easteregg/grass.png</item>
+			<item id="groundL" closeDelay=".5" openY="-110" openRegX="469" closeRegX="469" openRegY="172" closeRegY="750" openSkewX="0" closeSkewX="-10" openSkewY="5" closeSkewY="90" closeScaleY=".5" dim="right">/myStartupDemo/easter_card/assets/easteregg/pop_ground_left.png</item>
+			<item id="groundR" closeDelay=".5" openY="-110" openRegX="0" closeRegX="0" openRegY="172" closeRegY="750" openSkewX="0" closeSkewX="-10" openSkewY="-5" closeSkewY="-90" closeScaleY=".5" dim="left">/myStartupDemo/easter_card/assets/easteregg/pop_ground_right.png</item>
+			<item id="flower1" type="spritesheet" width="56" height="80" count="20" speed=".8" closeSpeed=".5" openX="-320" closeX="-320" openY="-170" closeY="-170" openRegX="56" closeRegX="56" openRegY="80" closeRegY="80" openSkewY="-5" closeSkewY="-5" closeScaleY="0" transition="fade" openDelay="1.3" >/myStartupDemo/easter_card/assets/easteregg/flower.png</item>
+
+			<item id="happyeaster" closeDelay=".5" openY="-80" openRegX="0" closeRegX="0" openRegY="590" closeRegY="590" openSkewX="0" closeSkewX="-10" openSkewY="-5" closeSkewY="-90" closeScaleY=".5" dim="right">/myStartupDemo/easter_card/assets/easteregg/happyeaster.png</item>
+			<item id="rabbitEar" closeDelay=".5" openY="-80" openRotation="0" closeRotation="45" openRegX="50" closeRegX="50" openRegY="500" closeRegY="500" openSkewX="0" closeSkewX="-10" openSkewY="-5" closeSkewY="-90" closeScaleY=".5" dim="right">/myStartupDemo/easter_card/assets/easteregg/pop_rabbit_ear.png</item>
+			<item id="rabbitL" closeDelay=".5" openY="-80" openRegX="330" closeRegX="330" openRegY="590" closeRegY="950" openSkewX="0" closeSkewX="-10" openSkewY="5" closeSkewY="90" closeScaleY=".5" dim="right">/myStartupDemo/easter_card/assets/easteregg/pop_rabbit_left.png</item>
+			<item id="rabbitR" closeDelay=".5" openY="-80" openRegX="0" closeRegX="0" openRegY="590" closeRegY="950" openSkewX="0" closeSkewX="-10" openSkewY="-5" closeSkewY="-90" closeScaleY=".5" dim="left">/myStartupDemo/easter_card/assets/easteregg/pop_rabbit_right.png</item>
+
+			<item id="basket" closeSpeed=".5" openX="-100" closeX="-100" openY="-90" closeY="-90" openRegX="192" closeRegX="192" openRegY="173" closeRegY="173" openSkewY="5" closeSkewY="5" closeScaleY="0" transition="fade" openDelay="2" >/myStartupDemo/easter_card/assets/easteregg/basket.png</item>
+			<item id="company" type="text" font="18px Fredoka One" lineHeight="30" color="#fff" align="left" openX="-81" closeX="-81" openY="-85" closeY="-85" openRegX="175" closeRegX="175" openRegY="66" closeRegY="66" openSkewY="5" closeSkewY="5" closeScaleY="0" transition="fade" openDelay="2"><![CDATA[ company.com ]]></item>
+			<item id="grass2" closeSpeed=".5" openX="-250" closeX="-250" openY="-60" closeY="-60" openRegX="175" closeRegX="175" openRegY="69" closeRegY="69" openSkewY="5" closeSkewY="5" closeScaleY="0" transition="fade" openDelay="1.5" >/myStartupDemo/easter_card/assets/easteregg/grass_2.png</item>
+			<item id="flower2" type="spritesheet" width="56" height="80" count="20" speed="1.3" closeSpeed=".5" openX="-270" closeX="-270" openY="-60" closeY="-60" openRegX="56" closeRegX="56" openRegY="80" closeRegY="80" openSkewY="-5" closeSkewY="-5" closeScaleY="0" transition="fade" openDelay="2" >/myStartupDemo/easter_card/assets/easteregg/flower.png</item>
+			<item id="close" closeSpeed=".5" openX="280" closeX="280" openY="-60" closeY="-60" openRegX="70" closeRegX="70" openRegY="138" closeRegY="138" openSkewY="-5" closeSkewY="-5" closeScaleY="0" transition="fade" openDelay="1.8" >/myStartupDemo/easter_card/assets/easteregg/close.png</item>
+			<item id="flower3" type="spritesheet" width="56" height="80" count="20" speed="1" closeSpeed=".5" openX="350" closeX="350" openY="-50" closeY="-50" openRegX="56" closeRegX="56" openRegY="80" closeRegY="80" openSkewY="-5" closeSkewY="-5" closeScaleY="0" transition="fade" openDelay="1.8" >/myStartupDemo/easter_card/assets/easteregg/flower.png</item>
+		</greeting_popup>
+
+		<particle_effects enable="true" scale="true" total="20" startY="-400" endY="-200" speed="1.5" rangeX="100">
+			<item>/myStartupDemo/easter_card/assets/easteregg/particle.png</item>
+		</particle_effects>
+
+		<parrallax_effects>
+			<item id="baseL" movement="x,y,skewX,skewY" percentage="10,5,10,5" />
+			<item id="baseR" movement="x,y,skewX,skewY" percentage="10,5,10,5" />
+
+			<item id="grass" movement="x,y,skewX,skewY" percentage="15,5,10,5" />
+			<item id="flower1" movement="x,y,skewX,skewY" percentage="15,5,10,5" />
+			<item id="groundL" movement="x,y,skewX,skewY" percentage="20,5,10,5" />
+			<item id="groundR" movement="x,y,skewX,skewY" percentage="20,5,10,5" />
+
+			<item id="happyeaster" movement="x,y,skewX,skewY,rotation" percentage="20,5,5,5,5" />
+			<item id="rabbitEar" movement="x,y,skewX,skewY,rotation" percentage="25,5,10,5,20" />
+			<item id="rabbitL" movement="x,y,skewX,skewY" percentage="25,5,10,5" />
+			<item id="rabbitR" movement="x,y,skewX,skewY" percentage="25,5,10,5" />
+
+			<item id="basket" movement="x,y,skewX,skewY" percentage="30,5,10,5" />
+			<item id="company" movement="x,y,skewX,skewY" percentage="30,5,10,5" />
+			<item id="grass2" movement="x,y,skewX,skewY" percentage="35,5,10,5" />
+			<item id="flower2" movement="x,y,skewX,skewY" percentage="35,5,10,5" />
+			<item id="close" movement="x,y,skewX,skewY" percentage="30,5,10,5" />
+			<item id="flower3" movement="x,y,skewX,skewY" percentage="30,5,10,5" />
+		</parrallax_effects>
+
+		<links>
+			<item id="basket">#</item>
+			<item id="company" hitX="-200" hitY="-40" hitWidth="400" hitHeight="80">#</item>
+		</links>
+	</landscape>
+
+	<portrait enable="true" width="768" height="1024" contentWidth="570" contentHeight="1024" cardX="384" cardY="819">
+		<greeting_cover openSpeed=".5" closeY="0" closeX="100" openScaleX="1" closeScaleX=".8" openScaleY="1" closeScaleY=".8" closeSpeed=".5" openRegY="700" closeRegY="700" openSkewX="-10" closeSkewX="-60" openSkewY="-90" closeSkewY="-40" openInnerRegX="0" closeInnerRegX="0" openInnerRegY="700" closeInnerRegY="700" openInnerSkewX="0" closeInnerSkewX="-10" openInnerSkewY="-175" closeInnerSkewY="-90" openInnerScaleY=".2" openInnerAlpha="0" closeInnerDelay=".5" >
+			<item id="cover" type="base" dim="left">/myStartupDemo/easter_card/assets/easteregg/cover.png</item>
+			<item id="message" type="text" font="25px Fredoka One" lineHeight="32" color="#5E3694" align="center" openX="250" closeX="250" openY="320" closeY="320"><![CDATA[ Dear friend,
+
+			Wishing you a season filled with
+			peace, joy, and beautiful weather.
+			Happy Easter! ]]></item>
+			<item id="button" type="text" font="30px Fredoka One" lineHeight="30" color="#fff" align="center" openX="250" closeX="250" openY="500" closeY="500"><![CDATA[ TAP FOR SURPRISE! ]]></item>
+		</greeting_cover>
+
+		<greeting_popup closeDelay=".5" openSpeed=".5" closeSpeed=".5" openScaleY=".8" openScaleX=".8" >
+			<item id="baseL" type="base" closeDelay=".5" openRegX="500" closeRegX="500" openRegY="700" closeRegY="700" openSkewX="0" closeSkewX="-10" openSkewY="5" closeSkewY="90" openScaleY=".2" dim="left">/myStartupDemo/easter_card/assets/easteregg/base_left.png</item>
+			<item id="baseR" type="base" closeDelay=".5" openRegX="0" closeRegX="0" openRegY="700" closeRegY="700" openSkewX="0" closeSkewX="-10" openSkewY="-5" closeSkewY="-90" openScaleY=".2" dim="right">/myStartupDemo/easter_card/assets/easteregg/base_right.png</item>
+
+			<!--START ADD POPUP HERE-->
+			<item id="grass" closeDelay=".5" openY="-190" openRegX="469" closeRegX="469" openRegY="359" closeRegY="750" openSkewX="0" closeSkewX="-10" openSkewY="5" closeSkewY="90" closeScaleY=".5">/myStartupDemo/easter_card/assets/easteregg/grass.png</item>
+			<item id="groundL" closeDelay=".5" openY="-110" openRegX="469" closeRegX="469" openRegY="172" closeRegY="750" openSkewX="0" closeSkewX="-10" openSkewY="5" closeSkewY="90" closeScaleY=".5" dim="right">/myStartupDemo/easter_card/assets/easteregg/pop_ground_left.png</item>
+			<item id="groundR" closeDelay=".5" openY="-110" openRegX="0" closeRegX="0" openRegY="172" closeRegY="750" openSkewX="0" closeSkewX="-10" openSkewY="-5" closeSkewY="-90" closeScaleY=".5" dim="left">/myStartupDemo/easter_card/assets/easteregg/pop_ground_right.png</item>
+			<item id="flower1" type="spritesheet" width="56" height="80" count="20" speed=".8" closeSpeed=".5" openX="-320" closeX="-320" openY="-170" closeY="-170" openRegX="56" closeRegX="56" openRegY="80" closeRegY="80" openSkewY="-5" closeSkewY="-5" closeScaleY="0" transition="fade" openDelay="1.3" >/myStartupDemo/easter_card/assets/easteregg/flower.png</item>
+
+			<item id="happyeaster" closeDelay=".5" openY="-80" openRegX="0" closeRegX="0" openRegY="590" closeRegY="590" openSkewX="0" closeSkewX="-10" openSkewY="-5" closeSkewY="-90" closeScaleY=".5" dim="right">/myStartupDemo/easter_card/assets/easteregg/happyeaster.png</item>
+			<item id="rabbitEar" closeDelay=".5" openY="-80" openRotation="0" closeRotation="45" openRegX="50" closeRegX="50" openRegY="500" closeRegY="500" openSkewX="0" closeSkewX="-10" openSkewY="-5" closeSkewY="-90" closeScaleY=".5" dim="right">/myStartupDemo/easter_card/assets/easteregg/pop_rabbit_ear.png</item>
+			<item id="rabbitL" closeDelay=".5" openY="-80" openRegX="330" closeRegX="330" openRegY="590" closeRegY="950" openSkewX="0" closeSkewX="-10" openSkewY="5" closeSkewY="90" closeScaleY=".5" dim="right">/myStartupDemo/easter_card/assets/easteregg/pop_rabbit_left.png</item>
+			<item id="rabbitR" closeDelay=".5" openY="-80" openRegX="0" closeRegX="0" openRegY="590" closeRegY="950" openSkewX="0" closeSkewX="-10" openSkewY="-5" closeSkewY="-90" closeScaleY=".5" dim="left">/myStartupDemo/easter_card/assets/easteregg/pop_rabbit_right.png</item>
+
+			<item id="basket" closeSpeed=".5" openX="-100" closeX="-100" openY="-90" closeY="-90" openRegX="192" closeRegX="192" openRegY="173" closeRegY="173" openSkewY="5" closeSkewY="5" closeScaleY="0" transition="fade" openDelay="2" >/myStartupDemo/easter_card/assets/easteregg/basket.png</item>
+			<item id="company" type="text" font="18px Fredoka One" lineHeight="30" color="#fff" align="left" openX="-81" closeX="-81" openY="-85" closeY="-85" openRegX="175" closeRegX="175" openRegY="66" closeRegY="66" openSkewY="5" closeSkewY="5" closeScaleY="0" transition="fade" openDelay="2"><![CDATA[ company.com ]]></item>
+			<item id="grass2" closeSpeed=".5" openX="-250" closeX="-250" openY="-60" closeY="-60" openRegX="175" closeRegX="175" openRegY="69" closeRegY="69" openSkewY="5" closeSkewY="5" closeScaleY="0" transition="fade" openDelay="1.5" >/myStartupDemo/easter_card/assets/easteregg/grass_2.png</item>
+			<item id="flower2" type="spritesheet" width="56" height="80" count="20" speed="1.3" closeSpeed=".5" openX="-270" closeX="-270" openY="-60" closeY="-60" openRegX="56" closeRegX="56" openRegY="80" closeRegY="80" openSkewY="-5" closeSkewY="-5" closeScaleY="0" transition="fade" openDelay="2" >/myStartupDemo/easter_card/assets/easteregg/flower.png</item>
+			<item id="close" closeSpeed=".5" openX="280" closeX="280" openY="-60" closeY="-60" openRegX="70" closeRegX="70" openRegY="138" closeRegY="138" openSkewY="-5" closeSkewY="-5" closeScaleY="0" transition="fade" openDelay="1.8" >/myStartupDemo/easter_card/assets/easteregg/close.png</item>
+			<item id="flower3" type="spritesheet" width="56" height="80" count="20" speed="1" closeSpeed=".5" openX="350" closeX="350" openY="-50" closeY="-50" openRegX="56" closeRegX="56" openRegY="80" closeRegY="80" openSkewY="-5" closeSkewY="-5" closeScaleY="0" transition="fade" openDelay="1.8" >/myStartupDemo/easter_card/assets/easteregg/flower.png</item>
+		</greeting_popup>
+
+		<particle_effects enable="true" scale="true" total="20" startY="-400" endY="-200" speed="1.5" rangeX="100">
+			<item>/myStartupDemo/easter_card/assets/easteregg/particle.png</item>
+		</particle_effects>
+
+		<parrallax_effects>
+			<item id="baseL" movement="x,y,skewX,skewY" percentage="10,5,10,5" />
+			<item id="baseR" movement="x,y,skewX,skewY" percentage="10,5,10,5" />
+
+			<item id="grass" movement="x,y,skewX,skewY" percentage="15,5,10,5" />
+			<item id="flower1" movement="x,y,skewX,skewY" percentage="15,5,10,5" />
+			<item id="groundL" movement="x,y,skewX,skewY" percentage="20,5,10,5" />
+			<item id="groundR" movement="x,y,skewX,skewY" percentage="20,5,10,5" />
+
+			<item id="happyeaster" movement="x,y,skewX,skewY,rotation" percentage="20,5,5,5,5" />
+			<item id="rabbitEar" movement="x,y,skewX,skewY,rotation" percentage="25,5,10,5,20" />
+			<item id="rabbitL" movement="x,y,skewX,skewY" percentage="25,5,10,5" />
+			<item id="rabbitR" movement="x,y,skewX,skewY" percentage="25,5,10,5" />
+
+			<item id="basket" movement="x,y,skewX,skewY" percentage="30,5,10,5" />
+			<item id="company" movement="x,y,skewX,skewY" percentage="30,5,10,5" />
+			<item id="grass2" movement="x,y,skewX,skewY" percentage="35,5,10,5" />
+			<item id="flower2" movement="x,y,skewX,skewY" percentage="35,5,10,5" />
+			<item id="close" movement="x,y,skewX,skewY" percentage="30,5,10,5" />
+			<item id="flower3" movement="x,y,skewX,skewY" percentage="30,5,10,5" />
+		</parrallax_effects>
+
+		<links>
+			<item id="basket">#</item>
+			<item id="company" hitX="-200" hitY="-40" hitWidth="400" hitHeight="80">#</item>
+		</links>
+	</portrait>
+</config>
