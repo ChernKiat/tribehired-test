@@ -1,6 +1,7 @@
 <?php
 namespace App\Models\NFTStorage;
 
+use App\Tools\FileTool;
 use App\Tools\StringTool;
 use Illuminate\Database\Eloquent\Model;
 

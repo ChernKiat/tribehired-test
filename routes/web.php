@@ -100,6 +100,12 @@ Route::prefix('seal-chamber')->namespace('SealChamber')->name('sealchamber.')->g
     });
 });
 
+Route::prefix('startup-demo')->namespace('StartupDemo')->name('startupdemo.')->group(function() {
+    Route::get('calcudoku', 'ProjectController@pageCalcudoku')->name('project.calcudoku');
+    Route::get('easter-card', 'ProjectController@pageEasterCard')->name('project.eastercard');
+    Route::get('slot-machine', 'ProjectController@pageSlotMachine')->name('project.slotmachine');
+});
+
 Route::namespace('Tesseract')->group(function() {
     Route::resource('documents', 'DocumentController')
         ->except('show');

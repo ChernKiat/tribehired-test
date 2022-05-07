@@ -3,9 +3,9 @@
 ////////////////////////////////////////////////////////////
 
 /*!
- * 
+ *
  * GAME SETTING CUSTOMIZATION START
- * 
+ *
  */
 
 var stageW=1280; //game width
@@ -23,11 +23,11 @@ var puzzleSettings = {
 }
 
 var timerSettings = {
-						status:true, //true or false to enable timer
-						mode:'countdown', //default or countdown mode
+                        status:true, //true or false to enable timer
+                        mode:'countdown', //default or countdown mode
                         hintPenalty:5000, //hint penalty
-						timesupText:'TIME\'S UP', //time's up text display
-					};
+                        timesupText:'TIME\'S UP', //time's up text display
+                    };
 
 //easy, normal, hard, expert mode settings
 var puzzleLevelSettings = [
@@ -62,18 +62,18 @@ var gameData = {page:'', mode:'landscape', completed:false, failed:false, solved
 var timeData = {enable:false, startDate:null, nowDate:null, timer:0, countdown:0, penalty:0};
 
 var puzzleData = {
-					size:5,
-					borders:[],
-					groups:[],
-					rows:[],
-					cells:[],
-					group_limit:3,
-					solved:false,
-					result:false,
+                    size:5,
+                    borders:[],
+                    groups:[],
+                    rows:[],
+                    cells:[],
+                    group_limit:3,
+                    solved:false,
+                    result:false,
                     hint:false,
-					error:false,
+                    error:false,
                     colour:[]
-				}
+                }
 
 var puzzleFontSize = [
                     {size:3, number:100, rule:60},
@@ -83,148 +83,148 @@ var puzzleFontSize = [
                 ];
 
 /*!
- * 
+ *
  * GAME BUTTONS - This is the function that runs to setup button event
- * 
+ *
  */
 function buildGameButton(){
     puzzleData.colour = puzzleSettings.colour;
-    
+
     toggleConfirm(false);
     toggleTutorial(false);
-    
+
     $('.gameGuideStatus').html(instructionText);
     $('.gameResultStatus').html(resultCompleteText);
     $('.gameShareStatus').html(shareText);
-    
-	$('#buttonStart').click(function() {
-		playSound('soundClick');
+
+    $('#buttonStart').click(function() {
+        playSound('soundClick');
         toggleGameMode(true);
     });
-    
+
     $('#buttonGameEasy').click(function() {
-		playSound('soundClick');
+        playSound('soundClick');
         getSettings(0)
         goPage('game');
     });
-    
+
     $('#buttonGameMedium').click(function() {
-		playSound('soundClick');
+        playSound('soundClick');
         getSettings(1)
         goPage('game');
     });
-    
+
     $('#buttonGameHard').click(function() {
-		playSound('soundClick');
+        playSound('soundClick');
         getSettings(2)
         goPage('game');
     });
-    
+
     $('#buttonGameExpert').click(function() {
-		playSound('soundClick');
+        playSound('soundClick');
         getSettings(3)
         goPage('game');
     });
-    
+
     $('#buttonHowToPlay, #buttonTutorial').click(function() {
-		playSound('soundClick');
-		toggleTutorial(true);
+        playSound('soundClick');
+        toggleTutorial(true);
         toggleGameOption(false);
     });
-    
+
     $('#buttonHowToPlayOk').click(function() {
-		playSound('soundClick');
-		toggleTutorial(false);
+        playSound('soundClick');
+        toggleTutorial(false);
     });
-	
-	$('#buttonOk').click(function() {
-		playSound('soundClick');
-		toggleConfirm(false);
-		stopGame();
-		goPage('main');
+
+    $('#buttonOk').click(function() {
+        playSound('soundClick');
+        toggleConfirm(false);
+        stopGame();
+        goPage('main');
     });
-	
-	$('#buttonCancel').click(function() {
-		playSound('soundClick');
-		toggleConfirm(false);
+
+    $('#buttonCancel').click(function() {
+        playSound('soundClick');
+        toggleConfirm(false);
     });
-	
-	$('#buttonContinue').click(function() {
-		playSound('soundClick');
-		goPage('main');
+
+    $('#buttonContinue').click(function() {
+        playSound('soundClick');
+        goPage('main');
     });
-	
-	$('#buttonFacebook').click(function() {
+
+    $('#buttonFacebook').click(function() {
         share('facebook');
     });
-	
-	$('#buttonTwitter').click(function() {
+
+    $('#buttonTwitter').click(function() {
         share('twitter');
     });
-	
-	$('#buttonWhatsapp').click(function() {
+
+    $('#buttonWhatsapp').click(function() {
         share('whatsapp');
     });
-	
-	$('#buttonOption').click(function() {
-		playSound('soundClick');
+
+    $('#buttonOption').click(function() {
+        playSound('soundClick');
         toggleGameOption();
     });
-	
-	$('#buttonSound').click(function() {
-		playSound('soundClick');
+
+    $('#buttonSound').click(function() {
+        playSound('soundClick');
         toggleGameMute();
     });
-	
-	$('#buttonFullscreen').click(function() {
-		playSound('soundClick');
+
+    $('#buttonFullscreen').click(function() {
+        playSound('soundClick');
         toggleFullScreen();
     });
-	
-	$('#buttonExit').click(function() {
-		playSound('soundClick');
-		toggleGameOption();
+
+    $('#buttonExit').click(function() {
+        playSound('soundClick');
+        toggleGameOption();
         toggleConfirm(true);
     });
-	
-	$(window).focus(function() {
+
+    $(window).focus(function() {
         //resizeGameDetail();
     });
 }
 
 
 /*!
- * 
+ *
  * DISPLAY PAGES - This is the function that runs to display pages
- * 
+ *
  */
 function goPage(page){
-	gameData.page = page;
-	$('#logoHolder').hide();
-	$('#gameHolder').hide();
-	$('#resultHolder').hide();
-	$('#buttonExit').show();
+    gameData.page = page;
+    $('#logoHolder').hide();
+    $('#gameHolder').hide();
+    $('#resultHolder').hide();
+    $('#buttonExit').show();
     $('#buttonTutorial').show();
-	
-	var targetContainer = ''
-	switch(page){
-		case 'main':
-			targetContainer = $('#logoHolder');
-			$('#buttonExit').hide();
+
+    var targetContainer = ''
+    switch(page){
+        case 'main':
+            targetContainer = $('#logoHolder');
+            $('#buttonExit').hide();
             $('#buttonTutorial').hide();
             toggleGameMode(false);
-		break;
-		
-		case 'game':
-			targetContainer = $('#gameHolder');
-			startGame();
-		break;
-	}
-	
-	targetContainer.show();
-	TweenMax.to(targetContainer, 0, {opacity:0, overwrite:true});
-	TweenMax.to(targetContainer, 1, {opacity:1, overwrite:true});
-    
+        break;
+
+        case 'game':
+            targetContainer = $('#gameHolder');
+            startGame();
+        break;
+    }
+
+    targetContainer.show();
+    TweenMax.to(targetContainer, 0, {opacity:0, overwrite:true});
+    TweenMax.to(targetContainer, 1, {opacity:1, overwrite:true});
+
     toggleGameOption(false);
     resizeGameDetail();
 }
@@ -237,7 +237,7 @@ function toggleGameMode(con){
     $('#buttonGameHard').hide();
     $('#buttonGameExpert').hide();
     $('#logoHolder .action').removeClass('level');
-    
+
     if(con){
         if(gameData.mode == 'landscape'){
             $('#logoHolder .action').addClass('level');
@@ -253,32 +253,32 @@ function toggleGameMode(con){
 }
 
 /*!
- * 
+ *
  * START GAME - This is the function that runs to start play game
- * 
+ *
  */
 function startGame(){
     shuffleClass();
-	playSound('soundStart');
+    playSound('soundStart');
     $('.gameButtonGuideStatus').html('').hide();
-    
+
     toggleResult(false);
     toggleGameTimer(true);
     generatePuzzle();
 }
 
  /*!
- * 
+ *
  * STOP GAME - This is the function that runs to stop play game
- * 
+ *
  */
 function stopGame(){
-	stopAudio();
-	TweenMax.killAll(false, true, false);
+    stopAudio();
+    TweenMax.killAll(false, true, false);
 }
 
 function saveGame(score, type){
-	/*$.ajax({
+    /*$.ajax({
       type: "POST",
       url: 'saveResults.php',
       data: {score:score},
@@ -295,19 +295,19 @@ function getSettings(type){
 }
 
 /*!
- * 
+ *
  * GENERATE BOARD - This is the function that runs to generate board
- * 
+ *
  */
 function generateBoard(){
-	var boardPuzzle = $('#puzzleTable');
+    var boardPuzzle = $('#puzzleTable');
     boardPuzzle.html("");
 
     puzzleData.borders = [];
     for (var row = 0; row < puzzleData.size + 1; row++) {
         puzzleData.borders.push([]);
         for (var col = 0; col < puzzleData.size + 1; col++) {
-            puzzleData.borders[row].push(false); 
+            puzzleData.borders[row].push(false);
         }
     }
 
@@ -315,14 +315,14 @@ function generateBoard(){
     puzzleData.rows = [];
     puzzleData.cells = [];
     puzzleData.groups = [];
-	
+
     for (var row = 0; row < puzzleData.size; row++) {
         puzzleData.rows.push([]);
-		
-		var tableRow = $(document.createElement('tr'));
-        tableRow.addClass('row'); 
-		boardPuzzle.append(tableRow);
-		
+
+        var tableRow = $(document.createElement('tr'));
+        tableRow.addClass('row');
+        boardPuzzle.append(tableRow);
+
         for (var col = 0; col < puzzleData.size; col++) {
             var i = row * puzzleData.size + col;
             var tableCell = new createCell(row, col, i);
@@ -331,14 +331,14 @@ function generateBoard(){
             tableRow.append(tableCell.div);
         }
     }
-    updateGroups();	
-	updateInputs();
+    updateGroups();
+    updateInputs();
 }
 
 /*!
- * 
+ *
  * UPDATE INPUTS - This is the function that runs to update inputs
- * 
+ *
  */
 function updateInputs(){
     $('.gameChoiceWrapper ul').empty();
@@ -346,44 +346,44 @@ function updateInputs(){
         var numberHTML = '';
         numberHTML += '<li class="buttonClick" data-calcudoku="'+(i+1)+'">';
         numberHTML += '<div class="gameChoiceNumber resizeFont" data-fontSize="50" data-lineHeight="50">'+(i+1)+'</div>';
-        numberHTML += '<img src="assets/item_number_bg.svg" />';
+        numberHTML += '<img src="/myStartupDemo/calcudoku/assets/item_number_bg.svg" />';
         numberHTML += '</li>';
-        
-		$('.gameChoiceWrapper ul').append(numberHTML);
+
+        $('.gameChoiceWrapper ul').append(numberHTML);
     }
-    
+
     //remove
     var numberHTML = '';
     numberHTML += '<li class="buttonClick" data-calcudoku="">';
     numberHTML += '<div class="gameChoiceNumber resizeFont" data-fontSize="50" data-lineHeight="50">X</div>';
-    numberHTML += '<img src="assets/item_number_bg.svg" />';
+    numberHTML += '<img src="/myStartupDemo/calcudoku/assets/item_number_bg.svg" />';
     numberHTML += '</li>';
     $('.gameChoiceWrapper ul').append(numberHTML);
-    
+
     //hint
     if(enableHintButton){
         var numberHTML = '';
         numberHTML += '<li class="buttonClick" data-calcudoku="HINT">';
-        numberHTML += '<img src="assets/button_hint.svg" />';
+        numberHTML += '<img src="/myStartupDemo/calcudoku/assets/button_hint.svg" />';
         numberHTML += '</li>';
         $('.gameChoiceWrapper ul').append(numberHTML);
     }
-    
+
     //solve
     if(enableSolveButton){
         var numberHTML = '';
         numberHTML += '<li class="buttonClick" data-calcudoku="SOLVE">';
-        numberHTML += '<img src="assets/button_solve.svg" />';
+        numberHTML += '<img src="/myStartupDemo/calcudoku/assets/button_solve.svg" />';
         numberHTML += '</li>';
         $('.gameChoiceWrapper ul').append(numberHTML);
     }
-    
-    
+
+
     $('.gameChoiceWrapper li').each(function(index, element) {
         $(this).click(function() {
             playSound('soundSelect');
             var currentValue = $(this).attr('data-calcudoku');
-            
+
             if(currentValue == 'SOLVE'){
                 displayGroupSolve();
             }else if(currentValue == 'HINT'){
@@ -391,10 +391,10 @@ function updateInputs(){
             }else{
                 $('.currentFocus .numberWrapper').html(currentValue);
                 checkCellError();
-                checkCellComplete();  
+                checkCellComplete();
             }
         });
-        
+
         $(this).hover(
            function () {
               var currentValue = $(this).attr('data-calcudoku');
@@ -405,7 +405,7 @@ function updateInputs(){
                 }else{
                     $('.gameButtonGuideStatus').html('').hide();
                 }
-           }, 
+           },
 
            function () {
               var currentValue = $(this).attr('data-calcudoku');
@@ -413,7 +413,7 @@ function updateInputs(){
            }
         );
     });
-    
+
     $("body").keypress(function(e){
         if (e.shiftKey || e.ctrlKey || e.altKey) {
             e.preventDefault();
@@ -423,11 +423,11 @@ function updateInputs(){
                 e.preventDefault();
             }
         }
-        
+
         if(gameData.completed){
             return;
         }
-        
+
         var value = e.key;
         if(!isNaN(value)){
             if(value.length > 1){
@@ -441,15 +441,15 @@ function updateInputs(){
             if (value > puzzleData.size){
                 value = puzzleData.size;
             }
-            
+
             playSound('soundSelect');
             $('.currentFocus .numberWrapper').html(value);
             checkCellError();
             checkCellComplete();
         }
     });
-    
-	$('.numberWrapper').each(function(index, element) {
+
+    $('.numberWrapper').each(function(index, element) {
         $(this).click(function() {
             if(gameData.completed){
                 return;
@@ -457,126 +457,126 @@ function updateInputs(){
 
             $('.numberWrapper').each(function(index, element) {
                 $(this).parent().removeClass('currentFocus');
-            });  
+            });
             $(this).parent().addClass('currentFocus');
         });
     });
 }
 
 /*!
- * 
+ *
  * CHECK CELL ERROR - This is the function that runs to check cell error
- * 
+ *
  */
 function checkCellError(){
-	puzzleData.error = false;
-	$('.cell').removeClass('error');
-	
-	for (var i = 0; i < puzzleData.rows.length; i++) {
-		var in_row = [];
+    puzzleData.error = false;
+    $('.cell').removeClass('error');
+
+    for (var i = 0; i < puzzleData.rows.length; i++) {
+        var in_row = [];
         for (var j = 0; j < puzzleData.rows.length; j++) {
-			var value = puzzleData.rows[i][j].div.find('.numberWrapper').html();
-			
-			if(value != ''){
-				var checkIndex = jQuery.inArray(value, in_row);
-				if(checkIndex != -1 && value != -1){
-					 puzzleData.error = true;
-					 puzzleData.rows[i][j].div.addClass('error');
-					 puzzleData.rows[i][checkIndex].div.addClass('error');
-				}
-			}
-			in_row.push(value);
+            var value = puzzleData.rows[i][j].div.find('.numberWrapper').html();
+
+            if(value != ''){
+                var checkIndex = jQuery.inArray(value, in_row);
+                if(checkIndex != -1 && value != -1){
+                     puzzleData.error = true;
+                     puzzleData.rows[i][j].div.addClass('error');
+                     puzzleData.rows[i][checkIndex].div.addClass('error');
+                }
+            }
+            in_row.push(value);
         }
     }
-	
-	for (var i = 0; i < puzzleData.rows.length; i++) {
-		var in_col = [];
+
+    for (var i = 0; i < puzzleData.rows.length; i++) {
+        var in_col = [];
         for (var j = 0; j < puzzleData.rows.length; j++) {
-			var value = puzzleData.rows[j][i].div.find('.numberWrapper').html();
-			
-			if(value != ''){
-				var checkIndex = jQuery.inArray(value, in_col);
-				if(checkIndex != -1 && value != -1){
-					 puzzleData.error = true;
-					 puzzleData.rows[j][i].div.addClass('error');
-					 puzzleData.rows[checkIndex][i].div.addClass('error');
-				}
-			}
-			in_col.push(value);
+            var value = puzzleData.rows[j][i].div.find('.numberWrapper').html();
+
+            if(value != ''){
+                var checkIndex = jQuery.inArray(value, in_col);
+                if(checkIndex != -1 && value != -1){
+                     puzzleData.error = true;
+                     puzzleData.rows[j][i].div.addClass('error');
+                     puzzleData.rows[checkIndex][i].div.addClass('error');
+                }
+            }
+            in_col.push(value);
         }
     }
-    
+
     if(puzzleData.error)
         playSound('soundError');
 }
 
 /*!
- * 
+ *
  * CHECK CELL COMPLETE - This is the function that runs to check if puzzle is complete
- * 
+ *
  */
 function checkCellComplete(){
-	var currentLength = $('.numberWrapper').length;
-	var completeLength = 0;
-	
-	$('.numberWrapper').each(function(index, element) {
-		var currentValue = $(this).html();
+    var currentLength = $('.numberWrapper').length;
+    var completeLength = 0;
+
+    $('.numberWrapper').each(function(index, element) {
+        var currentValue = $(this).html();
         if(currentValue != '' && !isNaN(currentValue)){
-			completeLength++;	
-		}
+            completeLength++;
+        }
     });
-	
-	if(currentLength == completeLength && !puzzleData.error){
-		if(!puzzleData.solved){
-			groupSolve();
-		}else{
-			checkPuzzleSolve();	
-		}
-	}
+
+    if(currentLength == completeLength && !puzzleData.error){
+        if(!puzzleData.solved){
+            groupSolve();
+        }else{
+            checkPuzzleSolve();
+        }
+    }
 }
 
 /*!
- * 
+ *
  * CHECK PUZZLE SOLVE - This is the function that runs to check if puzzle is solve
- * 
+ *
  */
 function checkPuzzleSolve(){
-	checkCellError();
-	
-	var correctGroupLength = 0;
-	for (var i = 0; i < puzzleData.groups.length; i++) {
-		var array = [];
-		for (var m = 0; m < puzzleData.groups[i].members.length; m++) {
-			var row = puzzleData.groups[i].members[m].row;
-			var col = puzzleData.groups[i].members[m].col;
-			array.push(puzzleData.rows[row][col].div.find('.numberWrapper').html());
-		}
-		
-		for (var p = 0; p < puzzleData.groups[i].possible.length; p++) {
-			var correctCount = 0;
-			for (var v = 0; v < puzzleData.groups[i].possible[p].length; v++) {
-				if(puzzleData.groups[i].possible[p][v] == array[v]){
-					correctCount++;
-				}
-			}
-			
-			if(correctCount == puzzleData.groups[i].possible[p].length){
-				p = puzzleData.groups[i].possible.length;	
-				correctGroupLength++;
-			}
-		}
-	}
-	
-	if(correctGroupLength == puzzleData.groups.length){
+    checkCellError();
+
+    var correctGroupLength = 0;
+    for (var i = 0; i < puzzleData.groups.length; i++) {
+        var array = [];
+        for (var m = 0; m < puzzleData.groups[i].members.length; m++) {
+            var row = puzzleData.groups[i].members[m].row;
+            var col = puzzleData.groups[i].members[m].col;
+            array.push(puzzleData.rows[row][col].div.find('.numberWrapper').html());
+        }
+
+        for (var p = 0; p < puzzleData.groups[i].possible.length; p++) {
+            var correctCount = 0;
+            for (var v = 0; v < puzzleData.groups[i].possible[p].length; v++) {
+                if(puzzleData.groups[i].possible[p][v] == array[v]){
+                    correctCount++;
+                }
+            }
+
+            if(correctCount == puzzleData.groups[i].possible[p].length){
+                p = puzzleData.groups[i].possible.length;
+                correctGroupLength++;
+            }
+        }
+    }
+
+    if(correctGroupLength == puzzleData.groups.length){
         toggleGameTimer(false);
         toggleResult(true);
-	}
+    }
 }
 
 /*!
- * 
+ *
  * CREATE CELL & GROUP - This is the function that runs to create cell and group
- * 
+ *
  */
 function createCell(row, col, index) {
     this.row = row;
@@ -595,57 +595,57 @@ function createCell(row, col, index) {
         }
     };
     // group related bits
-    
+
     this.border_top = false;
     this.border_right = false;
-	
+
     this.div = $(document.createElement("td")).attr({
             class: "cell buttonClick",
             id: "c" + row + "c" + col,
-			row: row,
-			col: col
+            row: row,
+            col: col
         });
-    
+
     var sizeIndex = 0;
     for(var n=0; n<puzzleFontSize.length; n++){
         if(puzzleData.size == puzzleFontSize[n].size){
            sizeIndex = n;
         }
     }
-	
-	this.bg_div = $(document.createElement("div"));
+
+    this.bg_div = $(document.createElement("div"));
     this.value_div = $(document.createElement("div"));
-	this.rule_div = $(document.createElement("div"));
-	this.bg_div.addClass('bgWrapper');
-	this.value_div.addClass('numberWrapper');
+    this.rule_div = $(document.createElement("div"));
+    this.bg_div.addClass('bgWrapper');
+    this.value_div.addClass('numberWrapper');
     this.value_div.addClass('resizeFont');
     this.value_div.attr('data-fontSize', puzzleFontSize[sizeIndex].number);
     this.value_div.attr('data-lineHeight', puzzleFontSize[sizeIndex].number * 2);
-	this.rule_div.addClass('ruleWrapper');
+    this.rule_div.addClass('ruleWrapper');
     this.rule_div.addClass('resizeFont');
     this.rule_div.attr('data-fontSize', puzzleFontSize[sizeIndex].rule);
     this.rule_div.attr('data-lineHeight', puzzleFontSize[sizeIndex].rule);
-	
-	this.div.append(this.bg_div);
+
+    this.div.append(this.bg_div);
     this.div.append(this.value_div);
-	this.div.append(this.rule_div);
+    this.div.append(this.rule_div);
 }
 
 function createGroup() {
     this.goal = 0;
     this.index = -1;
     this.operation = "+";
-	
+
     // The cell containing the description.
     this.topmost = null;
     this.members = [];
-	
+
     this.add = function(cell) {
         cell.group = this;
-		$.each(puzzleData.colour, function(i, v){
-		   cell.bg_div.css('background', 'transparent');
-		});
-		cell.bg_div.css('background', puzzleData.colour[puzzleData.classShuffle[puzzleData.classNum]]);
+        $.each(puzzleData.colour, function(i, v){
+           cell.bg_div.css('background', 'transparent');
+        });
+        cell.bg_div.css('background', puzzleData.colour[puzzleData.classShuffle[puzzleData.classNum]]);
         this.members.push(cell);
     }
     this.addAll = function(all) {
@@ -653,34 +653,34 @@ function createGroup() {
             this.add(all[i]);
         }
     }
-	
-	puzzleData.classNum++;
-	if(puzzleData.classNum > puzzleData.classShuffle.length-1){
-		shuffleClass();
-	}
+
+    puzzleData.classNum++;
+    if(puzzleData.classNum > puzzleData.classShuffle.length-1){
+        shuffleClass();
+    }
 }
 
 function shuffleClass(){
     puzzleData.classNum = 0;
     puzzleData.classShuffle = [];
-	for(var n=0; n<puzzleData.colour.length; n++){
-		puzzleData.classShuffle.push(n);	
-	}
-	shuffle(puzzleData.classShuffle);
+    for(var n=0; n<puzzleData.colour.length; n++){
+        puzzleData.classShuffle.push(n);
+    }
+    shuffle(puzzleData.classShuffle);
 }
 
 /*!
- * 
+ *
  * GENERATE PUZZLE - This is the function that runs to create puzzle
- * 
+ *
  */
 function generatePuzzle() {
-	puzzleData.solved = false;
-	puzzleData.result = false;
+    puzzleData.solved = false;
+    puzzleData.result = false;
     puzzleData.hint = false;
-    
+
     generateBoard();
-	
+
     for (var c = 0; c < puzzleData.cells.length; c++) {
         puzzleData.cells[c].group = null;
     }
@@ -732,7 +732,7 @@ function generatePuzzle() {
             puzzleData.groups.push(g);
         }
     }
-    
+
     var solution = [];
     var c = 0;
     for (var i = 0; i < puzzleData.rows.length; i++) {
@@ -761,7 +761,7 @@ function generatePuzzle() {
             solution[j][to_col] = temp;
         }
     }
-    
+
     // Choose an operation and calculate target
     var group_solutions = function(group) {
         var sols = [];
@@ -779,11 +779,11 @@ function generatePuzzle() {
             var possible = ["+", "*"];
             if (g.members.length === 2) {
                 possible.push("-");
-                if ((s[0] / s[1]) == Math.floor(s[0] / s[1]) || 
+                if ((s[0] / s[1]) == Math.floor(s[0] / s[1]) ||
                     (s[1] / s[0]) == Math.floor(s[1] / s[0])) {
                     possible.push("/");
                 }
-            } 
+            }
             g.operation = possible[Math.floor(Math.random() * possible.length)];
         }
         if (g.operation == "-") {
@@ -812,9 +812,9 @@ function generatePuzzle() {
 }
 
 /*!
- * 
+ *
  * GROUP CELLS - This is the function that runs to find group cells
- * 
+ *
  */
 function findNeighbors(cell, neighbors) {
     // banking on the fact that all top-row cells have a top border
@@ -850,20 +850,20 @@ function findNeighborsPush(cell, neighbors) {
 }
 
 /*!
- * 
+ *
  * UPDATE GROUPS - This is the function that runs to update cell groups
- * 
+ *
  */
 function updateGroups() {
     var old_groups = puzzleData.groups;
     puzzleData.groups = [];
-	
+
     // get the list of groups from the UI.
     var g = new createGroup();
     var visited = [];
     for (var i = 0; i < puzzleData.cells.length; i++) {
         var cell = puzzleData.cells[i];
-		
+
         if (jQuery.inArray(cell, visited) == -1) {
             var neighbors = findNeighbors(cell, null);
             g.addAll(neighbors);
@@ -883,15 +883,15 @@ function updateGroups() {
         puzzleData.groups[i].goal = old_groups[i].goal;
         puzzleData.groups[i].operation = old_groups[i].operation;
     }
-	
+
     updateBorders();
     updateRules();
 }
 
 /*!
- * 
+ *
  * UPDATE BORDERS - This is the function that runs to update cell borders
- * 
+ *
  */
 function updateBorders() {
     for (var row = 0; row < puzzleData.rows.length; row++) {
@@ -922,9 +922,9 @@ function updateBorders() {
 }
 
 /*!
- * 
+ *
  * UPDATE RULES - This is the function that runs to update rules
- * 
+ *
  */
 function updateRules() {
     for (var i = 0; i < puzzleData.cells.length; i++) {
@@ -938,7 +938,7 @@ function updateRules() {
 
 function findNextHint(){
     puzzleData.hint = true;
-    
+
     if(!puzzleData.solved){
         groupSolve();
     }else{
@@ -948,7 +948,7 @@ function findNextHint(){
 
 function displayHint(){
     var hintFound = false;
-    
+
     for (var i = 0; i < puzzleData.rows.length; i++) {
         for (var j = 0; j < puzzleData.rows.length; j++) {
             var currentValue = Number(puzzleData.rows[i][j].div.find('.numberWrapper').html());
@@ -961,27 +961,27 @@ function displayHint(){
         }
     }
     puzzleData.hint = false;
-    
+
     if(hintFound){
         timeData.penalty += timerSettings.hintPenalty;
         checkCellError();
-        checkCellComplete();  
+        checkCellComplete();
     }
 }
 
 /*!
- * 
+ *
  * DISPLAY GROUP SOLVE - This is the function that runs to reveal puzzle solution
- * 
+ *
  */
 function displayGroupSolve(){
     gameData.solved = true;
-	puzzleData.result = true;
-	groupSolve();
+    puzzleData.result = true;
+    groupSolve();
 }
 
 function checkCurrentSolve(){
-	getAllGroupSolutions();
+    getAllGroupSolutions();
     puzzleData.groups = puzzleData.groups.sort(function(a, b) {
         if (a.possible.length < b.possible.length) {
             return -1;
@@ -989,9 +989,9 @@ function checkCurrentSolve(){
             return 0;
         }
         return 1;
-    });	
+    });
 }
- 
+
 function groupSolve(){
     var start = new Date();
     getAllGroupSolutions();
@@ -1070,11 +1070,11 @@ function groupSolve(){
     if (!solved) {
         alert("No solution!");
     } else {
-		puzzleData.solved = true;
+        puzzleData.solved = true;
         if(puzzleData.hint){
             displayHint();
         }else{
-            checkPuzzleSolve();   
+            checkPuzzleSolve();
         }
         console.log("Solved in " + ((end - start) / 1000.) + " seconds.");
     }
@@ -1266,25 +1266,25 @@ function constructGroupConstrainedChoices() {
 }
 
 /*!
- * 
+ *
  * DRAW SOLUTION - This is the function that runs to draw solution
- * 
+ *
  */
 function drawSolution(solution) {
     for (var i = 0; i < puzzleData.rows.length; i++) {
         for (var j = 0; j < puzzleData.rows.length; j++) {
-			puzzleData.rows[i][j].div.solved = solution[i][j];
-			if(puzzleData.result){
-				puzzleData.rows[i][j].div.find('.numberWrapper').html(solution[i][j]);	
-			}
+            puzzleData.rows[i][j].div.solved = solution[i][j];
+            if(puzzleData.result){
+                puzzleData.rows[i][j].div.find('.numberWrapper').html(solution[i][j]);
+            }
         }
     }
 }
 
 /*!
- * 
+ *
  * CHECK PUZZLE VALIDITY - This is the function that runs to check if puzzle have a valid solution
- * 
+ *
  */
 function checkAll(solution) {
     return checkGroups(solution) && checkCols(solution) && checkRows(solution);
@@ -1360,84 +1360,84 @@ function checkCols(solution) {
 }
 
 /*!
- * 
+ *
  * GAME TIMER - This is the function that runs for game timer
- * 
+ *
  */
 function toggleGameTimer(con){
-	if(!timerSettings.status){
-		return;	
-	}
-	
-	if(con){
+    if(!timerSettings.status){
+        return;
+    }
+
+    if(con){
         timeData.penalty = 0;
-		timeData.startDate = new Date();
-		loopGameTimer();
-	}else{
-		
-	}
-	timeData.enable = con;
+        timeData.startDate = new Date();
+        loopGameTimer();
+    }else{
+
+    }
+    timeData.enable = con;
 }
 
 function loopGameTimer(){
-	TweenMax.to(timeData, .2, {overwrite:true, onComplete:updateGameTimer});		
+    TweenMax.to(timeData, .2, {overwrite:true, onComplete:updateGameTimer});
 }
 
 function updateGameTimer(){
-	if(!timeData.enable){
-		return;	
-	}
-	
-	timeData.nowDate = new Date();
-	var elapsedTime = (timeData.nowDate.getTime() - timeData.startDate.getTime());
-	
-	if(timerSettings.mode == 'default'){
-		timeData.timer = Math.floor(elapsedTime + timeData.penalty);
-	}else if(timerSettings.mode == 'countdown'){
-		timeData.timer = Math.floor(((timeData.countdown)) - (elapsedTime + timeData.penalty))
-	}
-	
+    if(!timeData.enable){
+        return;
+    }
+
+    timeData.nowDate = new Date();
+    var elapsedTime = (timeData.nowDate.getTime() - timeData.startDate.getTime());
+
+    if(timerSettings.mode == 'default'){
+        timeData.timer = Math.floor(elapsedTime + timeData.penalty);
+    }else if(timerSettings.mode == 'countdown'){
+        timeData.timer = Math.floor(((timeData.countdown)) - (elapsedTime + timeData.penalty))
+    }
+
     playerData.timer = timeData.timer;
-	$('.gameTimerStatus').html(millisecondsToTime(timeData.timer));
-	
-	var timerContinue = true;
-	if(timerSettings.mode == 'countdown'){
-		if(timeData.timer <= 0){
-			timerContinue = false;	
-		}
-	}
-	
-	if(timerContinue){
-		loopGameTimer();
-	}else{
-		$('.gameTimerStatus').html(millisecondsToTime(0));
-		
-		gameData.failed = true;
+    $('.gameTimerStatus').html(millisecondsToTime(timeData.timer));
+
+    var timerContinue = true;
+    if(timerSettings.mode == 'countdown'){
+        if(timeData.timer <= 0){
+            timerContinue = false;
+        }
+    }
+
+    if(timerContinue){
+        loopGameTimer();
+    }else{
+        $('.gameTimerStatus').html(millisecondsToTime(0));
+
+        gameData.failed = true;
         toggleResult(true);
-	}
+    }
 }
 
 /*!
- * 
+ *
  * TOGGLE RESULT - This is the function that runs to toggle result
- * 
+ *
  */
 function toggleResult(con){
     $('.gameChoiceHolder').hide();
     $('.gameResultHolder').hide();
-    
-	if(con){
-		$('.numberWrapper').each(function(index, element) {
+
+    if(con){
+        $('.numberWrapper').each(function(index, element) {
             $(this).parent().removeClass('currentFocus');
         });
         gameData.completed = true;
-		$('.gameResultHolder').fadeIn();
-        
+        $('.gameResultHolder').fadeIn();
+
         $('.resultOption').show();
         if(!shareEnable){
             $('.resultOption').hide();
         }
-        
+
         stopGame();
         if(gameData.solved){
             playSound('soundOver');
@@ -1450,49 +1450,49 @@ function toggleResult(con){
             $('.gameResultStatus').html(resultCompleteText);
             playSound('soundComplete');
         }
-	}else{
+    }else{
         gameData.completed = false;
         gameData.failed = false;
         gameData.solved = false;
-		$('.gameChoiceHolder').fadeIn();
-	}
+        $('.gameChoiceHolder').fadeIn();
+    }
 }
 
 function resizeGameDetail(){
     var curScalePercent = scalePercent;
-    
+
     if(gameData.mode == 'portrait'){
         curScalePercent = scalePercent * .5;
         $('.gameTimerHolder').css('left', 'auto');
-        
+
         $('.gameTimerStatus').attr('data-fontsize', 80);
-		$('.gameTimerStatus').attr('data-lineheight', 160);
-        
+        $('.gameTimerStatus').attr('data-lineheight', 160);
+
         $('.gameGuideStatus').attr('data-fontsize', 50);
-		$('.gameGuideStatus').attr('data-lineheight', 50);
-        
+        $('.gameGuideStatus').attr('data-lineheight', 50);
+
         $('.gameButtonGuideStatus').attr('data-fontsize', 40);
-		$('.gameButtonGuideStatus').attr('data-lineheight', 40);
+        $('.gameButtonGuideStatus').attr('data-lineheight', 40);
     }else{
         var targetPuzzle = $("#puzzleHolder").position();
         $('.gameTimerHolder').css('left', targetPuzzle.left + $("#puzzleHolder").outerWidth());
-        
+
         $('.gameTimerStatus').attr('data-fontsize', 60);
-		$('.gameTimerStatus').attr('data-lineheight', 120);
-        
+        $('.gameTimerStatus').attr('data-lineheight', 120);
+
         $('.gameGuideStatus').attr('data-fontsize', 30);
-		$('.gameGuideStatus').attr('data-lineheight', 30);
-        
+        $('.gameGuideStatus').attr('data-lineheight', 30);
+
         $('.gameButtonGuideStatus').attr('data-fontsize', 25);
-		$('.gameButtonGuideStatus').attr('data-lineheight', 25);
+        $('.gameButtonGuideStatus').attr('data-lineheight', 25);
     }
-    
+
     $('#puzzleTable .cell').each(function(index, element) {
         var currentWidth = $(this).outerWidth();
         $(this).css('height', currentWidth);
         $(this).css('border', puzzleSettings.borderColour+' solid '+(puzzleSettings.borderSize * curScalePercent)+'px');
     });
-    
+
     $('.border-left').each(function(index, element) {
         $(this).css('border-left', puzzleSettings.borderColour+' solid '+(puzzleSettings.borderDividerSize * curScalePercent)+'px');
     });
@@ -1505,86 +1505,86 @@ function resizeGameDetail(){
     $('.border-bottom').each(function(index, element) {
         $(this).css('border-bottom', puzzleSettings.borderColour+' solid '+(puzzleSettings.borderDividerSize * curScalePercent)+'px');
     });
-    
+
     resizeGameFonts();
 }
 
 /*!
- * 
+ *
  * RESIZE GAME FONTS - This is the function that runs to resize game fonts
- * 
+ *
  */
 function resizeGameFonts(){
     var curScalePercent = scalePercent;
     if(gameData.mode == 'portrait'){
         curScalePercent = scalePercent * .5;
     }
-    
-	$('.resizeFont').each(function(index, element) {
+
+    $('.resizeFont').each(function(index, element) {
         $(this).css('font-size', Math.round(Number($(this).attr('data-fontSize'))*curScalePercent)+'px');
-		$(this).css('line-height', Math.round(Number($(this).attr('data-lineHeight'))*curScalePercent)+'px');
+        $(this).css('line-height', Math.round(Number($(this).attr('data-lineHeight'))*curScalePercent)+'px');
     });
 }
 
 /*!
- * 
+ *
  * MILLISECONDS CONVERT - This is the function that runs to convert milliseconds to time
- * 
+ *
  */
 function millisecondsToTime(milli) {
-	var milliseconds = milli % 1000;
-	var seconds = Math.floor((milli / 1000) % 60);
-	var minutes = Math.floor((milli / (60 * 1000)) % 60);
-	
-	if(seconds<10){
-		seconds = '0'+seconds;  
-	}
-	
-	if(minutes<10){
-		minutes = '0'+minutes;  
-	}
-	
-	return minutes+':'+seconds;
+    var milliseconds = milli % 1000;
+    var seconds = Math.floor((milli / 1000) % 60);
+    var minutes = Math.floor((milli / (60 * 1000)) % 60);
+
+    if(seconds<10){
+        seconds = '0'+seconds;
+    }
+
+    if(minutes<10){
+        minutes = '0'+minutes;
+    }
+
+    return minutes+':'+seconds;
 }
 
 
 /*!
- * 
+ *
  * TOGGLE CONFIRM - This is the function that runs to toggle confirm exit
- * 
+ *
  */
 function toggleConfirm(con){
-	if(con){
-		$('#confirmHolder').show();
-	}else{
-		$('#confirmHolder').hide();	
-	}
+    if(con){
+        $('#confirmHolder').show();
+    }else{
+        $('#confirmHolder').hide();
+    }
 }
 
 /*!
- * 
+ *
  * TOGGLE TUTORIAL - This is the function that runs to toggle tutorial content
- * 
+ *
  */
 function toggleTutorial(con){
-	if(con){
-		$('#tutorialHolder').show();
-	}else{
-		$('#tutorialHolder').hide();	
-	}
+    if(con){
+        $('#tutorialHolder').show();
+    }else{
+        $('#tutorialHolder').hide();
+    }
 }
 
 
 /*!
- * 
+ *
  * OPTIONS - This is the function that runs to mute and fullscreen
- * 
+ *
  */
 function toggleGameOption(con){
     if(con != undefined){
-		$('#buttonOption').removeClass('buttonOptionOff');
+        $('#buttonOption').removeClass('buttonOptionOff');
         $('#buttonOption').removeClass('buttonOptionOn');
-        
+
         if(!con){
             $('#buttonOption').addClass('buttonOptionOn');
             $('#optionList').show();
@@ -1593,27 +1593,27 @@ function toggleGameOption(con){
             $('#optionList').hide();
         }
     }
-	if($('#buttonOption').hasClass('buttonOptionOn')){
-		$('#buttonOption').removeClass('buttonOptionOn');
-		$('#buttonOption').addClass('buttonOptionOff');
-		$('#optionList').hide();
-	}else{
-		$('#buttonOption').removeClass('buttonOptionOff');
-		$('#buttonOption').addClass('buttonOptionOn');
-		$('#optionList').show();
-	}
+    if($('#buttonOption').hasClass('buttonOptionOn')){
+        $('#buttonOption').removeClass('buttonOptionOn');
+        $('#buttonOption').addClass('buttonOptionOff');
+        $('#optionList').hide();
+    }else{
+        $('#buttonOption').removeClass('buttonOptionOff');
+        $('#buttonOption').addClass('buttonOptionOn');
+        $('#optionList').show();
+    }
 }
 
 function toggleGameMute(){
-	if($('#buttonSound').hasClass('buttonSoundOn')){
-		$('#buttonSound').removeClass('buttonSoundOn');
-		$('#buttonSound').addClass('buttonSoundOff');
-		toggleMute(true);
-	}else{
-		$('#buttonSound').removeClass('buttonSoundOff');
-		$('#buttonSound').addClass('buttonSoundOn');
-		toggleMute(false);
-	}
+    if($('#buttonSound').hasClass('buttonSoundOn')){
+        $('#buttonSound').removeClass('buttonSoundOn');
+        $('#buttonSound').addClass('buttonSoundOff');
+        toggleMute(true);
+    }else{
+        $('#buttonSound').removeClass('buttonSoundOff');
+        $('#buttonSound').addClass('buttonSoundOn');
+        toggleMute(false);
+    }
 }
 
 
@@ -1644,30 +1644,30 @@ function toggleFullScreen() {
 
 
 /*!
- * 
+ *
  * SHARE - This is the function that runs to open share url
- * 
+ *
  */
 function share(action){
-	gtag('event','click',{'event_category':'share','event_label':action});
-	
-	var loc = location.href
-	loc = loc.substring(0, loc.lastIndexOf("/") + 1);
-	
-	var title = '';
-	var text = '';
-	
-	title = shareTitle.replace("[SCORE]", millisecondsToTime(playerData.timer));
+    gtag('event','click',{'event_category':'share','event_label':action});
+
+    var loc = location.href
+    loc = loc.substring(0, loc.lastIndexOf("/") + 1);
+
+    var title = '';
+    var text = '';
+
+    title = shareTitle.replace("[SCORE]", millisecondsToTime(playerData.timer));
     text = shareMessage.replace("[SCORE]", millisecondsToTime(playerData.timer));
-	var shareurl = '';
-	
-	if( action == 'twitter' ) {
-		shareurl = 'https://twitter.com/intent/tweet?url='+loc+'&text='+text;
-	}else if( action == 'facebook' ){
-		shareurl = 'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(loc+'share.php?desc='+text+'&title='+title+'&url='+loc+'&thumb='+loc+'share.jpg&width=590&height=300');
-	}else if( action == 'whatsapp' ){
-		shareurl = "whatsapp://send?text=" + encodeURIComponent(text) + " - " + encodeURIComponent(loc);
-	}
-	
-	window.open(shareurl);
+    var shareurl = '';
+
+    if( action == 'twitter' ) {
+        shareurl = 'https://twitter.com/intent/tweet?url='+loc+'&text='+text;
+    }else if( action == 'facebook' ){
+        shareurl = 'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(loc+'share.php?desc='+text+'&title='+title+'&url='+loc+'&thumb='+loc+'share.jpg&width=590&height=300');
+    }else if( action == 'whatsapp' ){
+        shareurl = "whatsapp://send?text=" + encodeURIComponent(text) + " - " + encodeURIComponent(loc);
+    }
+
+    window.open(shareurl);
 }
