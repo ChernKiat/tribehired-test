@@ -55,7 +55,8 @@ Route::prefix('net-junkies')->namespace('NetJunkies')->name('netjunkies.')->grou
 });
 
 Route::prefix('nft-storage')->namespace('NFTStorage')->name('nftstorage.')->group(function() {
-    Route::get('/', 'DemoController@main')->name('demo.main');
+// Route::get('/', 'ManekiController@main')->name('maneki.main');
+Route::get('/', 'MultiverseController@main')->name('multiverse.main');
     Route::get('one', 'DemoController@one')->name('demo.one');
     Route::get('two', 'DemoController@two')->name('demo.two');
     Route::get('three', 'DemoController@three')->name('demo.three');
@@ -79,7 +80,7 @@ Route::domain(Config::get('app.url'))->namespace('NFTStorage')->name('nftstorage
     Route::get('{sha256}/maneki/{index}', 'ManekiController@image')->name('maneki.image');
     Route::get('{sha256}/static/{index}', 'ManekiController@static')->name('maneki.static');
 
-Route::get('/', 'MultiverseController@main')->name('multiverse.main');
+// Route::get('/', 'MultiverseController@main')->name('multiverse.main');
     Route::get('{sha256}/multiverse/{multiverse}', 'MultiverseController@image')->name('multiverse.image');
     Route::get('{sha256}/static/{multiverse}', 'MultiverseController@static')->name('multiverse.static');
 });
@@ -101,6 +102,7 @@ Route::prefix('seal-chamber')->namespace('SealChamber')->name('sealchamber.')->g
 });
 
 Route::prefix('startup-demo')->namespace('StartupDemo')->name('startupdemo.')->group(function() {
+    Route::get('/', 'ProjectController@main')->name('project.main');
     Route::get('calcudoku', 'ProjectController@pageCalcudoku')->name('project.calcudoku');
     Route::get('easter-card', 'ProjectController@pageEasterCard')->name('project.eastercard');
     Route::get('slot-machine', 'ProjectController@pageSlotMachine')->name('project.slotmachine');

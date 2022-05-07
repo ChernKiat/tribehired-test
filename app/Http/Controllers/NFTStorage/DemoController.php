@@ -12,15 +12,6 @@ use Illuminate\Http\Request;
 
 class DemoController extends Controller
 {
-    public function main()
-    {
-        $gipSkin = GipSkin::demo('a.jpg', public_path('myNFTStorage'), 3, 4);
-        dd('lol');
-
-        // $gip = new Gip(public_path('myNFTStorage\a.jpg'));
-        // dd($gip->createProtectImageResize(300, 500, new GipMask(new GipImage(public_path('myNFTStorage\a.jpg'))), new GipImage(public_path('myNFTStorage\a.jpg'))));
-    }
-
     public function one()
     {
         return view('modules.nft_storage.no_path');

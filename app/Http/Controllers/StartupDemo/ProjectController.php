@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
+    public function main()
+    {
+        return view('modules.startup_demo.main');
+    }
+
     public function pageCalcudoku()
     {
         return view('modules.startup_demo.calcudoku');
