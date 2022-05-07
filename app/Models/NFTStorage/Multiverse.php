@@ -55,7 +55,7 @@ class Multiverse extends Model
         }
     }
 
-    public function seed()
+    public static function seed()
     {
         $multiverse = self::updateOrCreate([
             'name'             => 'Maneki Zodiac',
@@ -105,16 +105,18 @@ class Multiverse extends Model
                 }
 
                 $asset = Asset::updateOrCreate([
-                    'index'         => $index,
+                    'nftstorage_multiverse_id'  => $multiverse->id,
+                    'index'                     => $index,
                 ], [
-                    'index'         => $index,
-                    'hex'           => dechex($index++),
-                    'unit'          => $i,
-                    'states_total'  => $total,
-                    'random'        => $random,
-                    'extension'     => 'png',
-                    'sha256'        => $sha256,
-                    'type'          => Asset::TYPE_CUSTOM,
+                    'nftstorage_multiverse_id'  => $multiverse->id,
+                    'index'                     => $index,
+                    'hex'                       => dechex($index++),
+                    'unit'                      => $i,
+                    'states_total'              => $total,
+                    'random'                    => $random,
+                    'extension'                 => 'png',
+                    'sha256'                    => $sha256,
+                    'type'                      => Asset::TYPE_CUSTOM,
                 ]);
             }
         }

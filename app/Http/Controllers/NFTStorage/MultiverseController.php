@@ -27,8 +27,9 @@ class MultiverseController extends Controller
 
     public function test()
     {
-        $multiverse = Multiverse::with(['asset'])->where('name', 'Maneki Zodiac')->first();
-        $multiverse->generateMetas();
+        Multiverse::seed();
+        // $multiverse = Multiverse::with(['asset'])->where('name', 'Maneki Zodiac')->first();
+        // $multiverse->generateMetas();
         // $multiverse->getMetaAttribute();
         // $multiverse->refreshMetas();
         dd('yay');

@@ -71,7 +71,8 @@ Route::prefix('nft-storage')->namespace('NFTStorage')->name('nftstorage.')->grou
     Route::get('wallet', 'WalletController@main')->name('wallet.main');
     Route::get('nft', 'WalletController@nft')->name('wallet.nft');
 
-    Route::get('test', 'ManekiController@test')->name('test');
+    Route::get('maneki/test', 'ManekiController@test')->name('maneki.test');
+    Route::get('multiverse/test', 'MultiverseController@test')->name('multiverse.test');
 });
 Route::domain(Config::get('app.url'))->namespace('NFTStorage')->name('nftstorage.')->group(function() {
 // Route::get('/', 'ManekiController@main')->name('maneki.main');
