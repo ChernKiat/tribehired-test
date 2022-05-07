@@ -15,7 +15,7 @@
         <meta property="og:title" content="CalcuDoku"/>
         <meta property="og:site_name" content="CalcuDoku"/>
         <meta property="og:image" content="/myStartupDemo/calcudoku/share.jpg" />
-        <meta property="og:url" content="{{ route('startup-demo.calcudoku') }}" />
+        <meta property="og:url" content="{{ route('startupdemo.project.calcudoku') }}" />
         <meta property="og:description" content="CalcuDoku is a HTML5 game where you have to fill in the grid so that every row and every column contains the digits. Each box must also be calculated according to number and operator, there is only 1 solution for each puzzle.">
 
         <!-- for Twitter -->

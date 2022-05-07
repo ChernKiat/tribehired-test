@@ -16,7 +16,7 @@
         <meta property="og:title" content="Easter Day (Pop Up Card)"/>
         <meta property="og:site_name" content="Easter Day (Pop Up Card)"/>
         <meta property="og:image" content="/myStartupDemo/easter_card/share.jpg" />
-        <meta property="og:url" content="{{ route('startup-demo.easter-card') }}" />
+        <meta property="og:url" content="{{ route('startupdemo.project.eastercard') }}" />
         <meta property="og:description" content="Easter Day (Pop Up Card) HTML5 Canvas is a Easter Card with pop up booklet effect, open the greetings with cool pop up animation, magic particles and background music.">
 
         <!-- for Twitter -->
