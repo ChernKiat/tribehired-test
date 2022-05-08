@@ -78,11 +78,11 @@ Route::get('/', 'MultiverseController@main')->name('multiverse.main');
 Route::domain(Config::get('app.url'))->namespace('NFTStorage')->name('nftstorage.')->group(function() {
 // Route::get('/', 'ManekiController@main')->name('maneki.main');
     Route::get('{sha256}/maneki/{index}', 'ManekiController@image')->name('maneki.image');
-    Route::get('{sha256}/static/{index}', 'ManekiController@static')->name('maneki.static');
+    Route::get('{sha256}/external/{index}', 'ManekiController@external')->name('maneki.external');
 
 // Route::get('/', 'MultiverseController@main')->name('multiverse.main');
     Route::get('{sha256}/multiverse/{multiverse}', 'MultiverseController@image')->name('multiverse.image');
-    Route::get('{sha256}/static/{multiverse}', 'MultiverseController@static')->name('multiverse.static');
+    Route::get('{sha256}/external/{multiverse}', 'MultiverseController@external')->name('multiverse.external');
 });
 
 Route::prefix('profile-landing')->namespace('ProfileLanding')->name('profilelanding.')->group(function() {

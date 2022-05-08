@@ -15,7 +15,7 @@ class Multiverse extends Model
 
     const WALLET_DEFAULT_DEPLOY_ADDRESS  = '0xaa43e38158d656e2B366f4D25274606962c09D72';
 
-    const PATH_RINKEBY_SERVER_FOLDER  = '/myNFTStorage/Rinkeby Server (Ultimate NFT)/';
+    const PATH_RINKEBY_SERVER_FOLDER  = '/myNFTStorage/Rinkeby Server/';
 
     public function assets()
     {
@@ -32,8 +32,8 @@ class Multiverse extends Model
         FileTool::createAFile(public_path(self::PATH_RINKEBY_SERVER_FOLDER . 'contract.json'), json_encode(array(
             'name'                     => $this->name,
             'description'              => $this->description,
-            'image'                    => route('nftstorage.maneki.main') . self::PATH_RINKEBY_SERVER_FOLDER . 'contract.png',
-            'external_url'             => route('nftstorage.maneki.main'),
+            'image'                    => route('nftstorage.multiverse.main') . self::PATH_RINKEBY_SERVER_FOLDER . 'contract.png',
+            'external_url'             => route('nftstorage.multiverse.main'),
             'seller_fee_basis_points'  => $this->transaction_fee,
             'fee_recipient'            => $this->wallet_address ?? self::WALLET_DEFAULT_DEPLOY_ADDRESS,
         ), JSON_UNESCAPED_SLASHES));

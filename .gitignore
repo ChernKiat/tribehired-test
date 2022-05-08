@@ -1,7 +1,8 @@
 /node_modules
 /public/hot
 /public/storage
-/public/myNFTStorage/Rinkeby Server (Ultimate NFT)
+/public/myNFTStorage/Rinkeby Server
+/public/myNFTStorage/Rinkeby Server (old)
 /storage/*.key
 /vendor
 .env

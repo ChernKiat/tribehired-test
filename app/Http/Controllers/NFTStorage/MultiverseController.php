@@ -25,11 +25,17 @@ class MultiverseController extends Controller
         }
     }
 
+    public function external(Request $request, $sha256, $index)
+    {
+    }
+
     public function test()
     {
-        Multiverse::seed();
-        // $multiverse = Multiverse::with(['asset'])->where('name', 'Maneki Zodiac')->first();
-        // $multiverse->generateMetas();
+        // Multiverse::seed();
+
+        $multiverse = Multiverse::with(['asset'])->where('name', 'Maneki Zodiac')->first();
+        // $multiverse->generateContractMeta();
+        $multiverse->generateMetas();
         // $multiverse->getMetaAttribute();
         // $multiverse->refreshMetas();
         dd('yay');

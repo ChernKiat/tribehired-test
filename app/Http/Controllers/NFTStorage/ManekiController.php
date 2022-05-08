@@ -23,7 +23,7 @@ class ManekiController extends Controller
         }
     }
 
-    public function static(Request $request, $maneki)
+    public function external(Request $request, $sha256, $index)
     {
     }
 
