@@ -82,8 +82,6 @@ class Maneki extends Model
 
     public function pending()
     {
-        // the static image route
-
         // the zodiac image
     }
 
@@ -172,7 +170,7 @@ class Maneki extends Model
             'description'   => '', // self::PROJECT_DESCRIPTION,
             'image'         => $this->meta_image,
             // 'image_data'    => $this->meta_image,
-            'external_url'  => route('nftstorage.maneki.static', ['sha256' => $this->sha256, 'index' => $this->index]), // the static image
+            'external_url'  => route('nftstorage.maneki.external', ['sha256' => $this->sha256, 'index' => $this->index]), // the static image
         );
     }
 

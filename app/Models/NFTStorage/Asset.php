@@ -35,7 +35,12 @@ class Asset extends Model
             default:
                 break;
         }
-        return route('nftstorage.maneki.image', ['sha256' => $this->sha256, 'index' => $this->index]);
+        return route('nftstorage.multiverse.image', ['sha256' => $this->sha256, 'multiverse' => $this->multiverse->name]);
+    }
+
+    public function getOriginalImageAttribute()
+    {
+        return public_path(Multiverse::PATH_RINKEBY_SERVER_FOLDER . "{$this->multiverse->name}_{$this->index}.{$this->extension}");
     }
 
     public function generateARandomImage($length)
@@ -68,7 +73,7 @@ class Asset extends Model
             'description'   => '', // self::PROJECT_DESCRIPTION,
             'image'         => $this->meta_image,
             // 'image_data'    => $this->meta_image,
-            'external_url'  => route('nftstorage.multiverse.static', ['sha256' => $this->sha256, 'multiverse' => $this->multiverse->name]), // the static image
+            'external_url'  => route('nftstorage.multiverse.external', ['sha256' => $this->sha256, 'multiverse' => $this->multiverse->name]), // the static image
         );
     }
 

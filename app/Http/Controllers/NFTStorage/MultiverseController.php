@@ -25,8 +25,16 @@ class MultiverseController extends Controller
         }
     }
 
-    public function external(Request $request, $sha256, $index)
+    public function external(Request $request, $sha256, $multiverse)
     {
+        $multiverse = Multiverse::with(['asset' => function ($query) use ($sha256) {
+                            $query->where('sha256', $sha256);
+                        }])->where('name', $multiverse)->first();
+        if (!empty($multiverse->asset)) {
+            return response()->file($multiverse->asset->original_image);
+        } else {
+            abort(404);
+        }
     }
 
     public function test()
