@@ -2,6 +2,7 @@
 namespace App\Models\NFTStorage;
 
 use App\Tools\FileTool;
+use App\Tools\ImageTool;
 use App\Tools\StringTool;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +16,7 @@ class Multiverse extends Model
 
     const WALLET_DEFAULT_DEPLOY_ADDRESS  = '0xaa43e38158d656e2B366f4D25274606962c09D72';
 
+    const PATH_IMAGE_FOLDER  = '/myNFTStorage/image/';
     const PATH_RINKEBY_SERVER_FOLDER  = '/myNFTStorage/Rinkeby Server/';
 
     public function assets()
@@ -123,8 +125,10 @@ class Multiverse extends Model
         }
     }
 
-    public function generateBaseImages()
+    public function generateBlackImages()
     {
-
+        foreach ($this->assets as $asset) {
+            FileTool::createAFile($asset->meta_filename, json_encode($asset->meta, JSON_UNESCAPED_SLASHES));
+        }
     }
 }

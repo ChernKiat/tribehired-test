@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\StartupDemo;
 
-use App\Tools\ImageTool;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 

@@ -25,6 +25,12 @@ class ManekiController extends Controller
 
     public function external(Request $request, $sha256, $index)
     {
+        $maneki = Maneki::where('index', $index)->first();
+        if ($maneki->sha256 == $sha256) {
+            return response()->file($maneki->original_image);
+        } else {
+            abort(404);
+        }
     }
 
     public function seed()

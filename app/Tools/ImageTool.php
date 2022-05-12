@@ -130,4 +130,42 @@ class ImageTool
     //     imagefilter($im, IMG_FILTER_COLORIZE, $rgb[0], $rgb[1], $rgb[2]);
     //     imagefilter($im, IMG_FILTER_NEGATE);
     // }
+
+    public static function demo($image, $directory, $x = 2, $y = 2)
+    {
+        list($width, $height) = getimagesize("{$directory}\\{$image}");
+
+        $min_x = floor($width / $x);
+        $min_y = floor($height / $y);
+
+        $array_x = array(0);
+        $temp = 0;
+        $balance = $width - ($min_x * $x);
+        for ($i = 0; $i < $x; $i++) {
+            $temp += $min_x;
+            if ($i < $balance) {
+                $temp++;
+            }
+            $array_x[] = $temp;
+        }
+        $array_y = array(0);
+        $temp = 0;
+        $balance = $height - ($min_y * $y);
+        for ($i = 0; $i < $y; $i++) {
+            $temp += $min_y;
+            if ($i < $balance) {
+                $temp++;
+            }
+            $array_y[] = $temp;
+        }
+
+        // $x = rand(0, $x - 1);
+        // $y = rand(0, $y - 1);
+
+        for ($i = 0; $i < $x; $i++) {
+            for ($j = 0; $j < $y; $j++) {
+                self::maskARectangle($image, $directory, $array_x[$i], $array_y[$j], $array_x[$i + 1], $array_y[$j + 1]);
+            }
+        }
+    }
 }
