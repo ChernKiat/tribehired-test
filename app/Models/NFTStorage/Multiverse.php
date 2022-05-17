@@ -2,6 +2,7 @@
 namespace App\Models\NFTStorage;
 
 use App\Tools\FileTool;
+use App\Tools\ImageTool;
 use App\Tools\StringTool;
 use Illuminate\Database\Eloquent\Model;
 
@@ -127,8 +128,22 @@ class Multiverse extends Model
 
     public function generateBlackImages()
     {
-        foreach ($this->assets as $asset) {
-            FileTool::createAFile($asset->meta_filename, json_encode($asset->meta, JSON_UNESCAPED_SLASHES));
+        // foreach ($this->assets as $asset) {
+            $this->asset->generateBlackImages('8.png', public_path(self::PATH_INPUT_FOLDER), public_path(self::PATH_IMAGE_FOLDER . "{$this->id}/"), 4, 4);
+            // $asset->generateBlackImages($this->asset->original_image "{$this->name}_{$this->index}_b", public_path(self::PATH_INPUT_FOLDER), public_path(self::PATH_IMAGE_FOLDER . "{$this->id}/"), 4, 4);...........
+        // }
+    }
+
+    public function generateCustomImages()
+    {
+        // foreach ($this->assets as $asset) {
+        // }
+        foreach (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b'] as $key => $i) {
+            foreach (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b'] as $index => $j) {
+                if ($key < $index) {
+                    ImageTool::pasteAnImageOnAnotherImage("{$i}.png", "{$j}.png", public_path(self::PATH_INPUT_FOLDER), public_path(self::PATH_IMAGE_FOLDER . "{$this->id}/"));
+                }
+            }
         }
     }
 }

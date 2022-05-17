@@ -123,9 +123,9 @@ class Asset extends Model
         // $x = rand(0, $x - 1);
         // $y = rand(0, $y - 1);
 
-        for ($i = 0; $i < $x; $i++) {
-            for ($j = 0; $j < $y; $j++) {
-                ImageTool::maskARectangle($image, $directory, $destination, $array_x[$i], $array_y[$j], $array_x[$i + 1], $array_y[$j + 1]);
+        for ($i = 1; $i < $x + 1; $i++) {
+            for ($j = 1; $j < $y + 1; $j++) {
+                ImageTool::maskARectangle($image, $directory, $destination, $array_x, $array_y, $i, $j);
             }
         }
     }

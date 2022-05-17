@@ -17,29 +17,40 @@ class ImageTool
     }
 
 
-    public static function pasteAnImageOnAnotherImage($image, $directory, $destination_path)
+    public static function pasteAnImageOnAnotherImage($image_1, $image_2, $source, $destination)
     {
         // transparent source to not transparent destination = destination
         // not transparent source to transparent destination = source
         // small source to big destination = black color for extra
         // big source to small destination = crop
 
-        // $destination_image = imagecreatefromjpeg("{$directory}\\sweet.png");
-        $source_image = imagecreatefrompng("{$directory}\\sweet.png");
+        $image_1 = "{$source}{$image_1}";
+        $image_2 = "{$source}{$image_2}";
+        $destination .= pathinfo($image_1, PATHINFO_FILENAME) . '_' . pathinfo($image_2, PATHINFO_FILENAME) . '.png';
+        list($width, $height) = getimagesize($image_1);
 
-        $destination_image = imagecreatefromjpeg("{$directory}\\{$image}");
-        // $source_image = imagecreatefrompng("{$directory}\\{$image}");
+        foreach (['image_1', 'image_2'] as $value) {
+            switch (pathinfo(${$value}, PATHINFO_EXTENSION)) {
+                case 'png':
+                    ${$value} = imagecreatefrompng(${$value});
+                    break;
+                case 'jpg':
+                case 'jpeg':
+                default:
+                    ${$value} = imagecreatefromjpeg(${$value});
+                    break;
+            }
+        }
 
-        list($width, $height) = getimagesize("{$directory}\\{$image}");
-        imagecopy($destination_image, $source_image, 0, 0, 0, 0, $width, $height);
+        imagecopy($image_1, $image_2, 0, 0, 0, 0, $width, $height);
 
         header('Content-Type: image/png');
-        imagepng($destination_image, "{$directory}\\nice.png");
-        imagedestroy($destination_image);
-        dd($image);
+        imagepng($image_1, $destination);
+        imagedestroy($image_1);
+        // dd($image);
     }
 
-    public static function maskARectangle($image, $directory, $destination, $x1, $y1, $x2, $y2, $red = 0, $green = 0, $blue = 0)
+    public static function maskARectangle($image, $directory, $destination, $array_x, $array_y, $x, $y, $red = 0, $green = 0, $blue = 0)
     {
         $path = "{$directory}{$image}";
         $destination = $destination . pathinfo($image, PATHINFO_FILENAME);
@@ -59,10 +70,10 @@ class ImageTool
                 break;
         }
 
-        imagefilledrectangle($image, $x1, $y1, $x2, $y2, $black);
+        imagefilledrectangle($image, $array_x[$y - 1], $array_y[$x - 1], $array_x[$y], $array_y[$x], $black);
 
         header('Content-Type: image/png');
-        imagepng($image, "{$destination}_{$x1}_{$y1}.png");
+        imagepng($image, "{$destination}_b_{$x}_{$y}.png");
         imagedestroy($image);
         // dd($image);
     }
