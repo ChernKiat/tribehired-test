@@ -4,7 +4,7 @@ namespace App\Tools;
 
 class ImageTool
 {
-    public static function combine2Images($image_1, $image_2, $destination_path)
+    public static function combine2Images($image_1, $image_2)
     {
         $image1 = imagecreatefrompng($image_1);
         $image2 = imagecreatefrompng($image_2);
@@ -17,7 +17,7 @@ class ImageTool
     }
 
 
-    public static function pasteAnImageOnAnotherImage($image, $directory)
+    public static function pasteAnImageOnAnotherImage($image, $directory, $destination_path)
     {
         // transparent source to not transparent destination = destination
         // not transparent source to transparent destination = source
@@ -39,28 +39,38 @@ class ImageTool
         dd($image);
     }
 
-    public static function maskARectangle($image, $directory, $x1, $y1, $x2, $y2, $red = 0, $green = 0, $blue = 0)
+    public static function maskARectangle($image, $directory, $destination, $x1, $y1, $x2, $y2, $red = 0, $green = 0, $blue = 0)
     {
-        list($width, $height) = getimagesize("{$directory}\\{$image}");
+        $path = "{$directory}{$image}";
+        $destination = $destination . pathinfo($image, PATHINFO_FILENAME);
+        list($width, $height) = getimagesize($path);
 
         $mask = imagecreatetruecolor($width, $height);
         $black = imagecolorallocate($mask, $red, $green, $blue);
 
-        $image = imagecreatefromjpeg("{$directory}\\{$image}");
-        // $image = imagecreatefrompng("{$directory}\\{$image}");
+        switch (pathinfo($path, PATHINFO_EXTENSION)) {
+            case 'png':
+                $image = imagecreatefrompng($path);
+                break;
+            case 'jpg':
+            case 'jpeg':
+            default:
+                $image = imagecreatefromjpeg($path);
+                break;
+        }
 
         imagefilledrectangle($image, $x1, $y1, $x2, $y2, $black);
 
         header('Content-Type: image/png');
-        imagepng($image, "{$directory}\\input\\nice_{$x1}_{$y1}.png");
+        imagepng($image, "{$destination}_{$x1}_{$y1}.png");
         imagedestroy($image);
         // dd($image);
     }
 
     public static function changeAColorInBulk($image, $directory, $red1, $green1, $blue1, $red2, $green2, $blue2)
     {
-        // $image = imagecreatefromjpeg("{$directory}\\{$image}");
-        $image = imagecreatefrompng("{$directory}\\{$image}");
+        // $image = imagecreatefromjpeg("{$directory}{$image}");
+        $image = imagecreatefrompng("{$directory}{$image}");
 
         if (!imageistruecolor($image))
             imagepalettetotruecolor($image);
@@ -80,7 +90,7 @@ class ImageTool
             }
 
         header('Content-Type: image/png');
-        imagepng($image, "{$directory}\\nice.png");
+        imagepng($image, "{$directory}nice.png");
         imagedestroy($image);
         dd($image);
     }
@@ -130,42 +140,4 @@ class ImageTool
     //     imagefilter($im, IMG_FILTER_COLORIZE, $rgb[0], $rgb[1], $rgb[2]);
     //     imagefilter($im, IMG_FILTER_NEGATE);
     // }
-
-    public static function demo($image, $directory, $x = 2, $y = 2)
-    {
-        list($width, $height) = getimagesize("{$directory}\\{$image}");
-
-        $min_x = floor($width / $x);
-        $min_y = floor($height / $y);
-
-        $array_x = array(0);
-        $temp = 0;
-        $balance = $width - ($min_x * $x);
-        for ($i = 0; $i < $x; $i++) {
-            $temp += $min_x;
-            if ($i < $balance) {
-                $temp++;
-            }
-            $array_x[] = $temp;
-        }
-        $array_y = array(0);
-        $temp = 0;
-        $balance = $height - ($min_y * $y);
-        for ($i = 0; $i < $y; $i++) {
-            $temp += $min_y;
-            if ($i < $balance) {
-                $temp++;
-            }
-            $array_y[] = $temp;
-        }
-
-        // $x = rand(0, $x - 1);
-        // $y = rand(0, $y - 1);
-
-        for ($i = 0; $i < $x; $i++) {
-            for ($j = 0; $j < $y; $j++) {
-                self::maskARectangle($image, $directory, $array_x[$i], $array_y[$j], $array_x[$i + 1], $array_y[$j + 1]);
-            }
-        }
-    }
 }

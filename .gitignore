@@ -1,6 +1,8 @@
 /node_modules
 /public/hot
 /public/storage
+/public/myNFTStorage/image
+/public/myNFTStorage/input
 /public/myNFTStorage/Rinkeby Server
 /public/myNFTStorage/Rinkeby Server (old)
 /storage/*.key

@@ -43,7 +43,8 @@ class MultiverseController extends Controller
 
         $multiverse = Multiverse::with(['asset'])->where('name', 'Maneki Zodiac')->first();
         // $multiverse->generateContractMeta();
-        $multiverse->generateMetas();
+        // $multiverse->generateMetas();
+        $multiverse->generateBlackImages();
         // $multiverse->getMetaAttribute();
         // $multiverse->refreshMetas();
         dd('yay');

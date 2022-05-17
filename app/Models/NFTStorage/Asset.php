@@ -1,6 +1,7 @@
 <?php
 namespace App\Models\NFTStorage;
 
+use App\Tools\ImageTool;
 use Illuminate\Database\Eloquent\Model;
 
 class Asset extends Model
@@ -43,12 +44,6 @@ class Asset extends Model
         return public_path(Multiverse::PATH_RINKEBY_SERVER_FOLDER . "{$this->multiverse->name}_{$this->index}.{$this->extension}");
     }
 
-    public function generateARandomImage($length)
-    {
-        $characters = range(0, $length - 1);
-        return $characters[rand(0, strlen($characters) - 1)];
-    }
-
     public function getMetaNameAttribute()
     {
         return "{$this->multiverse->name} #{$this->index}";
@@ -77,4 +72,61 @@ class Asset extends Model
         );
     }
 
+    public function generateARandomImage($length)
+    {
+        $characters = range(0, $length - 1);
+        return $characters[rand(0, strlen($characters) - 1)];
+    }
+
+    public function generateBlackImages($image, $directory, $destination, $x = 2, $y = 2)
+    {
+        list($width, $height) = getimagesize("{$directory}{$image}");
+
+        $min_x = floor($width / $x);
+        $min_y = floor($height / $y);
+
+        $array_x = array_fill(0, $x, $min_x);
+        $balance = $width - ($min_x * $x);
+        $temp = ceil($balance / 2);
+        for ($i = 0; $i < $temp; $i++) {
+            $array_x[$i]++;
+        }
+        $temp = floor($balance / 2);
+        for ($i = $x - 1; $i > $x - $temp - 1; $i--) {
+            $array_x[$i]++;
+        }
+        $balance = 0;
+        $temp = array(0);
+        foreach ($array_x as $value) {
+            $balance += $value;
+            $temp[] = $balance;
+        }
+        $array_x = $temp;
+        $array_y = array_fill(0, $y, $min_y);
+        $balance = $height - ($min_y * $y);
+        $temp = ceil($balance / 2);
+        for ($i = 0; $i < $temp; $i++) {
+            $array_y[$i]++;
+        }
+        $temp = floor($balance / 2);
+        for ($i = $y - 1; $i > $y - $temp - 1; $i--) {
+            $array_y[$i]++;
+        }
+        $balance = 0;
+        $temp = array(0);
+        foreach ($array_y as $value) {
+            $balance += $value;
+            $temp[] = $balance;
+        }
+        $array_y = $temp;
+
+        // $x = rand(0, $x - 1);
+        // $y = rand(0, $y - 1);
+
+        for ($i = 0; $i < $x; $i++) {
+            for ($j = 0; $j < $y; $j++) {
+                ImageTool::maskARectangle($image, $directory, $destination, $array_x[$i], $array_y[$j], $array_x[$i + 1], $array_y[$j + 1]);
+            }
+        }
+    }
 }
