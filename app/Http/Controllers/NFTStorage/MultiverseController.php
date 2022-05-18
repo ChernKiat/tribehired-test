@@ -45,7 +45,8 @@ class MultiverseController extends Controller
         // $multiverse->generateContractMeta();
         // $multiverse->generateMetas();
         // $multiverse->generateBlackImages();
-        $multiverse->generateCustomImages();
+        $multiverse->generateBaseCustomImages();
+        // $multiverse->generateCustomImages();
         // $multiverse->getMetaAttribute();
         // $multiverse->refreshMetas();
         dd('yay');

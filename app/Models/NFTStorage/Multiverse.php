@@ -134,14 +134,77 @@ class Multiverse extends Model
         // }
     }
 
+    public function generateBaseCustomImages()
+    {
+        // foreach (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b'] as $key => $i) {
+        //     foreach (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b'] as $index => $j) {
+        //         if ($key < $index) {
+        //             ImageTool::pasteAnImageOnAnotherImage("{$i}.png", "{$j}.png", public_path(self::PATH_INPUT_FOLDER), public_path(self::PATH_INPUT_FOLDER));
+        //         }
+        //         foreach (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b'] as $token => $k) {
+        //             if ($key < $index && $index < $token) {
+        //                 ImageTool::pasteAnImageOnAnotherImage("{$i}_{$j}.png", "{$k}.png", public_path(self::PATH_INPUT_FOLDER), public_path(self::PATH_INPUT_FOLDER));
+        //             }
+        //         }
+        //     }
+        // }
+
+        foreach ([
+            ['1_2.png', '3_4_5.png', '6_7_8.png', '9_a_b.png'],
+            ['0_2.png', '3_4_5.png', '6_7_8.png', '9_a_b.png'],
+            ['0_1.png', '3_4_5.png', '6_7_8.png', '9_a_b.png'],
+            ['0_1_2.png', '4_5.png', '6_7_8.png', '9_a_b.png'],
+            ['0_1_2.png', '3_5.png', '6_7_8.png', '9_a_b.png'],
+            ['0_1_2.png', '3_4.png', '6_7_8.png', '9_a_b.png'],
+            ['0_1_2.png', '3_4_5.png', '7_8.png', '9_a_b.png'],
+            ['0_1_2.png', '3_4_5.png', '6_8.png', '9_a_b.png'],
+            ['0_1_2.png', '3_4_5.png', '6_7.png', '9_a_b.png'],
+            ['0_1_2.png', '3_4_5.png', '6_7_8.png', 'a_b.png'],
+            ['0_1_2.png', '3_4_5.png', '6_7_8.png', '9_b.png'],
+            ['0_1_2.png', '3_4_5.png', '6_7_8.png', '9_a.png'],
+        ] as $value) {
+            ImageTool::pasteMultipleImagesOnAnImage($value, public_path(self::PATH_INPUT_FOLDER), public_path(self::PATH_IMAGE_FOLDER . "{$this->id}/"));
+        }
+    }
+
     public function generateCustomImages()
     {
-        // foreach ($this->assets as $asset) {
-        // }
-        foreach (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b'] as $key => $i) {
-            foreach (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b'] as $index => $j) {
-                if ($key < $index) {
-                    ImageTool::pasteAnImageOnAnotherImage("{$i}.png", "{$j}.png", public_path(self::PATH_INPUT_FOLDER), public_path(self::PATH_IMAGE_FOLDER . "{$this->id}/"));
+        $totalList = array(
+            'adam'     => 1,
+            'eve'      => 1,
+            'serpent'  => 1,
+            'zodiac'   => 12,
+            'couple'   => 66,
+            'genesis'  => 924,
+        );
+        $index = 0;
+        foreach ($totalList as $key => $value) {
+            for ($i = 0; $i < $value; $i++) {
+                $random = StringTool::randomGenerator('letter');
+                switch ($key) {
+                    case 'adam':
+                        $sha256 = hash('sha256', "{$index}_{$random}");
+                        $total = 1;
+                        break;
+                    case 'eve':
+                    case 'serpent':
+                        $sha256 = hash('sha256', "{$index}_{$random}");
+                        $total = 12;
+                        break;
+                    case 'zodiac':
+                        $sha256 = hash('sha256', "{$index}_{$random}");
+                        $total = 22;
+                        break;
+                    case 'couple':
+                        $sha256 = hash('sha256', "{$index}_{$random}");
+                        $total = 10;
+                        break;
+                    case 'genesis':
+                        $sha256 = hash('sha256', "{$index}_{$random}");
+                        $total = 20;
+                        break;
+                    default:
+                        break;
                 }
             }
         }
