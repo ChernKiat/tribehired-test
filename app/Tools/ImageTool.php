@@ -16,23 +16,19 @@ class ImageTool
         dd($image1);
     }
 
-
-    public static function pasteAnImageOnAnotherImage($image_1, $image_2, $source, $destination, $is_single = true, $is_first = null, $is_last = null)
+    public static function pasteAnImageOnAnotherImage($image_1, $image_2, $source, $destination)
     {
         // transparent source to not transparent destination = destination
         // not transparent source to transparent destination = source
         // small source to big destination = black color for extra
         // big source to small destination = crop
 
-        if ($is_single || (!$is_single && $is_first)) {
-            $image_1 = "{$source}{$image_1}";
-        }
+        $image_1 = "{$source}{$image_1}";
         $image_2 = "{$source}{$image_2}";
+        list($width, $height) = getimagesize($image_1);
         $destination .= pathinfo($image_1, PATHINFO_FILENAME) . '_' . pathinfo($image_2, PATHINFO_FILENAME) . '.png';
-        list($width, $height) = getimagesize($image_2);
 
         foreach (['image_1', 'image_2'] as $value) {
-            if (!$is_single && !$is_first && $value == 'image_1') { continue; }
             switch (pathinfo(${$value}, PATHINFO_EXTENSION)) {
                 case 'png':
                     ${$value} = imagecreatefrompng(${$value});
@@ -49,29 +45,47 @@ class ImageTool
 
         imagecopy($image_1, $image_2, 0, 0, 0, 0, $width, $height);
 
-        if ($is_single || (!$is_single && $is_last)) {
-            header('Content-Type: image/png');
-            imagepng($image_1, $destination);
-            imagedestroy($image_1);
-        } else {
-            return $image_1;
-        }
+        header('Content-Type: image/png');
+        imagepng($image_1, $destination);
+        imagedestroy($image_1);
         // dd($image);
     }
 
-    public static function pasteMultipleImagesOnAnImage($images, $source, $destination)
+    public static function pasteMultipleImagesOnAnImage($images, $source, $destination, $ignore_filename_list = array())
     {
-        $temp = $images[0];
+        $temp = null;
         foreach ($images as $key => $image) {
-            if ($key == 0) { continue; }
-            if ($key == 1) {
-                $temp = self::pasteAnImageOnAnotherImage($temp, $image, $source, $destination, false, true, false);
-            } elseif ($key == (count($images) - 1)) {
-                $temp = self::pasteAnImageOnAnotherImage($temp, $image, $source, $destination, false, false, true);
-            } else {
-                $temp = self::pasteAnImageOnAnotherImage($temp, $image, $source, $destination, false, false, false);
+            $image = "{$source}{$image}";
+            list($width, $height) = getimagesize($image);
+            if (!in_array(pathinfo($image, PATHINFO_FILENAME), $ignore_filename_list)) {
+                if ($key != 0) {
+                    $destination .= '_';
+                }
+                $destination .= pathinfo($image, PATHINFO_FILENAME);
             }
+            switch (pathinfo($image, PATHINFO_EXTENSION)) {
+                case 'png':
+                    $image = imagecreatefrompng($image);
+                    break;
+                case 'jpg':
+                case 'jpeg':
+                default:
+                    $image = imagecreatefromjpeg($image);
+                    break;
+            }
+            imagealphablending($image, true);
+            imagesavealpha($image, true);
+
+            if ($key == 0) { $temp = $image; continue; }
+
+            imagecopy($temp, $image, 0, 0, 0, 0, $width, $height);
         }
+        $destination .= '.png';
+
+        header('Content-Type: image/png');
+        imagepng($temp, $destination);
+        imagedestroy($temp);
+        // dd($image);
     }
 
     public static function maskARectangle($image, $directory, $destination, $array_x, $array_y, $x, $y, $red = 0, $green = 0, $blue = 0)

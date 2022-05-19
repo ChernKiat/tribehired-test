@@ -26,12 +26,13 @@ class Asset extends Model
     {
         switch ($this->type) {
             case self::TYPE_BLACK:
-                $randomCharacter = $this->generateARandomImage(16);
-                return public_path(Multiverse::PATH_RINKEBY_SERVER_FOLDER . "{$this->multiverse->name}_{$this->index}_b{$randomCharacter}.{$this->extension}");
+                $first = $this->generateARandomImage(4);
+                $second = $this->generateARandomImage(4);
+                return public_path(Multiverse::PATH_RINKEBY_SERVER_FOLDER . "{$this->multiverse->id}/{$this->index}_b_{$first}_{$second}.{$this->extension}");
                 break;
             case self::TYPE_CUSTOM:
                 $randomCharacter = $this->generateARandomImage($this->states_total);
-                return public_path(Multiverse::PATH_RINKEBY_SERVER_FOLDER . "{$this->multiverse->name}_{$this->index}_c{$randomCharacter}.{$this->extension}");
+                return public_path(Multiverse::PATH_RINKEBY_SERVER_FOLDER . "{$this->multiverse->id}/{$this->index}_c_{$randomCharacter}.{$this->extension}");
                 break;
             default:
                 break;
