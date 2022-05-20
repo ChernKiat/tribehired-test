@@ -107,10 +107,10 @@
             <div class="container">
                 <div class="row g-5">
                     <div class="col-md">
-                        <a href="{{ route('nftstorage.multiverse.image', ['sha256' => '8d94179d0989f6f99ec7b55c5f2d590ccdeca0f7a7a4c25a671259cc93e47f8b', 'multiverse' => 'maneki_zodiac']) }}" class="popup-image"><img src="/myNFTStorage/codecanyon/img/how1.png" alt="" class="img1"></a>
+                        <a href="{{ route('nftstorage.multiverse.image', ['sha256' => '8d94179d0989f6f99ec7b55c5f2d590ccdeca0f7a7a4c25a671259cc93e47f8b', 'multiverse' => 'maneki_zodiac']) }}" class="popup-image"><img src="{{ route('nftstorage.multiverse.image', ['sha256' => '8d94179d0989f6f99ec7b55c5f2d590ccdeca0f7a7a4c25a671259cc93e47f8b', 'multiverse' => 'maneki_zodiac']) }}" alt="" class="img1"></a>
                     </div>
                     <div class="col-md">
-                        <a href="{{ route('nftstorage.multiverse.image', ['sha256' => '244bb24e51b88aecc08dee721d486d0f418b2de2ca219be707ac00247c8bd47f', 'multiverse' => 'maneki_zodiac']) }}" class="popup-image"><img src="/myNFTStorage/codecanyon/img/how2.png" alt="" class="img2"></a>
+                        <a href="{{ route('nftstorage.multiverse.image', ['sha256' => '244bb24e51b88aecc08dee721d486d0f418b2de2ca219be707ac00247c8bd47f', 'multiverse' => 'maneki_zodiac']) }}" class="popup-image"><img src="{{ route('nftstorage.multiverse.image', ['sha256' => '244bb24e51b88aecc08dee721d486d0f418b2de2ca219be707ac00247c8bd47f', 'multiverse' => 'maneki_zodiac']) }}" alt="" class="img2"></a>
                     </div>
                     <div class="col-md-6">
                         <h2>How does Multiverse NFT works?</h2>

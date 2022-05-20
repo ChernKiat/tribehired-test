@@ -107,8 +107,10 @@ class ImageTool
                 $image = imagecreatefromjpeg($path);
                 break;
         }
+        $x -= 1;
+        $y -= 1;
 
-        imagefilledrectangle($image, $array_x[$y - 1], $array_y[$x - 1], $array_x[$y], $array_y[$x], $black);
+        imagefilledrectangle($image, $array_x[$y], $array_y[$x], $array_x[$y + 1], $array_y[$x + 1], $black);
 
         header('Content-Type: image/png');
         imagepng($image, "{$destination}_black_{$x}_{$y}.png");
