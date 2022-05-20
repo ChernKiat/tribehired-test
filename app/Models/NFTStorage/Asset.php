@@ -28,11 +28,11 @@ class Asset extends Model
             case self::TYPE_BLACK:
                 $first = $this->generateARandomImage(4);
                 $second = $this->generateARandomImage(4);
-                return public_path(Multiverse::PATH_IMAGE_FOLDER . "{$this->multiverse->id}/{$this->index}_b_{$first}_{$second}.{$this->extension}");
+                return public_path(Multiverse::PATH_IMAGE_FOLDER . "{$this->multiverse->id}/{$this->index}_black_{$first}_{$second}.{$this->extension}");
                 break;
             case self::TYPE_CUSTOM:
                 $randomCharacter = $this->generateARandomImage($this->states_total);
-                return public_path(Multiverse::PATH_IMAGE_FOLDER . "{$this->multiverse->id}/{$this->index}_c_{$randomCharacter}.{$this->extension}");
+                return public_path(Multiverse::PATH_IMAGE_FOLDER . "{$this->multiverse->id}/{$this->index}_custom_{$randomCharacter}.{$this->extension}");
                 break;
             default:
                 break;
