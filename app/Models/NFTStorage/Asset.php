@@ -28,11 +28,11 @@ class Asset extends Model
             case self::TYPE_BLACK:
                 $first = $this->generateARandomImage(4);
                 $second = $this->generateARandomImage(4);
-                return public_path(Multiverse::PATH_RINKEBY_SERVER_FOLDER . "{$this->multiverse->id}/{$this->index}_b_{$first}_{$second}.{$this->extension}");
+                return public_path(Multiverse::PATH_IMAGE_FOLDER . "{$this->multiverse->id}/{$this->index}_b_{$first}_{$second}.{$this->extension}");
                 break;
             case self::TYPE_CUSTOM:
                 $randomCharacter = $this->generateARandomImage($this->states_total);
-                return public_path(Multiverse::PATH_RINKEBY_SERVER_FOLDER . "{$this->multiverse->id}/{$this->index}_c_{$randomCharacter}.{$this->extension}");
+                return public_path(Multiverse::PATH_IMAGE_FOLDER . "{$this->multiverse->id}/{$this->index}_c_{$randomCharacter}.{$this->extension}");
                 break;
             default:
                 break;
@@ -42,7 +42,7 @@ class Asset extends Model
 
     public function getOriginalImageAttribute()
     {
-        return public_path(Multiverse::PATH_RINKEBY_SERVER_FOLDER . "{$this->multiverse->name}_{$this->index}.{$this->extension}");
+        return public_path(Multiverse::PATH_IMAGE_FOLDER . "{$this->multiverse->name}_{$this->index}.{$this->extension}");
     }
 
     public function getMetaNameAttribute()
@@ -76,7 +76,7 @@ class Asset extends Model
     public function generateARandomImage($length)
     {
         $characters = range(0, $length - 1);
-        return $characters[rand(0, strlen($characters) - 1)];
+        return $characters[rand(0, count($characters) - 1)];
     }
 
     public function generateBlackImages($image, $directory, $destination, $x = 2, $y = 2)

@@ -134,7 +134,7 @@ class Multiverse extends Model
     public function generateBlackImages()
     {
         // foreach ($this->assets as $asset) {
-            $this->asset->generateBlackImages('8.png', public_path(self::PATH_INPUT_FOLDER), public_path(self::PATH_IMAGE_FOLDER . "{$this->id}/"), 4, 4);
+            $this->asset->generateBlackImages('0_1_2_3_4_5_6_7_8_9_a_b.png', public_path(self::PATH_INPUT_FOLDER), public_path(self::PATH_IMAGE_FOLDER . "{$this->id}/"), 4, 4);
             // $asset->generateBlackImages($this->asset->original_image "{$this->name}_{$this->index}_b", public_path(self::PATH_INPUT_FOLDER), public_path(self::PATH_IMAGE_FOLDER . "{$this->id}/"), 4, 4);...........
         // }
     }
@@ -181,6 +181,7 @@ class Multiverse extends Model
         foreach ($this->assets as $asset) {
             switch ($asset->index) {
                 case 0:
+                    copy(public_path(self::PATH_INPUT_FOLDER . '0_1_2_3_4_5_6_7_8_9_a_b.png'), public_path(self::PATH_IMAGE_FOLDER) . Multiverse::PROJECT_MULTIVERSE . "/{$asset->index}_b.png");
                     copy(public_path(self::PATH_INPUT_FOLDER . '0_1_2_3_4_5_6_7_8_9_a_b.png'), public_path(self::PATH_IMAGE_FOLDER) . Multiverse::PROJECT_MULTIVERSE . "/{$asset->index}_c_0.png");
                     break;
                 case 1:
