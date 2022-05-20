@@ -66,8 +66,10 @@ class Multiverse extends Model
     {
         $multiverse = self::updateOrCreate([
             'name'             => 'Maneki Zodiac',
+            'keyword'          => 'maneki_zodiac',
         ], [
             'name'             => 'Maneki Zodiac',
+            'keyword'          => 'maneki_zodiac',
             'description'      => '',
             'transaction_fee'  => 0,
             'wallet_address'   => self::WALLET_DEFAULT_DEPLOY_ADDRESS,
@@ -139,36 +141,39 @@ class Multiverse extends Model
 
     public function generateBaseCustomImages()
     {
-        // foreach (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b'] as $key => $i) {
-        //     foreach (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b'] as $index => $j) {
-        //         if ($key < $index) {
-        //             // ImageTool::pasteAnImageOnAnotherImage("{$i}.png", "{$j}.png", public_path(self::PATH_INPUT_FOLDER), public_path(self::PATH_IMAGE_FOLDER . Multiverse::PROJECT_MULTIVERSE . '/'));
-        //             ImageTool::pasteMultipleImagesOnAnImage(["{$i}.png", "{$j}.png", 'z.png'], public_path(self::PATH_INPUT_FOLDER), public_path(self::PATH_IMAGE_FOLDER . Multiverse::PROJECT_MULTIVERSE . '/'), ['z']);
-        //         }
-        //         foreach (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b'] as $token => $k) {
-        //             if ($key < $index && $index < $token) {
-        //                 ImageTool::pasteMultipleImagesOnAnImage(["{$i}_{$j}.png", "{$k}.png", 'z.png'], public_path(self::PATH_INPUT_FOLDER), public_path(self::PATH_IMAGE_FOLDER . Multiverse::PROJECT_MULTIVERSE . '/'), ['z']);
-        //             }
-        //         }
-        //     }
-        // }
+        foreach (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b'] as $key => $i) {
+            // ImageTool::pasteMultipleImagesOnAnImage(["{$i}.png", 'z.png'], public_path(self::PATH_INPUT_FOLDER), public_path(self::PATH_IMAGE_FOLDER . Multiverse::PROJECT_MULTIVERSE . '/'), ['z']);
+            foreach (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b'] as $index => $j) {
+                if ($key < $index) {
+                    ImageTool::pasteAnImageOnAnotherImage("{$i}.png", "{$j}.png", public_path(self::PATH_INPUT_FOLDER), public_path(self::PATH_IMAGE_FOLDER . Multiverse::PROJECT_MULTIVERSE . '/'));
+                    // ImageTool::pasteMultipleImagesOnAnImage(["{$i}.png", "{$j}.png", 'z.png'], public_path(self::PATH_INPUT_FOLDER), public_path(self::PATH_IMAGE_FOLDER . Multiverse::PROJECT_MULTIVERSE . '/'), ['z']);
+                }
+                foreach (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b'] as $token => $k) {
+                    if ($key < $index && $index < $token) {
+                        ImageTool::pasteAnImageOnAnotherImage("{$i}_{$j}.png", "{$k}.png", public_path(self::PATH_INPUT_FOLDER), public_path(self::PATH_IMAGE_FOLDER . Multiverse::PROJECT_MULTIVERSE . '/'));
+                        // ImageTool::pasteMultipleImagesOnAnImage(["{$i}_{$j}.png", "{$k}.png", 'z.png'], public_path(self::PATH_INPUT_FOLDER), public_path(self::PATH_IMAGE_FOLDER . Multiverse::PROJECT_MULTIVERSE . '/'), ['z']);
+                    }
+                }
+            }
+        }
 
-        // foreach ([
-        //     ['1_2.png', '3_4_5.png', '6_7_8.png', '9_a_b.png', 'z.png'],
-        //     ['0_2.png', '3_4_5.png', '6_7_8.png', '9_a_b.png', 'z.png'],
-        //     ['0_1.png', '3_4_5.png', '6_7_8.png', '9_a_b.png', 'z.png'],
-        //     ['0_1_2.png', '4_5.png', '6_7_8.png', '9_a_b.png', 'z.png'],
-        //     ['0_1_2.png', '3_5.png', '6_7_8.png', '9_a_b.png', 'z.png'],
-        //     ['0_1_2.png', '3_4.png', '6_7_8.png', '9_a_b.png', 'z.png'],
-        //     ['0_1_2.png', '3_4_5.png', '7_8.png', '9_a_b.png', 'z.png'],
-        //     ['0_1_2.png', '3_4_5.png', '6_8.png', '9_a_b.png', 'z.png'],
-        //     ['0_1_2.png', '3_4_5.png', '6_7.png', '9_a_b.png', 'z.png'],
-        //     ['0_1_2.png', '3_4_5.png', '6_7_8.png', 'a_b.png', 'z.png'],
-        //     ['0_1_2.png', '3_4_5.png', '6_7_8.png', '9_b.png', 'z.png'],
-        //     ['0_1_2.png', '3_4_5.png', '6_7_8.png', '9_a.png', 'z.png'],
-        // ] as $value) {
-        //     ImageTool::pasteMultipleImagesOnAnImage($value, public_path(self::PATH_INPUT_FOLDER), public_path(self::PATH_IMAGE_FOLDER . Multiverse::PROJECT_MULTIVERSE . '/'), ['z']);
-        // }
+        foreach ([
+            ['1_2.png', '3_4_5.png', '6_7_8.png', '9_a_b.png', 'z.png'],
+            ['0_2.png', '3_4_5.png', '6_7_8.png', '9_a_b.png', 'z.png'],
+            ['0_1.png', '3_4_5.png', '6_7_8.png', '9_a_b.png', 'z.png'],
+            ['0_1_2.png', '4_5.png', '6_7_8.png', '9_a_b.png', 'z.png'],
+            ['0_1_2.png', '3_5.png', '6_7_8.png', '9_a_b.png', 'z.png'],
+            ['0_1_2.png', '3_4.png', '6_7_8.png', '9_a_b.png', 'z.png'],
+            ['0_1_2.png', '3_4_5.png', '7_8.png', '9_a_b.png', 'z.png'],
+            ['0_1_2.png', '3_4_5.png', '6_8.png', '9_a_b.png', 'z.png'],
+            ['0_1_2.png', '3_4_5.png', '6_7.png', '9_a_b.png', 'z.png'],
+            ['0_1_2.png', '3_4_5.png', '6_7_8.png', 'a_b.png', 'z.png'],
+            ['0_1_2.png', '3_4_5.png', '6_7_8.png', '9_b.png', 'z.png'],
+            ['0_1_2.png', '3_4_5.png', '6_7_8.png', '9_a.png', 'z.png'],
+            ['0_1_2.png', '3_4_5.png', '6_7_8.png', '9_a_b.png', 'z.png'],
+        ] as $value) {
+            ImageTool::pasteMultipleImagesOnAnImage($value, public_path(self::PATH_INPUT_FOLDER), public_path(self::PATH_IMAGE_FOLDER . Multiverse::PROJECT_MULTIVERSE . '/'), ['z']);
+        }
     }
 
     public function generateCustomImages()
@@ -176,36 +181,41 @@ class Multiverse extends Model
         foreach ($this->assets as $asset) {
             switch ($asset->index) {
                 case 0:
-                    $sha256 = hash('sha256', "{$index}_{$random}");
+                    copy(public_path(self::PATH_INPUT_FOLDER . '0_1_2_3_4_5_6_7_8_9_a_b.png'), public_path(self::PATH_IMAGE_FOLDER) . Multiverse::PROJECT_MULTIVERSE . "/{$asset->index}_c_0.png");
                     break;
-                case 'eve':
-                case 'serpent':
-                    $sha256 = hash('sha256', "{$index}_{$random}");
+                case 1:
+                    for ($i = 0; $i < 12; $i++) {
+                        copy(public_path(self::PATH_INPUT_FOLDER . dechex($i) . '.png'), public_path(self::PATH_IMAGE_FOLDER) . Multiverse::PROJECT_MULTIVERSE . "/{$asset->index}_c_{$i}.png");
+                    }
                     break;
-                case 'zodiac':
-                    $sha256 = hash('sha256', "{$index}_{$random}");
+                case 2:
+                    copy(public_path(self::PATH_INPUT_FOLDER . '1_2_3_4_5_6_7_8_9_a_b.png'), public_path(self::PATH_IMAGE_FOLDER) . Multiverse::PROJECT_MULTIVERSE . "/{$asset->index}_c_0.png");
+                    copy(public_path(self::PATH_INPUT_FOLDER . '0_2_3_4_5_6_7_8_9_a_b.png'), public_path(self::PATH_IMAGE_FOLDER) . Multiverse::PROJECT_MULTIVERSE . "/{$asset->index}_c_1.png");
+                    copy(public_path(self::PATH_INPUT_FOLDER . '0_1_3_4_5_6_7_8_9_a_b.png'), public_path(self::PATH_IMAGE_FOLDER) . Multiverse::PROJECT_MULTIVERSE . "/{$asset->index}_c_0.png");
+                    copy(public_path(self::PATH_INPUT_FOLDER . '0_1_2_4_5_6_7_8_9_a_b.png'), public_path(self::PATH_IMAGE_FOLDER) . Multiverse::PROJECT_MULTIVERSE . "/{$asset->index}_c_3.png");
+                    copy(public_path(self::PATH_INPUT_FOLDER . '0_1_2_3_5_6_7_8_9_a_b.png'), public_path(self::PATH_IMAGE_FOLDER) . Multiverse::PROJECT_MULTIVERSE . "/{$asset->index}_c_4.png");
+                    copy(public_path(self::PATH_INPUT_FOLDER . '0_1_2_3_4_6_7_8_9_a_b.png'), public_path(self::PATH_IMAGE_FOLDER) . Multiverse::PROJECT_MULTIVERSE . "/{$asset->index}_c_5.png");
+                    copy(public_path(self::PATH_INPUT_FOLDER . '0_1_2_3_4_5_7_8_9_a_b.png'), public_path(self::PATH_IMAGE_FOLDER) . Multiverse::PROJECT_MULTIVERSE . "/{$asset->index}_c_6.png");
+                    copy(public_path(self::PATH_INPUT_FOLDER . '0_1_2_3_4_5_6_8_9_a_b.png'), public_path(self::PATH_IMAGE_FOLDER) . Multiverse::PROJECT_MULTIVERSE . "/{$asset->index}_c_7.png");
+                    copy(public_path(self::PATH_INPUT_FOLDER . '0_1_2_3_4_5_6_7_9_a_b.png'), public_path(self::PATH_IMAGE_FOLDER) . Multiverse::PROJECT_MULTIVERSE . "/{$asset->index}_c_8.png");
+                    copy(public_path(self::PATH_INPUT_FOLDER . '0_1_2_3_4_5_6_7_8_a_b.png'), public_path(self::PATH_IMAGE_FOLDER) . Multiverse::PROJECT_MULTIVERSE . "/{$asset->index}_c_9.png");
+                    copy(public_path(self::PATH_INPUT_FOLDER . '0_1_2_3_4_5_6_7_8_9_b.png'), public_path(self::PATH_IMAGE_FOLDER) . Multiverse::PROJECT_MULTIVERSE . "/{$asset->index}_c_10.png");
+                    copy(public_path(self::PATH_INPUT_FOLDER . '0_1_2_3_4_5_6_7_8_9_a.png'), public_path(self::PATH_IMAGE_FOLDER) . Multiverse::PROJECT_MULTIVERSE . "/{$asset->index}_c_11.png");
                     break;
-                case 'couple':
-                    $sha256 = hash('sha256', "{$index}_{$random}");
+                case 2 < $asset->index && 15 > $asset->index: // 3 - 14
                     break;
-                case 'genesis':
-                    $sha256 = hash('sha256', "{$index}_{$random}");
+                case 14 < $asset->index && 81 > $asset->index: // 15 - 80
+                    break;
+                case 80 < $asset->index && 1005 > $asset->index: // 81 - 1005
                     break;
                 default:
                     break;
             }
         }
         $totalList = array(
-            'adam'     => 1,
-            'eve'      => 12,
-            'serpent'  => 12,
             'zodiac'   => 22,
             'couple'   => 10,
             'genesis'  => 20,
         );
-        $index = 0;
-        foreach ($totalList as $key => $value) {
-
-        }
     }
 }

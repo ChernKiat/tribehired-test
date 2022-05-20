@@ -17,6 +17,7 @@ class CreateAllNftstorageTables2 extends Migration
         {
             $table->increments('id');
             $table->string('name')->unique();
+            $table->string('keyword')->unique();
             $table->text('description')->nullable();
             $table->smallInteger('transaction_fee')->default(0);
             $table->string('wallet_address')->nullable();

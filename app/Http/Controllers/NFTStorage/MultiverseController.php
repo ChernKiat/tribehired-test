@@ -17,7 +17,7 @@ class MultiverseController extends Controller
     {
         $multiverse = Multiverse::with(['asset' => function ($query) use ($sha256) {
                             $query->where('sha256', $sha256);
-                        }])->where('name', $multiverse)->first();
+                        }])->where('keyword', $multiverse)->first();
         if (!empty($multiverse->asset)) {
             return response()->file($multiverse->asset->image);
         } else {
@@ -29,7 +29,7 @@ class MultiverseController extends Controller
     {
         $multiverse = Multiverse::with(['asset' => function ($query) use ($sha256) {
                             $query->where('sha256', $sha256);
-                        }])->where('name', $multiverse)->first();
+                        }])->where('keyword', $multiverse)->first();
         if (!empty($multiverse->asset)) {
             return response()->file($multiverse->asset->original_image);
         } else {
@@ -41,12 +41,12 @@ class MultiverseController extends Controller
     {
         // Multiverse::seed();
 
-        $multiverse = Multiverse::with(['asset'])->where('name', 'Maneki Zodiac')->first();
+        $multiverse = Multiverse::with(['assets'])->where('name', 'Maneki Zodiac')->first();
         // $multiverse->generateContractMeta();
         // $multiverse->generateMetas();
         // $multiverse->generateBlackImages();
-        $multiverse->generateBaseCustomImages();
-        // $multiverse->generateCustomImages();
+        // $multiverse->generateBaseCustomImages();
+        $multiverse->generateCustomImages();
         // $multiverse->getMetaAttribute();
         // $multiverse->refreshMetas();
         dd('yay');
