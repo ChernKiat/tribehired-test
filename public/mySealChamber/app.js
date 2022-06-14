@@ -3,8 +3,9 @@ import { readFileSync } from 'fs';
 import WebSocket, { WebSocketServer } from 'ws';
 
 const server = createServer({
-    cert: readFileSync('/path/to/cert.pem'),
-    key: readFileSync('/path/to/key.pem')
+    // cert: readFileSync('/home/admin/conf/web/ssl.sealkingdom.xyz.pem'),
+    cert: readFileSync('/home/admin/conf/web/ssl.sealkingdom.xyz.crt'),
+    key: readFileSync('/home/admin/conf/web/ssl.sealkingdom.xyz.key');
 });
 const wss = new WebSocketServer({ server });
 
