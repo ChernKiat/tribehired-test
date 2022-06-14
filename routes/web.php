@@ -129,3 +129,11 @@ Route::prefix('vanguard-system')->namespace('VanguardSystem')->name('vanguardsys
 Route::prefix('vengeance-mail')->namespace('VengeanceMail')->name('vengeancemail.')->group(function() {
     Route::get('send', 'EmailController@sendSpamMail')->name('send.spam.mail');
 });
+
+// Route::prefix('payment-gateway')->namespace('PaymentGateway')->name('paymentgateway.')->group(function() {
+Route::namespace('WebsiteTemplate')->name('websitetemplate.')->group(function() {
+    Route::prefix('webhook')->group(function() {
+        Route::post('stripe', 'WebhookController@stripe')->name('webhook.stripe');
+        Route::post('paypal', 'WebhookController@paypal')->name('webhook.paypal');
+    });
+});

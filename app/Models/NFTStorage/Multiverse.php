@@ -204,6 +204,8 @@ class Multiverse extends Model
                     copy(public_path(self::PATH_INPUT_FOLDER . '0_1_2_3_4_5_6_7_8_9_a.png'), public_path(self::PATH_IMAGE_FOLDER) . Multiverse::PROJECT_MULTIVERSE . "/{$asset->index}_custom_11.png");
                     break;
                 case 2 < $asset->index && 15 > $asset->index: // 3 - 14
+                    foreach ($variable as $key => $value) {
+                    }
                     break;
                 case 14 < $asset->index && 81 > $asset->index: // 15 - 80
                     break;
