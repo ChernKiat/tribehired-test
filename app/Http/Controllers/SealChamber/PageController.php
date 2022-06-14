@@ -12,6 +12,6 @@ class PageController extends Controller
 
     public function roomCode() // landing
     {
-        return view('seal_chamber.room_code');
+        return view('modules.seal_chamber.room_code');
     }
 }
