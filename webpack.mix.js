@@ -1,19 +1,20 @@
 const mix = require('laravel-mix');
 mix.webpackConfig({
-    resolve: {
-        fallback: {
-            fs: false,
-            // http: false,
-            http: require.resolve('stream-http'),
-            // https: false,
-            https: require.resolve('https-browserify'),
-            // crypto: false,
-            crypto: require.resolve('crypto-browserify'),
-            stream: require.resolve('stream-browserify'),
-            // zlib: false,
-            // zlib: require.resolve('browserify-zlib'),
-        },
-    },
+    target: "node",
+    // resolve: {
+    //     fallback: {
+    //         fs: false,
+    //         // http: false,
+    //         http: require.resolve('stream-http'),
+    //         // https: false,
+    //         https: require.resolve('https-browserify'),
+    //         // crypto: false,
+    //         crypto: require.resolve('crypto-browserify'),
+    //         stream: require.resolve('stream-browserify'),
+    //         // zlib: false,
+    //         // zlib: require.resolve('browserify-zlib'),
+    //     },
+    // },
 });
 // // mix.js('resources/js/myNFTStorage/main.js', 'public/myNFTStorage/');
 // mix.js('resources/js/myNFTStorage/waifulabs.js', 'public/myNFTStorage/');
