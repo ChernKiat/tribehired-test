@@ -5,7 +5,7 @@ import WebSocket, { WebSocketServer } from 'ws';
 const server = createServer({
     // cert: readFileSync('/home/admin/conf/web/ssl.sealkingdom.xyz.pem'),
     cert: readFileSync('/home/admin/conf/web/ssl.sealkingdom.xyz.crt'),
-    key: readFileSync('/home/admin/conf/web/ssl.sealkingdom.xyz.key');
+    key: readFileSync('/home/admin/conf/web/ssl.sealkingdom.xyz.key')
 });
 const wss = new WebSocketServer({ server });
 
