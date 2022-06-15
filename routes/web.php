@@ -94,7 +94,8 @@ Route::prefix('research-development')->namespace('ResearchDevelopment')->name('r
 });
 
 Route::prefix('seal-chamber')->namespace('SealChamber')->name('sealchamber.')->group(function() {
-    Route::get('code', 'PageController@roomCode')->name('room.code');
+    Route::get('code', 'PageController@roomCode')->name('page.code');
+    Route::get('test', 'PageController@test')->name('page.test');
 
     Route::prefix('rooms')->name('room.')->group(function() {
         Route::get('join', 'RoomController@join')->name('join');

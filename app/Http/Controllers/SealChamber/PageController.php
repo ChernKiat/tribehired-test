@@ -14,4 +14,9 @@ class PageController extends Controller
     {
         return view('modules.seal_chamber.room_code');
     }
+
+    public function test()
+    {
+        return view('modules.seal_chamber.test');
+    }
 }
