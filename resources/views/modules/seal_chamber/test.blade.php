@@ -33,7 +33,7 @@
 @endsection
 
 @section('footer')
-{!! HTML::script('mySealChamber/ws/client.js') !!}
+{!! HTML::script('js/ws/client.js') !!}
 <script>
 $(function() {
 });

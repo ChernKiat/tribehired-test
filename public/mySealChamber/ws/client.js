@@ -1,3 +1,4 @@
+import 'node-self';
 import WebSocket, { WebSocketServer } from 'ws';
 
 const ws = new WebSocket('ws://sealkingdom.xyz:8080');

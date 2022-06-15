@@ -1,3 +1,4 @@
+import 'node-self';
 import { createServer } from 'https';
 import { readFileSync } from 'fs';
 import WebSocket, { WebSocketServer } from 'ws';
