@@ -361,20 +361,6 @@ load.compareTuples = compareTuples
 
 /***/ }),
 
-/***/ "./node_modules/node-self/index.js":
-/*!*****************************************!*\
-  !*** ./node_modules/node-self/index.js ***!
-  \*****************************************/
-/***/ (() => {
-
-void !function () {
-  typeof self === 'undefined' && typeof global === 'object'
-    ? global.self = global : null
-}()
-
-
-/***/ }),
-
 /***/ "./node_modules/process/browser.js":
 /*!*****************************************!*\
   !*** ./node_modules/process/browser.js ***!
@@ -4188,13 +4174,10 @@ var __webpack_exports__ = {};
   !*** ./public/mySealChamber/ws/client.js ***!
   \*******************************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var node_self__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! node-self */ "./node_modules/node-self/index.js");
-/* harmony import */ var node_self__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(node_self__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var ws__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ws */ "./node_modules/ws/index.js");
-/* harmony import */ var ws__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(ws__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var ws__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ws */ "./node_modules/ws/index.js");
+/* harmony import */ var ws__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(ws__WEBPACK_IMPORTED_MODULE_0__);
 
-
-var ws = new (ws__WEBPACK_IMPORTED_MODULE_1___default())('ws://sealkingdom.xyz:8080');
+var ws = new (ws__WEBPACK_IMPORTED_MODULE_0___default())('ws://sealkingdom.xyz:8080');
 ws.on('open', function open() {
   console.log('connected');
   ws.send(Date.now());
