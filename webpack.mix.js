@@ -1,27 +1,31 @@
 const mix = require('laravel-mix');
-mix.webpackConfig({
-    resolve: {
-        fallback: {
-            fs: false,
-            // http: false,
-            http: require.resolve('stream-http'),
-            // https: false,
-            https: require.resolve('https-browserify'),
-            // crypto: false,
-            crypto: require.resolve('crypto-browserify'),
-            stream: require.resolve('stream-browserify'),
-            // zlib: false,
-            zlib: require.resolve('browserify-zlib'),
-        },
-    },
-});
-// mix.js('resources/js/myNFTStorage/main.js', 'public/myNFTStorage/');
-mix.js('resources/js/myNFTStorage/waifulabs.js', 'public/myNFTStorage/');
-// mix.js('node_modules/waifusocket/waifulabs.js', 'public/myNFTStorage/');
+// mix.webpackConfig({
+//     resolve: {
+//         fallback: {
+//             fs: false,
+//             // http: false,
+//             http: require.resolve('stream-http'),
+//             // https: false,
+//             https: require.resolve('https-browserify'),
+//             // crypto: false,
+//             crypto: require.resolve('crypto-browserify'),
+//             stream: require.resolve('stream-browserify'),
+//             // zlib: false,
+//             zlib: require.resolve('browserify-zlib'),
+//         },
+//     },
+// });
+// // mix.js('resources/js/myNFTStorage/main.js', 'public/myNFTStorage/');
+// mix.js('resources/js/myNFTStorage/waifulabs.js', 'public/myNFTStorage/');
+// // mix.js('node_modules/waifusocket/waifulabs.js', 'public/myNFTStorage/');
 
 // mix.js('resources/js/app.js', 'public/js')
 //     .js('resources/js/bootstrap.js', 'public/js');
 mix.sass('resources/sass/app.scss', 'public/assets/css');
+
+mix.scripts([
+    'public/mySealChamber/app.js',
+], 'public/js/ws/app.js');
 
 mix.scripts([
     'public/assets/js/jquery-3.3.1.min.js',
