@@ -21,6 +21,7 @@
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
     <link href="/css/default.css" rel="stylesheet">
+
     @yield('css')
 </head>
 <body>
@@ -80,6 +81,7 @@
             @yield('content')
         </main>
     </div>
-    @yield('footer')
+
+    @yield('scripts')
 </body>
 </html>

@@ -28,7 +28,7 @@
 </div>
 @endsection
 
-@section('footer')
+@section('scripts')
 <script>
 $(function() {
 });

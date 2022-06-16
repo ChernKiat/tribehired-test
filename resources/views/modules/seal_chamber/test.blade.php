@@ -32,7 +32,7 @@
 </div>
 @endsection
 
-@section('footer')
+@section('scripts')
 {!! HTML::script('js/mySealChamber/ws/client.js') !!}
 {!! HTML::script('js/waifulabs.js') !!}
 <script>

@@ -15,7 +15,7 @@
 </div>
 @endsection
 
-@section('footer')
+@section('scripts')
 <script>
 $(function() {
     console.log(variableName);

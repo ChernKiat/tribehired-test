@@ -47,7 +47,7 @@
 </div>
 @endsection
 
-@section('footer')
+@section('scripts')
 <script>
 $(function() {
     $(".my-js-data-table").DataTable({

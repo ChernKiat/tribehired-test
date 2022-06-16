@@ -70,7 +70,7 @@
 </div>
 @endsection
 
-@section('footer')
+@section('scripts')
 <script src="/js/icheck/icheck.js"></script>
 <script>
 $(function() {
