@@ -11,7 +11,7 @@
     <meta name="msapplication-TileColor" content="#FFFFFF" />
     <meta name="msapplication-config" content="/browserconfig.xml">
 
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="/mix-manifest.json">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" type="text/css" media="all" href="{{ mix('assets/css/vendor.css') }}">
     <link rel="stylesheet" type="text/css" media="all" href="{{ mix('assets/css/app.css') }}">
