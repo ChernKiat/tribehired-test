@@ -4125,70 +4125,28 @@ module.exports = require("zlib");
 /******/ 	}
 /******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	(() => {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = (exports) => {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-"use strict";
 /*!*************************************!*\
   !*** ./public/mySealChamber/app.js ***!
   \*************************************/
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var https__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! https */ "https");
-/* harmony import */ var https__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(https__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! fs */ "fs");
-/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var ws__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ws */ "./node_modules/ws/index.js");
-/* harmony import */ var ws__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(ws__WEBPACK_IMPORTED_MODULE_2__);
+var _require = __webpack_require__(/*! https */ "https"),
+    createServer = _require.createServer;
 
+var _require2 = __webpack_require__(/*! fs */ "fs"),
+    readFileSync = _require2.readFileSync;
 
+var WebSocket,
+    _require3 = __webpack_require__(/*! ws */ "./node_modules/ws/index.js"),
+    WebSocketServer = _require3.WebSocketServer;
 
-var server = (0,https__WEBPACK_IMPORTED_MODULE_0__.createServer)({
+var server = createServer({
   // cert: readFileSync('/home/admin/conf/web/ssl.sealkingdom.xyz.pem'),
-  cert: (0,fs__WEBPACK_IMPORTED_MODULE_1__.readFileSync)('/home/admin/conf/web/ssl.sealkingdom.xyz.crt'),
-  key: (0,fs__WEBPACK_IMPORTED_MODULE_1__.readFileSync)('/home/admin/conf/web/ssl.sealkingdom.xyz.key')
+  cert: readFileSync('/home/admin/conf/web/ssl.sealkingdom.xyz.crt'),
+  key: readFileSync('/home/admin/conf/web/ssl.sealkingdom.xyz.key')
 });
-var wss = new ws__WEBPACK_IMPORTED_MODULE_2__.WebSocketServer({
+var wss = new WebSocketServer({
   server: server
 }); // const wss = new WebSocketServer('ws://www.host.com/path');
 // const wss = new WebSocketServer({ port: 8080 });
@@ -4201,7 +4159,7 @@ wss.on('connection', function connection(ws, request) {
     ws.send('something');
     wss.clients.forEach(function each(client) {
       // if (client.readyState === WebSocket.OPEN) { // broadcast including itself
-      if (client !== ws && client.readyState === (ws__WEBPACK_IMPORTED_MODULE_2___default().OPEN)) {
+      if (client !== ws && client.readyState === WebSocket.OPEN) {
         client.send(data, {
           binary: isBinary
         });

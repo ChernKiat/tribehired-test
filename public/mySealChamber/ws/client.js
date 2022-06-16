@@ -1,4 +1,4 @@
-import WebSocket, { WebSocketServer } from 'ws';
+var WebSocket, { WebSocketServer } = require('ws');
 
 const ws = new WebSocket('ws://sealkingdom.xyz:8080');
 
