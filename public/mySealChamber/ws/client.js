@@ -1,4 +1,6 @@
-const ws = new WebSocket('ws://sealkingdom.xyz:8090');
+import WebSocket, { WebSocketServer } from 'ws';
+
+const ws = new WebSocket('wss://sealkingdom.xyz:8090');
 
 ws.on('open', function open() {
     console.log('connected');
@@ -12,3 +14,4 @@ ws.on('message', function message(data) {
 ws.on('close', function close() {
     console.log('disconnected');
 });
+c

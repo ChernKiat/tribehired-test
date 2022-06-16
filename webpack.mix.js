@@ -17,9 +17,9 @@ mix.webpackConfig({
         // },
     },
 });
-// mix.js('resources/js/myNFTStorage/main.js', 'public/js/waifulabs.js');
-mix.js('resources/js/myNFTStorage/waifulabs.js', 'public/js/waifulabs.js');
-// mix.js('node_modules/waifusocket/waifulabs.js', 'public/js/waifulabs.js');
+// // mix.js('resources/js/myNFTStorage/main.js', 'public/js/waifulabs.js');
+// mix.js('resources/js/myNFTStorage/waifulabs.js', 'public/js/waifulabs.js');
+// // mix.js('node_modules/waifusocket/waifulabs.js', 'public/js/waifulabs.js');
 
 // mix.js('resources/js/app.js', 'public/js')
 //     .js('resources/js/bootstrap.js', 'public/js');
