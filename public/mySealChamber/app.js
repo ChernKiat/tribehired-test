@@ -1,6 +1,7 @@
-import { createServer } from 'https';
-import { readFileSync } from 'fs';
-import WebSocket, { WebSocketServer } from 'ws';
+const { createServer } = require('https');
+const { readFileSync } = require('fs');
+const WebSocket= require('ws');
+const WebSocketServer = WebSocket.Server;
 
 const server = createServer({
     // cert: readFileSync('/home/admin/conf/web/ssl.sealkingdom.xyz.pem'),
