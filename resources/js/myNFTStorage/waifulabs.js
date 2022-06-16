@@ -1,7 +1,6 @@
-// import WaifuSocket from './index.js';
-import fs from 'fs/promises';
-let WaifuSocket = require('waifusocket');
-// let fs = require('fs/promises');
+// var WaifuSocket = require('./index.js');
+var WaifuSocket = require('waifusocket');
+var fs = require('fs/promises');
 
 (async () => {
     const ws = await new WaifuSocket().login('SFMyNTY.g2gDbQAAACBYkXCBc7hS676XBwDeoCVxSBR0nJkhI45vu583VwcgT24GAERvH6x_AWIATxoA.I6Yh1lNFZRoJw5Nofsq0C2Qndqwdl10VjVFTiJ5GpJQ');

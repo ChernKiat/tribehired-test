@@ -1,7 +1,7 @@
 const WebSocket= require('ws');
 const WebSocketServer = WebSocket.Server;
 
-const ws = new WebSocket('ws://sealkingdom.xyz:8080');
+const ws = new WebSocket('ws://sealkingdom.xyz:8090');
 
 ws.on('open', function open() {
     console.log('connected');

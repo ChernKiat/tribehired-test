@@ -373,19 +373,16 @@ module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var fs_promises__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! fs/promises */ "fs/promises");
-/* harmony import */ var fs_promises__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(fs_promises__WEBPACK_IMPORTED_MODULE_1__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-// import WaifuSocket from './index.js';
+// var WaifuSocket = require('./index.js');
+var WaifuSocket = __webpack_require__(/*! waifusocket */ "./node_modules/waifusocket/index.js");
 
-
-var WaifuSocket = __webpack_require__(/*! waifusocket */ "./node_modules/waifusocket/index.js"); // let fs = require('fs/promises');
-
+var fs = __webpack_require__(/*! fs/promises */ "fs/promises");
 
 _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
   var ws;
@@ -416,7 +413,7 @@ _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MOD
                   case 6:
                     big = _context.sent;
                     _context.next = 9;
-                    return fs_promises__WEBPACK_IMPORTED_MODULE_1___default().writeFile('./image.png', big.image);
+                    return fs.writeFile('./image.png', big.image);
 
                   case 9:
                     ws.close();
@@ -20580,7 +20577,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 		// object to store loaded chunks
 /******/ 		// "1" means "loaded", otherwise not loaded yet
 /******/ 		var installedChunks = {
-/******/ 			"/myNFTStorage/waifulabs": 1,
+/******/ 			"/js/waifulabs": 1,
 /******/ 			"assets/css/app": 1
 /******/ 		};
 /******/ 		
@@ -20603,7 +20600,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 		__webpack_require__.f.require = (chunkId, promises) => {
 /******/ 			// "1" is the signal for "already loaded"
 /******/ 			if(!installedChunks[chunkId]) {
-/******/ 				if("/myNFTStorage/waifulabs" == chunkId) {
+/******/ 				if("/js/waifulabs" == chunkId) {
 /******/ 					installChunk(require("../../" + __webpack_require__.u(chunkId)));
 /******/ 				} else installedChunks[chunkId] = 1;
 /******/ 			}

@@ -4134,7 +4134,7 @@ var __webpack_exports__ = {};
 var WebSocket = __webpack_require__(/*! ws */ "./node_modules/ws/index.js");
 
 var WebSocketServer = WebSocket.Server;
-var ws = new WebSocket('ws://sealkingdom.xyz:8080');
+var ws = new WebSocket('ws://sealkingdom.xyz:8090');
 ws.on('open', function open() {
   console.log('connected');
   ws.send(Date.now());
