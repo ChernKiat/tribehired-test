@@ -2,7 +2,8 @@ const mix = require('laravel-mix');
 mix.webpackConfig({
     target: "node",
     resolve: {
-        mainFields: ['main', 'browser'],
+        aliasFields: ['browser'],
+        // mainFields: ['main', 'browser'],
         // fallback: {
         //     fs: false,
         //     // http: false,
