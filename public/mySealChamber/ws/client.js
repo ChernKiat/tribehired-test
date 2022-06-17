@@ -1,17 +1,14 @@
-import WebSocket, { WebSocketServer } from 'ws';
-
 const ws = new WebSocket('wss://sealkingdom.xyz:8090');
 
-ws.on('open', function open() {
+ws.addEventListener('open', function (event) {
     console.log('connected');
     ws.send(Date.now());
 });
 
-ws.on('message', function message(data) {
-    console.log('received: %s', data);
+ws.addEventListener('message', function (event) {
+    console.log('received: %s', event.data);
 });
 
-ws.on('close', function close() {
+ws.addEventListener('close', function (event) {
     console.log('disconnected');
 });
-c

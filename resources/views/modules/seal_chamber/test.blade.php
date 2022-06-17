@@ -33,8 +33,7 @@
 @endsection
 
 @section('scripts')
-{!! HTML::script('mySealChamber/ws/client.js') !!}
-{!! HTML::script('js/waifulabs.js') !!}
+{!! HTML::script('js/ws/client.js') !!}
 <script>
 $(function() {
 });
