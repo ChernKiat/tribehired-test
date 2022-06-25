@@ -22,8 +22,12 @@ mix.webpackConfig({
 //     .js('resources/js/bootstrap.js', 'public/js');
 mix.sass('resources/sass/app.scss', 'public/assets/css');
 
-mix.js('public/mySealChamber/app.js', 'public/js/ws/app.js')
+mix.js('public/mySealChamber/app.js', 'public/js/ws/app.js');
     // "watch": "watchify public/mySealChamber/WebRTC/client.js -o public/js/bundle.js -v",
+    // "watch": "watchify public/mySealChamber/ws/client-old.js -o public/js/client.js -v",
+
+    // "watch": "watchify mySealChamber/ws/client-old.js -o js/client.js -v",
+    // "watch": "watchify mySealChamber/WebRTC/client.js -o js/bundle.js -v",
 
 mix.scripts([
     'public/assets/js/jquery-3.3.1.min.js',

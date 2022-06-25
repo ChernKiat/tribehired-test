@@ -33,43 +33,44 @@
 @endsection
 
 @section('scripts')
+<script src="/js/client.js"></script>
 <script>
 $(function() {
-    class GateOfBabylon {
-        constructor() {
-            this.Letter = arguments[0];
-            this.Score = arguments[1];
+    // class GateOfBabylon {
+    //     constructor() {
+    //         this.Letter = arguments[0];
+    //         this.Score = arguments[1];
 
-            console.log(this);
-            if (this.Letter == this.BlankLetter) {
-                this.IsBlank = true;
-            }
-        }
+    //         console.log(this);
+    //         if (this.Letter == this.BlankLetter) {
+    //             this.IsBlank = true;
+    //         }
+    //     }
 
-        constructor() {
-        }
-    }
+    //     constructor() {
+    //     }
+    // }
 
-    $('#myJSRoomCodeButton').click(function() {
-        var my_code = $('#myJSRoomCodeField').val();
-        var my_player = $('#myJSRoomPlayerField').val();
-        if (my_code.length == 5 && my_player) {
-            $.ajax({
-                url   : '{{ route("sealchamber.room.join") }}',
-                type  : 'POST',
-                data  : {
-                    code    : my_code,
-                    player  : my_player,
-                    _token  : $('input[name=_token]').val()
-                },
-                success: function(res) {
-                    if (orders.status == 'processing') {
-                    } else {
-                    }
-                }
-            });
-        }
-    });
+    // $('#myJSRoomCodeButton').click(function() {
+    //     var my_code = $('#myJSRoomCodeField').val();
+    //     var my_player = $('#myJSRoomPlayerField').val();
+    //     if (my_code.length == 5 && my_player) {
+    //         $.ajax({
+    //             url   : '{{ route("sealchamber.room.join") }}',
+    //             type  : 'POST',
+    //             data  : {
+    //                 code    : my_code,
+    //                 player  : my_player,
+    //                 _token  : $('input[name=_token]').val()
+    //             },
+    //             success: function(res) {
+    //                 if (orders.status == 'processing') {
+    //                 } else {
+    //                 }
+    //             }
+    //         });
+    //     }
+    // });
 });
 </script>
 @endsection

@@ -39650,7 +39650,7 @@ try {
   module.exports = require('./fallback');
 }
 
-}).call(this)}).call(this,"/node_modules/bufferutil")
+}).call(this)}).call(this,"/../node_modules/bufferutil")
 },{"./fallback":257,"node-gyp-build":259}],259:[function(require,module,exports){
 (function (process){(function (){
 var fs = require('fs')
@@ -40138,7 +40138,7 @@ try {
   module.exports = require('./fallback');
 }
 
-}).call(this)}).call(this,"/node_modules/utf-8-validate")
+}).call(this)}).call(this,"/../node_modules/utf-8-validate")
 },{"./fallback":262,"node-gyp-build":259}],264:[function(require,module,exports){
 /*!
  * ws: a node.js websocket client
@@ -43156,7 +43156,7 @@ function abortConnection (socket, code, message) {
 }
 
 },{"./Constants":266,"./Extensions":269,"./PerMessageDeflate":270,"./WebSocket":274,"crypto":82,"events":112,"http":228,"safe-buffer":260,"ultron":261,"url":248}],276:[function(require,module,exports){
-const WebSocket= require('ws');
+const WebSocket = require('ws');
 const WebSocketServer = WebSocket.Server;
 
 const ws = new WebSocket('wss://sealkingdom.xyz:8090');

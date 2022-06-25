@@ -36,6 +36,7 @@
         "httpolyglot": "^0.1.2",
         "https-browserify": "^1.0.0",
         "icheck": "^1.0.2",
+        "mediasoup": "^3.8.3",
         "mediasoup-client": "^3.6.37",
         "net": "^1.0.2",
         "os": "^0.1.2",
