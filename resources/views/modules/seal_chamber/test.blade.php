@@ -81,6 +81,7 @@
     </body>
   </body>
   <footer>
-      <script src="bundle.js"></script>
+      <script src="/js/bundle.js"></script>
+      {{-- {!! HTML::script('/js/bundle.js') !!} --}}
   </footer>
 </html>
