@@ -5,6 +5,7 @@
 /public/myNFTStorage/input
 /public/myNFTStorage/Rinkeby Server
 /public/myNFTStorage/Rinkeby Server (old)
+/public/node_modules
 /storage/*.key
 /vendor
 .env
