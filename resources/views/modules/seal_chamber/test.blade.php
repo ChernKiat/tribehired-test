@@ -1,41 +1,86 @@
-@extends('layouts.app')
+<html>
+  <head>
+    <style>
+        tr {
+            vertical-align: top;
+        }
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
+        .video {
+            width: 360px;
+            background-color: black;
+            margin: 2px 0;
+        }
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+        button {
+            margin: 2;
+        }
 
-                    <form>
-                        <div class="form-group">
-                            <label for="code">Room Code:</label>
-                            <input type="text" class="form-control" id="myJSRoomCodeField">
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Name:</label>
-                            <input type="text" class="form-control" id="myJSRoomPlayerField">
-                        </div>
-                        <button type="button" id="myJSRoomCodeButton" class="btn btn-primary">Submit</button>
-                    </form>
-                </div>
-            </div>
+        #sharedBtns {
+            padding: 5;
+            background-color: papayawhip;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+  </head>
+  <body>
+    <body>
+        <div id="video">
+            <table>
+                <thead>
+                    <th>Local Video</th>
+                    <th>Remote Video</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div id="sharedBtns">
+                                <video id="localVideo" autoplay class="video" ></video>
+                            </div>
+                        </td>
+                        <td>
+                            <div id="sharedBtns">
+                                <video id="remoteVideo" autoplay class="video" ></video>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="sharedBtns">
+                                <button id="btnLocalVideo">1. Get Local Video</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div id="sharedBtns">
+                                <button id="btnRtpCapabilities">2. Get Rtp Capabilities</button>
+                                <br />
+                                <button id="btnDevice">3. Create Device</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="sharedBtns">
+                                <button id="btnCreateSendTransport">4. Create Send Transport</button>
+                                <br />
+                                <button id="btnConnectSendTransport">5. Connect Send Transport & Produce</button></td>
+                            </div>
+                        <td>
+                            <div id="sharedBtns">
+                                <button id="btnRecvSendTransport">6. Create Recv Transport</button>
+                                <br />
+                                <button id="btnConnectRecvTransport">7. Connect Recv Transport & Consume</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </div>
-</div>
-@endsection
-
-@section('scripts')
-{!! HTML::script('js/ws/client.js') !!}
-<script>
-$(function() {
-});
-</script>
-@endsection
+    </body>
+  </body>
+  <footer>
+      <script src="bundle.js"></script>
+  </footer>
+</html>
