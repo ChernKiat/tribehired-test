@@ -36,9 +36,4 @@ peers.on('connection', async socket => {
     socket.emit('connection-success', {
         socketId: socket.id
     })
-
-    socket.on('disconnect', () => {
-        // do some cleanup
-        console.log('peer disconnected')
-    })
 })

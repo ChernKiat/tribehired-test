@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
-    "watch": "watchify mySealChamber/WebRTC/client-2.js -o mySealChamber/WebRTC/bundle.js -v"
+    "watch": "watchify mySealChamber/WebRTC/client-5.js -o mySealChamber/WebRTC/bundle.js -v"
   },
   "author": "amir eshaq",
   "license": "ISC",
