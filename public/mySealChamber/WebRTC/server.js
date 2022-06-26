@@ -10,20 +10,20 @@ import { Server } from 'socket.io'
 import mediasoup from 'mediasoup'
 
 app.get('/', (req, res) => {
-  res.send('Hello from mediasoup app!')
+    res.send('Hello from mediasoup app!')
 })
 
 app.use('/sfu', express.static(path.join(__dirname, 'public')))
 
 // SSL cert for HTTPS access
 const options = {
-  key: fs.readFileSync('./server/ssl/key.pem', 'utf-8'),
-  cert: fs.readFileSync('./server/ssl/cert.pem', 'utf-8')
+    cert: readFileSync('/home/admin/conf/web/ssl.sealkingdom.xyz.crt'),
+    key: readFileSync('/home/admin/conf/web/ssl.sealkingdom.xyz.key')
 }
 
 const httpsServer = https.createServer(options, app)
 httpsServer.listen(3000, () => {
-  console.log('listening on port: ' + 3000)
+    console.log('listening on port: ' + 3000)
 })
 
 const io = new Server(httpsServer)
