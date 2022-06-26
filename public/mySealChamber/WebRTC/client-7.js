@@ -1,4 +1,5 @@
 // const io = require('socket.io-client')
+// const mediasoupClient = require('mediasoup-client')
 
 // const socket = io("/mediasoup")
 
@@ -85,52 +86,6 @@ const createSendTransport = () => {
         }
 
         console.log(params)
-
-        // creates a new WebRTC Transport to send media
-        // based on the server's producer transport params
-        // https://mediasoup.org/documentation/v3/mediasoup-client/api/#TransportOptions
-        producerTransport = device.createSendTransport(params)
-
-        // https://mediasoup.org/documentation/v3/communication-between-client-and-server/#producing-media
-        // this event is raised when a first call to transport.produce() is made
-        // see connectSendTransport() below
-        producerTransport.on('connect', async ({ dtlsParameters }, callback, errback) => {
-            try {
-                // Signal local DTLS parameters to the server side transport
-                // see server's socket.on('transport-connect', ...)
-                await socket.emit('transport-connect', {
-                  dtlsParameters,
-                })
-
-                // Tell the transport that parameters were transmitted.
-                callback()
-
-            } catch (error) {
-                errback(error)
-            }
-        })
-
-        producerTransport.on('produce', async (parameters, callback, errback) => {
-            console.log(parameters)
-
-            try {
-                // tell the server to create a Producer
-                // with the following parameters and produce
-                // and expect back a server side producer id
-                // see server's socket.on('transport-produce', ...)
-                await socket.emit('transport-produce', {
-                    kind: parameters.kind,
-                    rtpParameters: parameters.rtpParameters,
-                    appData: parameters.appData,
-                }, ({ id }) => {
-                    // Tell the transport that parameters were transmitted and provide it with the
-                    // server side producer's id.
-                    callback({ id })
-                })
-            } catch (error) {
-                errback(error)
-            }
-        })
     })
 }
 

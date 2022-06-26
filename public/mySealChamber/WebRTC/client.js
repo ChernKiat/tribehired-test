@@ -185,42 +185,42 @@ const connectSendTransport = async () => {
 }
 
 const createRecvTransport = async () => {
-  // see server's socket.on('consume', sender?, ...)
-  // this is a call from Consumer, so sender = false
-  await socket.emit('createWebRtcTransport', { sender: false }, ({ params }) => {
-    // The server sends back params needed
-    // to create Send Transport on the client side
-    if (params.error) {
-      console.log(params.error)
-      return
-    }
+    // see server's socket.on('consume', sender?, ...)
+    // this is a call from Consumer, so sender = false
+    await socket.emit('createWebRtcTransport', { sender: false }, ({ params }) => {
+        // The server sends back params needed
+        // to create Send Transport on the client side
+        if (params.error) {
+            console.log(params.error)
+            return
+        }
 
-    console.log(params)
+        console.log(params)
 
-    // creates a new WebRTC Transport to receive media
-    // based on server's consumer transport params
-    // https://mediasoup.org/documentation/v3/mediasoup-client/api/#device-createRecvTransport
-    consumerTransport = device.createRecvTransport(params)
+        // creates a new WebRTC Transport to receive media
+        // based on server's consumer transport params
+        // https://mediasoup.org/documentation/v3/mediasoup-client/api/#device-createRecvTransport
+        consumerTransport = device.createRecvTransport(params)
 
-    // https://mediasoup.org/documentation/v3/communication-between-client-and-server/#producing-media
-    // this event is raised when a first call to transport.produce() is made
-    // see connectRecvTransport() below
-    consumerTransport.on('connect', async ({ dtlsParameters }, callback, errback) => {
-      try {
-        // Signal local DTLS parameters to the server side transport
-        // see server's socket.on('transport-recv-connect', ...)
-        await socket.emit('transport-recv-connect', {
-          dtlsParameters,
+        // https://mediasoup.org/documentation/v3/communication-between-client-and-server/#producing-media
+        // this event is raised when a first call to transport.produce() is made
+        // see connectRecvTransport() below
+        consumerTransport.on('connect', async ({ dtlsParameters }, callback, errback) => {
+            try {
+                // Signal local DTLS parameters to the server side transport
+                // see server's socket.on('transport-recv-connect', ...)
+                await socket.emit('transport-recv-connect', {
+                    dtlsParameters,
+                })
+
+                // Tell the transport that parameters were transmitted.
+                callback()
+            } catch (error) {
+                // Tell the transport that something was wrong
+                errback(error)
+            }
         })
-
-        // Tell the transport that parameters were transmitted.
-        callback()
-      } catch (error) {
-        // Tell the transport that something was wrong
-        errback(error)
-      }
     })
-  })
 }
 
 const connectRecvTransport = async () => {

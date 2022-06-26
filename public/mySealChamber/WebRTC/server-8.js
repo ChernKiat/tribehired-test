@@ -34,8 +34,8 @@
 
 // let worker
 // let router
-let producerTransport
-let consumerTransport
+// let producerTransport
+// let consumerTransport
 
 // const createWorker = async () => {
 //     worker = await mediasoup.createWorker({
@@ -95,15 +95,16 @@ let consumerTransport
 //         callback({ rtpCapabilities })
 //     })
 
-    socket.on('createWebRtcTransport', async ({ sender }, callback) => {
-        console.log(`Is this a sender request? ${sender}`)
-        // The client indicates if it is a producer or a consumer
-        // if sender is true, indicates a producer else a consumer
-        if (sender)
-            producerTransport = await createWebRtcTransport(callback)
-        else
-            consumerTransport = await createWebRtcTransport(callback)
-    })
+//     socket.on('createWebRtcTransport', async ({ sender }, callback) => {
+//         console.log(`Is this a sender request? ${sender}`)
+//         // The client indicates if it is a producer or a consumer
+//         // if sender is true, indicates a producer else a consumer
+//         if (sender)
+//             producerTransport = await createWebRtcTransport(callback)
+//         else
+//             consumerTransport = await createWebRtcTransport(callback)
+//     })
+
 // })
 
 const createWebRtcTransport = async (callback) => {
