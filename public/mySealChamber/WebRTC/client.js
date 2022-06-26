@@ -224,36 +224,36 @@ const createRecvTransport = async () => {
 }
 
 const connectRecvTransport = async () => {
-  // for consumer, we need to tell the server first
-  // to create a consumer based on the rtpCapabilities and consume
-  // if the router can consume, it will send back a set of params as below
-  await socket.emit('consume', {
-    rtpCapabilities: device.rtpCapabilities,
-  }, async ({ params }) => {
-    if (params.error) {
-      console.log('Cannot Consume')
-      return
-    }
+    // for consumer, we need to tell the server first
+    // to create a consumer based on the rtpCapabilities and consume
+    // if the router can consume, it will send back a set of params as below
+    await socket.emit('consume', {
+        rtpCapabilities: device.rtpCapabilities,
+    }, async ({ params }) => {
+        if (params.error) {
+            console.log('Cannot Consume')
+            return
+        }
 
-    console.log(params)
-    // then consume with the local consumer transport
-    // which creates a consumer
-    consumer = await consumerTransport.consume({
-      id: params.id,
-      producerId: params.producerId,
-      kind: params.kind,
-      rtpParameters: params.rtpParameters
+        console.log(params)
+        // then consume with the local consumer transport
+        // which creates a consumer
+        consumer = await consumerTransport.consume({
+            id: params.id,
+            producerId: params.producerId,
+            kind: params.kind,
+            rtpParameters: params.rtpParameters
+        })
+
+        // destructure and retrieve the video track from the producer
+        const { track } = consumer
+
+        remoteVideo.srcObject = new MediaStream([track])
+
+        // the server consumer started with media paused
+        // so we need to inform the server to resume
+        socket.emit('consumer-resume')
     })
-
-    // destructure and retrieve the video track from the producer
-    const { track } = consumer
-
-    remoteVideo.srcObject = new MediaStream([track])
-
-    // the server consumer started with media paused
-    // so we need to inform the server to resume
-    socket.emit('consumer-resume')
-  })
 }
 
 btnLocalVideo.addEventListener('click', getLocalStream)

@@ -36,7 +36,8 @@
 // let router
 // let producerTransport
 // let consumerTransport
-let producer
+// let producer
+let consumer
 
 // const createWorker = async () => {
 //     worker = await mediasoup.createWorker({
@@ -106,80 +107,85 @@ let producer
 //             consumerTransport = await createWebRtcTransport(callback)
 //     })
 
-    socket.on('transport-connect', async ({ dtlsParameters }) => {
-        console.log('DTLS PARAMS... ', { dtlsParameters })
-        await producerTransport.connect({ dtlsParameters })
-    })
+//     socket.on('transport-connect', async ({ dtlsParameters }) => {
+//         console.log('DTLS PARAMS... ', { dtlsParameters })
+//         await producerTransport.connect({ dtlsParameters })
+//     })
 
-    socket.on('transport-produce', async ({ kind, rtpParameters, appData }, callback) => {
-        // call produce based on the prameters from the client
-        producer = await producerTransport.produce({
-            kind,
-            rtpParameters,
-        })
+//     socket.on('transport-produce', async ({ kind, rtpParameters, appData }, callback) => {
+//         // call produce based on the prameters from the client
+//         producer = await producerTransport.produce({
+//             kind,
+//             rtpParameters,
+//         })
 
-        console.log('Producer ID: ', producer.id, producer.kind)
+//         console.log('Producer ID: ', producer.id, producer.kind)
 
-        producer.on('transportclose', () => {
-            console.log('transport for this producer closed ')
-            producer.close()
-        })
+//         producer.on('transportclose', () => {
+//             console.log('transport for this producer closed ')
+//             producer.close()
+//         })
 
-        // Send back to the client the Producer's id
-        callback({
-            id: producer.id
-        })
+//         // Send back to the client the Producer's id
+//         callback({
+//             id: producer.id
+//         })
+//     })
+
+    socket.on('transport-recv-connect', async ({ dtlsParameters }) => {
+        console.log(`DTLS PARAMS: ${dtlsParameters}`)
+        await consumerTransport.connect({ dtlsParameters })
     })
 // })
 
-const createWebRtcTransport = async (callback) => {
-    try {
-        // https://mediasoup.org/documentation/v3/mediasoup/api/#WebRtcTransportOptions
-        const webRtcTransport_options = {
-            listenIps: [
-                {
-                    ip: '0.0.0.0', // replace with relevant IP address
-                    announcedIp: '127.0.0.1',
-                }
-            ],
-            enableUdp: true,
-            enableTcp: true,
-            preferUdp: true,
-        }
+// const createWebRtcTransport = async (callback) => {
+//     try {
+//         // https://mediasoup.org/documentation/v3/mediasoup/api/#WebRtcTransportOptions
+//         const webRtcTransport_options = {
+//             listenIps: [
+//                 {
+//                     ip: '0.0.0.0', // replace with relevant IP address
+//                     announcedIp: '127.0.0.1',
+//                 }
+//             ],
+//             enableUdp: true,
+//             enableTcp: true,
+//             preferUdp: true,
+//         }
 
-        // https://mediasoup.org/documentation/v3/mediasoup/api/#router-createWebRtcTransport
-        let transport = await router.createWebRtcTransport(webRtcTransport_options)
-        console.log(`transport id: ${transport.id}`)
+//         // https://mediasoup.org/documentation/v3/mediasoup/api/#router-createWebRtcTransport
+//         let transport = await router.createWebRtcTransport(webRtcTransport_options)
+//         console.log(`transport id: ${transport.id}`)
 
-        transport.on('dtlsstatechange', dtlsState => {
-            if (dtlsState === 'closed') {
-                transport.close()
-            }
-        })
+//         transport.on('dtlsstatechange', dtlsState => {
+//             if (dtlsState === 'closed') {
+//                 transport.close()
+//             }
+//         })
 
-        transport.on('close', () => {
-            console.log('transport closed')
-        })
+//         transport.on('close', () => {
+//             console.log('transport closed')
+//         })
 
-        // send back to the client the following prameters
-        callback({
-            // https://mediasoup.org/documentation/v3/mediasoup-client/api/#TransportOptions
-            params: {
-                id: transport.id,
-                iceParameters: transport.iceParameters,
-                iceCandidates: transport.iceCandidates,
-                dtlsParameters: transport.dtlsParameters,
-            }
-        })
+//         // send back to the client the following prameters
+//         callback({
+//             // https://mediasoup.org/documentation/v3/mediasoup-client/api/#TransportOptions
+//             params: {
+//                 id: transport.id,
+//                 iceParameters: transport.iceParameters,
+//                 iceCandidates: transport.iceCandidates,
+//                 dtlsParameters: transport.dtlsParameters,
+//             }
+//         })
 
-        return transport
+//         return transport
 
-    } catch (error) {
-        console.log(error)
-        callback({
-            params: {
-                error: error
-            }
-        })
-    }
-}
+//     } catch (error) {
+//         console.log(error)
+//         callback({
+//             params: {
+//                 error: error
+//             }
+//         })
+//     }
+// }
