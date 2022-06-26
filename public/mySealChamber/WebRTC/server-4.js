@@ -32,13 +32,13 @@ const io = new Server(httpsServer)
 const peers = io.of('/mediasoup')
 
 peers.on('connection', async socket => {
-  console.log(socket.id)
-  socket.emit('connection-success', {
-    socketId: socket.id
-  })
+    console.log(socket.id)
+    socket.emit('connection-success', {
+        socketId: socket.id
+    })
 
-  socket.on('disconnect', () => {
-    // do some cleanup
-    console.log('peer disconnected')
-  })
+    socket.on('disconnect', () => {
+        // do some cleanup
+        console.log('peer disconnected')
+    })
 })

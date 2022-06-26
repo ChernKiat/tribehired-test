@@ -1,11 +1,10 @@
-//index.js
 const io = require('socket.io-client')
 const mediasoupClient = require('mediasoup-client')
 
 const socket = io("/mediasoup")
 
 socket.on('connection-success', ({ socketId }) => {
-  console.log(socketId)
+    console.log(socketId)
 })
 
 let device
@@ -18,77 +17,77 @@ let consumer
 // https://mediasoup.org/documentation/v3/mediasoup-client/api/#ProducerOptions
 // https://mediasoup.org/documentation/v3/mediasoup-client/api/#transport-produce
 let params = {
-  // mediasoup params
-  encodings: [
-    {
-      rid: 'r0',
-      maxBitrate: 100000,
-      scalabilityMode: 'S1T3',
-    },
-    {
-      rid: 'r1',
-      maxBitrate: 300000,
-      scalabilityMode: 'S1T3',
-    },
-    {
-      rid: 'r2',
-      maxBitrate: 900000,
-      scalabilityMode: 'S1T3',
-    },
-  ],
-  // https://mediasoup.org/documentation/v3/mediasoup-client/api/#ProducerCodecOptions
-  codecOptions: {
-    videoGoogleStartBitrate: 1000
-  }
+    // mediasoup params
+    encodings: [
+        {
+            rid: 'r0',
+            maxBitrate: 100000,
+            scalabilityMode: 'S1T3',
+        },
+        {
+            rid: 'r1',
+            maxBitrate: 300000,
+            scalabilityMode: 'S1T3',
+        },
+        {
+            rid: 'r2',
+            maxBitrate: 900000,
+            scalabilityMode: 'S1T3',
+        },
+    ],
+    // https://mediasoup.org/documentation/v3/mediasoup-client/api/#ProducerCodecOptions
+    codecOptions: {
+        videoGoogleStartBitrate: 1000
+    }
 }
 
 const streamSuccess = async (stream) => {
-  localVideo.srcObject = stream
-  const track = stream.getVideoTracks()[0]
-  params = {
-    track,
-    ...params
-  }
+    localVideo.srcObject = stream
+    const track = stream.getVideoTracks()[0]
+    params = {
+        track,
+        ...params
+    }
 }
 
 const getLocalStream = () => {
-  navigator.getUserMedia({
-    audio: false,
-    video: {
-      width: {
-        min: 640,
-        max: 1920,
-      },
-      height: {
-        min: 400,
-        max: 1080,
-      }
-    }
-  }, streamSuccess, error => {
-    console.log(error.message)
-  })
+    navigator.getUserMedia({
+        audio: false,
+        video: {
+            width: {
+                min: 640,
+                max: 1920,
+            },
+            height: {
+                min: 400,
+                max: 1080,
+            }
+        }
+    }, streamSuccess, error => {
+        console.log(error.message)
+    })
 }
 
-// A device is an endpoint connecting to a Router on the 
+// A device is an endpoint connecting to a Router on the
 // server side to send/recive media
 const createDevice = async () => {
-  try {
-    device = new mediasoupClient.Device()
+    try {
+        device = new mediasoupClient.Device()
 
-    // https://mediasoup.org/documentation/v3/mediasoup-client/api/#device-load
-    // Loads the device with RTP capabilities of the Router (server side)
-    await device.load({
-      // see getRtpCapabilities() below
-      routerRtpCapabilities: rtpCapabilities
-    })
+        // https://mediasoup.org/documentation/v3/mediasoup-client/api/#device-load
+        // Loads the device with RTP capabilities of the Router (server side)
+        await device.load({
+            // see getRtpCapabilities() below
+            routerRtpCapabilities: rtpCapabilities
+        })
 
-    console.log('RTP Capabilities', device.rtpCapabilities)
+        console.log('RTP Capabilities', device.rtpCapabilities)
 
-  } catch (error) {
-    console.log(error)
-    if (error.name === 'UnsupportedError')
-      console.warn('browser not supported')
-  }
+    } catch (error) {
+        console.log(error)
+        if (error.name === 'UnsupportedError')
+            console.warn('browser not supported')
+    }
 }
 
 const getRtpCapabilities = () => {
@@ -108,7 +107,7 @@ const createSendTransport = () => {
   // see server's socket.on('createWebRtcTransport', sender?, ...)
   // this is a call from Producer, so sender = true
   socket.emit('createWebRtcTransport', { sender: true }, ({ params }) => {
-    // The server sends back params needed 
+    // The server sends back params needed
     // to create Send Transport on the client side
     if (params.error) {
       console.log(params.error)
@@ -189,7 +188,7 @@ const createRecvTransport = async () => {
   // see server's socket.on('consume', sender?, ...)
   // this is a call from Consumer, so sender = false
   await socket.emit('createWebRtcTransport', { sender: false }, ({ params }) => {
-    // The server sends back params needed 
+    // The server sends back params needed
     // to create Send Transport on the client side
     if (params.error) {
       console.log(params.error)
