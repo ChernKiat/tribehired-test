@@ -6,6 +6,9 @@
 //     console.log(socketId)
 // })
 
+let device
+let rtpCapabilities
+
 // let params = {
 //     // mediasoup params
 // }
@@ -36,26 +39,6 @@
 //         console.log(error.message)
 //     })
 // }
-
-const createDevice = async () => {
-    try {
-        device = new mediasoupClient.Device()
-
-        // https://mediasoup.org/documentation/v3/mediasoup-client/api/#device-load
-        // Loads the device with RTP capabilities of the Router (server side)
-        await device.load({
-            // see getRtpCapabilities() below
-            routerRtpCapabilities: rtpCapabilities
-        })
-
-        console.log('RTP Capabilities', device.rtpCapabilities)
-
-    } catch (error) {
-        console.log(error)
-        if (error.name === 'UnsupportedError')
-            console.warn('browser not supported')
-    }
-}
 
 const getRtpCapabilities = () => {
     // make a request to the server for Router RTP Capabilities

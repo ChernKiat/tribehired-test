@@ -104,84 +104,84 @@ const getRtpCapabilities = () => {
 }
 
 const createSendTransport = () => {
-  // see server's socket.on('createWebRtcTransport', sender?, ...)
-  // this is a call from Producer, so sender = true
-  socket.emit('createWebRtcTransport', { sender: true }, ({ params }) => {
-    // The server sends back params needed
-    // to create Send Transport on the client side
-    if (params.error) {
-      console.log(params.error)
-      return
-    }
+    // see server's socket.on('createWebRtcTransport', sender?, ...)
+    // this is a call from Producer, so sender = true
+    socket.emit('createWebRtcTransport', { sender: true }, ({ params }) => {
+        // The server sends back params needed
+        // to create Send Transport on the client side
+        if (params.error) {
+            console.log(params.error)
+            return
+        }
 
-    console.log(params)
+        console.log(params)
 
-    // creates a new WebRTC Transport to send media
-    // based on the server's producer transport params
-    // https://mediasoup.org/documentation/v3/mediasoup-client/api/#TransportOptions
-    producerTransport = device.createSendTransport(params)
+        // creates a new WebRTC Transport to send media
+        // based on the server's producer transport params
+        // https://mediasoup.org/documentation/v3/mediasoup-client/api/#TransportOptions
+        producerTransport = device.createSendTransport(params)
 
-    // https://mediasoup.org/documentation/v3/communication-between-client-and-server/#producing-media
-    // this event is raised when a first call to transport.produce() is made
-    // see connectSendTransport() below
-    producerTransport.on('connect', async ({ dtlsParameters }, callback, errback) => {
-      try {
-        // Signal local DTLS parameters to the server side transport
-        // see server's socket.on('transport-connect', ...)
-        await socket.emit('transport-connect', {
-          dtlsParameters,
+        // https://mediasoup.org/documentation/v3/communication-between-client-and-server/#producing-media
+        // this event is raised when a first call to transport.produce() is made
+        // see connectSendTransport() below
+        producerTransport.on('connect', async ({ dtlsParameters }, callback, errback) => {
+            try {
+                // Signal local DTLS parameters to the server side transport
+                // see server's socket.on('transport-connect', ...)
+                await socket.emit('transport-connect', {
+                  dtlsParameters,
+                })
+
+                // Tell the transport that parameters were transmitted.
+                callback()
+
+            } catch (error) {
+                errback(error)
+            }
         })
 
-        // Tell the transport that parameters were transmitted.
-        callback()
+        producerTransport.on('produce', async (parameters, callback, errback) => {
+            console.log(parameters)
 
-      } catch (error) {
-        errback(error)
-      }
-    })
-
-    producerTransport.on('produce', async (parameters, callback, errback) => {
-      console.log(parameters)
-
-      try {
-        // tell the server to create a Producer
-        // with the following parameters and produce
-        // and expect back a server side producer id
-        // see server's socket.on('transport-produce', ...)
-        await socket.emit('transport-produce', {
-          kind: parameters.kind,
-          rtpParameters: parameters.rtpParameters,
-          appData: parameters.appData,
-        }, ({ id }) => {
-          // Tell the transport that parameters were transmitted and provide it with the
-          // server side producer's id.
-          callback({ id })
+            try {
+                // tell the server to create a Producer
+                // with the following parameters and produce
+                // and expect back a server side producer id
+                // see server's socket.on('transport-produce', ...)
+                await socket.emit('transport-produce', {
+                    kind: parameters.kind,
+                    rtpParameters: parameters.rtpParameters,
+                    appData: parameters.appData,
+                }, ({ id }) => {
+                    // Tell the transport that parameters were transmitted and provide it with the
+                    // server side producer's id.
+                    callback({ id })
+                })
+            } catch (error) {
+                errback(error)
+            }
         })
-      } catch (error) {
-        errback(error)
-      }
     })
-  })
 }
 
 const connectSendTransport = async () => {
-  // we now call produce() to instruct the producer transport
-  // to send media to the Router
-  // https://mediasoup.org/documentation/v3/mediasoup-client/api/#transport-produce
-  // this action will trigger the 'connect' and 'produce' events above
-  producer = await producerTransport.produce(params)
+    // we now call produce() to instruct the producer transport
+    // to send media to the Router
+    // https://mediasoup.org/documentation/v3/mediasoup-client/api/#transport-produce
+    // this action will trigger the 'connect' and 'produce' events above
+    producer = await producerTransport.produce(params)
 
-  producer.on('trackended', () => {
-    console.log('track ended')
+    producer.on('trackended', () => {
+        console.log('track ended')
 
-    // close video track
-  })
+        // close video track
+    })
 
-  producer.on('transportclose', () => {
-    console.log('transport ended')
+    producer.on('transportclose', () => {
+        console.log('transport ended')
 
-    // close video track
-  })
+        // close video track
+    })
 }
 
 const createRecvTransport = async () => {
