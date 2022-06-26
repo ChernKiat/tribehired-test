@@ -11,10 +11,12 @@
 //     res.send('Hello from mediasoup app!')
 // })
 
+app.use('/sfu', express.static(path.join(__dirname, 'public')))
+
 // // SSL cert for HTTPS access
 // const options = {
-    key: fs.readFileSync('/home/admin/conf/web/ssl.sealkingdom.xyz.key'),
-    cert: fs.readFileSync('/home/admin/conf/web/ssl.sealkingdom.xyz.crt')
+//     key: fs.readFileSync('/home/admin/conf/web/ssl.sealkingdom.xyz.key'),
+//     cert: fs.readFileSync('/home/admin/conf/web/ssl.sealkingdom.xyz.crt')
 // }
 
 // const httpsServer = https.createServer(options, app)
