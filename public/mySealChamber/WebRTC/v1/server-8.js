@@ -34,8 +34,9 @@
 
 // let worker
 // let router
-let producerTransport
-let consumerTransport
+// let producerTransport
+// let consumerTransport
+let producer
 
 // const createWorker = async () => {
 //     worker = await mediasoup.createWorker({
@@ -95,14 +96,39 @@ let consumerTransport
 //         callback({ rtpCapabilities })
 //     })
 
-    socket.on('createWebRtcTransport', async ({ sender }, callback) => {
-        console.log(`Is this a sender request? ${sender}`)
-        // The client indicates if it is a producer or a consumer
-        // if sender is true, indicates a producer else a consumer
-        if (sender)
-            producerTransport = await createWebRtcTransport(callback)
-        else
-            consumerTransport = await createWebRtcTransport(callback)
+//     socket.on('createWebRtcTransport', async ({ sender }, callback) => {
+//         console.log(`Is this a sender request? ${sender}`)
+//         // The client indicates if it is a producer or a consumer
+//         // if sender is true, indicates a producer else a consumer
+//         if (sender)
+//             producerTransport = await createWebRtcTransport(callback)
+//         else
+//             consumerTransport = await createWebRtcTransport(callback)
+//     })
+
+    socket.on('transport-connect', async ({ dtlsParameters }) => {
+        console.log('DTLS PARAMS... ', { dtlsParameters })
+        await producerTransport.connect({ dtlsParameters })
+    })
+
+    socket.on('transport-produce', async ({ kind, rtpParameters, appData }, callback) => {
+        // call produce based on the prameters from the client
+        producer = await producerTransport.produce({
+            kind,
+            rtpParameters,
+        })
+
+        console.log('Producer ID: ', producer.id, producer.kind)
+
+        producer.on('transportclose', () => {
+            console.log('transport for this producer closed ')
+            producer.close()
+        })
+
+        // Send back to the client the Producer's id
+        callback({
+            id: producer.id
+        })
     })
 // })
 
@@ -112,7 +138,7 @@ const createWebRtcTransport = async (callback) => {
         const webRtcTransport_options = {
             listenIps: [
                 {
-                    ip: '0.0.0.0', // replace with relevant IP address
+                    ip: '0.0.0.0',
                     announcedIp: '127.0.0.1',
                 }
             ],
