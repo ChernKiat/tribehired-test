@@ -47,7 +47,7 @@ const connections = io.of('/mediasoup')
  *     |-> Producer Transport(s)
  *         |-> Producer
  *     |-> Consumer Transport(s)
- *         |-> Consumer 
+ *         |-> Consumer
  **/
 let worker
 let rooms = {}          // { roomName1: { Router, rooms: [ sicketId1, ... ] }, ...}
@@ -168,7 +168,7 @@ connections.on('connection', async socket => {
     } else {
       router1 = await worker.createRouter({ mediaCodecs, })
     }
-    
+
     console.log(`Router ID: ${router1.id}`, peers.length)
 
     rooms[roomName] = {
@@ -312,7 +312,7 @@ connections.on('connection', async socket => {
   // see client's socket.emit('transport-connect', ...)
   socket.on('transport-connect', ({ dtlsParameters }) => {
     console.log('DTLS PARAMS... ', { dtlsParameters })
-    
+
     getTransport(socket.id).connect({ dtlsParameters })
   })
 
@@ -428,8 +428,8 @@ const createWebRtcTransport = async (router) => {
       const webRtcTransport_options = {
         listenIps: [
           {
-            ip: '0.0.0.0', // replace with relevant IP address
-            announcedIp: '10.0.0.115',
+            ip: '127.0.0.1',
+            announcedIp: 'sealkingdom.com'
           }
         ],
         enableUdp: true,

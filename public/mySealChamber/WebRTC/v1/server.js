@@ -218,8 +218,8 @@ const createWebRtcTransport = async (callback) => {
         const webRtcTransport_options = {
             listenIps: [
                 {
-                    ip: '0.0.0.0',
-                    announcedIp: '127.0.0.1',
+                    ip: '127.0.0.1',
+                    announcedIp: 'sealkingdom.com'
                 }
             ],
             enableUdp: true,
