@@ -4,6 +4,7 @@ namespace App\Console\CryptoBot;
 
 use App\Models\CryptoBot\Exchange;
 use App\Skins\CryptoBot\CCXTSkin;
+use Config;
 use Illuminate\Console\Command;
 
 class CCXTPairReviveCommand extends Command
@@ -23,11 +24,8 @@ class CCXTPairReviveCommand extends Command
     {
         ini_set('memory_limit', '256M');
 
-        $ccxt = (new CCXTSkin());
-        foreach (Exchange::with('pairsDeactivated')->where('is_active', 1)->get() as $exchange) {
-            $ccxt->setCryptobotExchange($exchange);
-            $ccxt->setCryptobotPair($exchange->pairsDeactivated);
-            $ccxt->fetchTickers();
+        if (Config::get('bot.is_active.CCXTPairCommand:revive')) {
+            CCXTSkin::updatePairs();
         }
     }
 }

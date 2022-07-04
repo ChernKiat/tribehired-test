@@ -3,7 +3,7 @@
 return [
     'is_active' => [
         'CCXTPairCommand:retrieve' => true,
-        // 'CCXTPairCommand:revive' => true,
+        'CCXTPairCommand:revive' => true,
         'CCXTStrategyCommand:run' => true,
         // 'DatabaseCommand:backup' => true,
     ],
