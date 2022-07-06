@@ -605,14 +605,7 @@ class CCXTSkin
                     if (array_key_exists($key, $cryptobotPairs)) {
                         $cryptobotPair = $cryptobotPairs[$key];
                     } else {
-                        $currencies = explode('/', $key);
-                        foreach ($currencies as $index => $currency) {
-                            if (array_key_exists($currency, $cryptobot_currencies)) {
-                                $currencies[$index] = $cryptobot_currencies[$currency];
-                            } else {
-                                $currencies[$index] = Currency::updateOrCreate(['name' => $currency])->id;
-                            }
-                        }
+                        $currencies = Currency::savePairs($key);
                         $cryptobotPair = Pair::updateOrCreate(['cryptobot_exchange_id' => $exchange->id, 'cryptobot_quote_currency_id' => $currencies[1], 'cryptobot_base_currency_id' => $currencies[0], 'pair' => $key, 'is_active' => $pair['active']]);
                     }
                 // } catch (ccxt\AuthenticationError $e) {
@@ -628,6 +621,7 @@ class CCXTSkin
         }
     }
 
+    // deprecated the cryptobotPair table got new columns
     public static function setupPairs()
     {
         // no delete
@@ -645,9 +639,9 @@ class CCXTSkin
             // ripio ExchangeNotAvailable (1020)
             if (empty($cryptobotExchange) || in_array($exchange, ['aofex', 'bibox', 'buda', 'coinbase', 'coinmarketcap', 'crex24', 'flowbtc', 'lykke', 'ripio'])) { continue; }
 
+            $cryptobotExchange = Exchange::where('exchange', $exchange->id)->first();
             $exchange = (new self())->initExchange($exchange);
             $pairs = $exchange->load_markets();
-            $cryptobotExchange = Exchange::where('exchange', $exchange->id)->first();
             if (empty($pairs) || empty($cryptobotExchange)) {
                 Log::info("{$exchange->id} pairs @ cryptobotExchange variable is empty.");
                 continue;
