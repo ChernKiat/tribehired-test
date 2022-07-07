@@ -604,8 +604,11 @@ class CCXTSkin
                 // try {
                     if (array_key_exists($key, $cryptobotPairs)) {
                         $cryptobotPair = $cryptobotPairs[$key];
+                        if (is_null($cryptobotPair->cryptobot_quote_currency_id)) {
+                            $currencies = Currency::saveCurrencies($key, $cryptobot_currencies);
+                        }
                     } else {
-                        $currencies = Currency::savePairs($key);
+                        $currencies = Currency::saveCurrencies($key, $cryptobot_currencies);
                         $cryptobotPair = Pair::updateOrCreate(['cryptobot_exchange_id' => $exchange->id, 'cryptobot_quote_currency_id' => $currencies[1], 'cryptobot_base_currency_id' => $currencies[0], 'pair' => $key, 'is_active' => $pair['active']]);
                     }
                 // } catch (ccxt\AuthenticationError $e) {
