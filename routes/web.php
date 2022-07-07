@@ -31,6 +31,7 @@ Route::prefix('board-game')->namespace('BoardGame')->name('boardgame.')->group(f
 Route::prefix('crypto-bot')->namespace('CryptoBot')->name('cryptobot.')->group(function() {
     Route::prefix('ccxt')->name('ccxt.')->group(function() {
         Route::get('test', 'CCXTController@test')->name('test');
+        Route::get('bug', 'CCXTController@bug')->name('bug');
     });
 });
 

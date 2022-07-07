@@ -30,10 +30,10 @@ class CCXTController extends Controller
         //     }
         // }
 
-        // $ccxt = (new CCXTSkin());
-        // $ccxt->setCryptobotExchange(Exchange::find(Exchange::BINANCE));
-        // $ccxt->setCryptobotPair(Pair::where('pair', 'XNO/USDT')->first());
-        // dd($ccxt->fetchTicker(), 'wtf');
+        $ccxt = (new CCXTSkin());
+        $ccxt->setCryptobotExchange(Exchange::find(Exchange::BINANCE));
+        $ccxt->setCryptobotPair(Pair::where('cryptobot_exchange_id', Exchange::BINANCE)->where('pair', 'RAMP/USDT')->first());
+        dd($ccxt->fetchTickers(), 'wtf');
 
         // \Artisan::call('CCXTPairCommand:retrieve');
         // dd(\Artisan::output(), 'lol');
@@ -60,5 +60,32 @@ class CCXTController extends Controller
         dd(\Artisan::output(), 'lol');
 
         return view('test');
+    }
+
+    public function bug()
+    {
+
+    }
+
+    public function removeDuplicatedCryptobotPairs()
+    {
+        $cryptobotPairs = Pair::select('id')->selectRaw('COUNT(id) AS pair_duplicated')->havingRaw('pair_duplicated > 1')->groupBy('cryptobot_exchange_id')->groupBy('pair')->orderBy('id', 'ASC')->pluck('id')->toArray();
+
+        // Pair::whereIn('id', $cryptobotPairs)->delete();
+        Pair::whereIn('id', $cryptobotPairs)->forceDelete();
+        // Pair::onlyTrashed()->forceDelete();
+
+        PairStrategy::whereIn('cryptobot_pair_id', $cryptobotPairs)->delete();
+
+        Ohclv::whereIn('cryptobot_pair_id', $cryptobotPairs)->delete();
+
+        Order::whereIn('cryptobot_pair_id', $cryptobotPairs)->delete();
+
+        Ticker::whereIn('cryptobot_pair_id', $cryptobotPairs)->delete();
+
+        Trade::whereIn('cryptobot_pair_id', $cryptobotPairs)->delete();
+        // Trade::doesntHave('pair')->whereIn('cryptobot_pair_id', $cryptobotPairs)->delete();
+
+        dd($cryptobotPairs, 'lol');
     }
 }

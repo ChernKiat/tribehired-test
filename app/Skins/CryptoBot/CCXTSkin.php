@@ -107,9 +107,9 @@ class CCXTSkin
             if ($this->exchange->has['fetchTicker']) {
                 $data = $this->exchange->fetch_ticker($this->cryptobotPair->pair);
                 foreach (['bid_volume' => 'bidVolume', 'ask_volume' => 'askVolume', 'base_volume' => 'baseVolume', 'quote_volume' => 'quoteVolume'] as $key => $value) {
-                    if (array_key_exists($value, $data[$pair->pair])) {
-                        $data[$pair->pair][$key] = $data[$pair->pair][$value];
-                        unset($data[$pair->pair][$value]);
+                    if (array_key_exists($value, $data)) {
+                        $data[$key] = $data[$value];
+                        unset($data[$value]);
                     }
                 }
 
@@ -181,6 +181,7 @@ class CCXTSkin
                             $pair->is_active         = 0;
                             $pair->latest_ticked_at  = explode('.', $data[$pair->pair]['datetime'])[0];
                             $pair->save();
+                            unset($data[$pair->pair]);
                             // mail
                             continue;
                         }
@@ -603,10 +604,14 @@ class CCXTSkin
             foreach ($pairs as $key => $pair) {
                 // try {
                     if (array_key_exists($key, $cryptobotPairs)) {
+                        $currencies = array(null, null);
                         $cryptobotPair = $cryptobotPairs[$key];
                         if (is_null($cryptobotPair->cryptobot_quote_currency_id)) {
                             $currencies = Currency::saveCurrencies($key, $cryptobot_currencies);
                         }
+                        $cryptobotPair->cryptobot_base_currency_id = $currencies[0];
+                        if (!is_null($currencies[1])) { $cryptobotPair->cryptobot_quote_currency_id = $currencies[1]; }
+                        $cryptobotPair->save();
                     } else {
                         $currencies = Currency::saveCurrencies($key, $cryptobot_currencies);
                         $cryptobotPair = Pair::updateOrCreate(['cryptobot_exchange_id' => $exchange->id, 'cryptobot_quote_currency_id' => $currencies[1], 'cryptobot_base_currency_id' => $currencies[0], 'pair' => $key, 'is_active' => $pair['active']]);
