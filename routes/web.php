@@ -57,7 +57,7 @@ Route::prefix('net-junkies')->namespace('NetJunkies')->name('netjunkies.')->grou
 
 Route::prefix('nft-storage')->namespace('NFTStorage')->name('nftstorage.')->group(function() {
 // Route::get('/', 'ManekiController@main')->name('maneki.main');
-Route::get('/', 'MultiverseController@main')->name('multiverse.main');
+// Route::get('/', 'MultiverseController@main')->name('multiverse.main');
     Route::get('one', 'DemoController@one')->name('demo.one');
     Route::get('two', 'DemoController@two')->name('demo.two');
     Route::get('three', 'DemoController@three')->name('demo.three');
@@ -81,7 +81,7 @@ Route::domain(Config::get('app.url'))->namespace('NFTStorage')->name('nftstorage
     Route::get('{sha256}/maneki/{index}', 'ManekiController@image')->name('maneki.image');
     Route::get('{sha256}/external/{index}', 'ManekiController@external')->name('maneki.external');
 
-// Route::get('/', 'MultiverseController@main')->name('multiverse.main');
+Route::get('/', 'MultiverseController@main')->name('multiverse.main');
     Route::get('{sha256}/multiverse/{multiverse}', 'MultiverseController@image')->name('multiverse.image');
     Route::get('{sha256}/external/{multiverse}', 'MultiverseController@external')->name('multiverse.external');
 });
@@ -126,6 +126,12 @@ Route::namespace('Tesseract')->group(function() {
 
 Route::prefix('vanguard-system')->namespace('VanguardSystem')->name('vanguardsystem.')->group(function() {
     Route::get('/', 'IPFSController@show')->name('ipfs.show');
+
+    Route::prefix('crypto-bot')->namespace('CryptoBot')->name('cryptobot.')->group(function() {
+        Route::prefix('ccxt')->name('ccxt.')->group(function() {
+            Route::get('test', 'CCXTController@test')->name('test');
+        });
+    });
 });
 
 Route::prefix('vengeance-mail')->namespace('VengeanceMail')->name('vengeancemail.')->group(function() {

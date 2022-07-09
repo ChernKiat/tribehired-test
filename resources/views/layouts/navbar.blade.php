@@ -2,8 +2,8 @@
 
     <div class="navbar-brand-wrapper d-flex align-items-center justify-content-center">
         <a class="navbar-brand mr-0" href="{{-- route('main') --}}">
-            <img src="https://mttsolutions.com.my/img/logo.png" class="logo-lg" width="140" />
-            <img src="https://mttsolutions.com.my/img/logo.png" class="logo-sm" width="140" />
+            <img src="/myVanguardSystem/logo.jpg" class="logo-lg" width="140" />
+            <img src="/myVanguardSystem/logo.jpg" class="logo-sm" width="140" />
         </a>
     </div>
 
