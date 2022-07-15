@@ -1,0 +1,10 @@
+export default {
+    apps: [{
+        name: 'pm2',
+        log_file: 'index.log',
+        script: 'index.js',
+        node_args: '--require=esm',
+        autorestart: true,
+        watch: false
+    }]
+}
