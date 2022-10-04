@@ -18,6 +18,7 @@ class CreateSupportsTable extends Migration
             $table->increments('id');
             $table->string('user_name')->nullable();
             $table->string('user_email')->nullable();
+            $table->string('user_image')->nullable();
             $table->tinyInteger('user_gender')->nullable();
             $table->integer('birthday_year')->nullable();
             $table->text('to')->nullable();

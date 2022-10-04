@@ -30,23 +30,25 @@
 </head>
 
 <body style=" background: lightblue url(/mySupportSystem/newyear/bg.jpg) no-repeat fixed center; -webkit-background-size: cover;-moz-background-size: cover; -o-background-size: cover;background-size: cover; ">
+    {!! Form::open(['route' => 'supportsystem.newyear.store', 'files' => true, 'id' => 'newyear-form']) !!}
+    {{ csrf_field() }}
     <div class="d-flex align-items-center" style="text-align: center;  margin: 25px; justify-content: center; ">
         <div class="row">
             <div class="col">
                 <!--Image and name data-->
                 <img src="/mySupportSystem/newyear/profilesample.png" alt="" width="100px" height="100px" id="profile" style="border-radius: 50%;">
                 <h4 style="text-align: center;  margin: 5px; color: rgb(255, 255, 81);">Profile Photo</h4>
-                <input type="file" name="pic" accept="image/*" id="imgInp" style="color: #000000; background-color: rgb(255, 255, 255); border-radius: 1rem;">
+                <input type="file" name="image" accept="image/*" id="imgInp" style="color: #000000; background-color: rgb(255, 255, 255); border-radius: 1rem;">
 
                 <h6 style="text-align: center;  margin-top: 30px; color: rgb(255, 255, 81);">Name</h6>
-                <input  type="text" class="form-control form-rounded" placeholder="Enter Name"
+                <input  type="text" class="form-control form-rounded" placeholder="Enter Name" name="name" required
                   style=" text-align: center; border-radius: 1rem; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;color: rgb(0, 39, 110); font-size:xx-large; font-weight: bold;">
                 <!--Bio Data-->
                 <div class="row">
                     <div class="col">
                         <h6 style="text-align: start;  margin-top: 30px; color: rgb(255, 255, 81);">Year of birth</h6>
                         <div class="form-group">
-                            <select class="form-control" name="" id="yearpicker"
+                            <select class="form-control" name="birthday" id="yearpicker" required
                                 style="text-align: center; border-radius: 1rem; font-weight: bold;">
                                 <option value="">Please Select</option>
                             </select>
@@ -64,15 +66,14 @@
                     </div>
 
                     <div class="col">
-                        <h6 style="text-align: start;  margin-top: 30px; color: rgb(255, 255, 81);">Gender</h6>
+                        <h6 style="text-align: start; margin-top: 30px; color: rgb(255, 255, 81);">Gender</h6>
                         <div class="form-group">
-
-                            <select class="form-control" name="" id="gender"
+                            <select class="form-control" name="gender" id="gender" required
                                 style="text-align: center; border-radius: 1rem; font-weight: bold;">
                                 <option value="">Please Select</option>
-                                <option>Male</option>
-                                <option>Female</option>
-                                <option>Other</option>
+                                <option value="1">Male</option>
+                                <option value="2">Female</option>
+                                <option value="3">Other</option>
                             </select>
                         </div>
                     </div>
@@ -80,7 +81,7 @@
 
                 <!--Email-->
                 <h6 style="text-align: start;  margin: 3px; color: rgb(255, 255, 81);">Email</h6>
-                <input type="text" class="form-control form-rounded" placeholder="Enter Email"
+                <input type="text" class="form-control form-rounded" name="email" placeholder="Enter Email" required
                       style="text-align: center; border-radius: 1rem; font-weight: bold;">
                 <!--CheckBox-->
                 <div class="form-check">
@@ -99,6 +100,7 @@
             </div>
         </div>
     </div>
+    {!! Form::close() !!}
 
 
     <!-- Optional JavaScript -->
@@ -117,7 +119,7 @@
     <script>
         $('#submit').click(function () {
           //do something
-          alert("Clicked:  Ok");
+          $('#newyear-form').submit();
         });
 
 
@@ -130,7 +132,7 @@
             if (file) {
               profile.src = URL.createObjectURL(file)
             }
-          }
+        }
     </script>
 </body>
 </html>
