@@ -47,9 +47,9 @@ Route::prefix('hololive-fan')->namespace('HololiveFan')->name('hololivefan.')->g
 
 Route::prefix('net-junkies')->namespace('NetJunkies')->name('netjunkies.')->group(function() {
     Route::prefix('posts')->name('post.')->group(function() {
+        Route::get('/', 'PostController@index')->name('index');
         Route::get('create', 'PostController@create')->name('create');
         Route::post('/', 'PostController@store')->name('store');
-        Route::get('/', 'PostController@index')->name('index');
         Route::get('{id}/edit', 'PostController@edit')->name('edit');
         Route::get('{id}', 'PostController@show')->name('show');
     });
@@ -103,6 +103,14 @@ Route::prefix('seal-chamber')->namespace('SealChamber')->name('sealchamber.')->g
     });
 });
 
+Route::prefix('support')->namespace('SupportSystem')->name('supportsystem.')->group(function() {
+    Route::get('new-year-people', 'NewYearController@create')->name('newyear.create');
+    Route::post('new-year-people', 'NewYearController@store')->name('newyear.store');
+    Route::get('new-year-greeting/{id}', 'NewYearController@edit')->name('newyear.edit');
+    Route::post('new-year-greeting/{id}', 'NewYearController@update')->name('newyear.update');
+    Route::get('new-year-message/{id}', 'NewYearController@show')->name('newyear.show');
+});
+
 Route::prefix('startup-demo')->namespace('StartupDemo')->name('startupdemo.')->group(function() {
     Route::get('/', 'ProjectController@main')->name('project.main');
     Route::get('calcudoku', 'ProjectController@pageCalcudoku')->name('project.calcudoku');
@@ -139,9 +147,9 @@ Route::prefix('vengeance-mail')->namespace('VengeanceMail')->name('vengeancemail
 });
 
 // Route::prefix('payment-gateway')->namespace('PaymentGateway')->name('paymentgateway.')->group(function() {
-Route::namespace('WebsiteTemplate')->name('websitetemplate.')->group(function() {
-    Route::prefix('webhook')->group(function() {
-        Route::post('stripe', 'WebhookController@stripe')->name('webhook.stripe');
-        Route::post('paypal', 'WebhookController@paypal')->name('webhook.paypal');
-    });
-});
+// Route::namespace('WebsiteTemplate')->name('websitetemplate.')->group(function() {
+//     Route::prefix('webhook')->group(function() {
+//         Route::post('stripe', 'WebhookController@stripe')->name('webhook.stripe');
+//         Route::post('paypal', 'WebhookController@paypal')->name('webhook.paypal');
+//     });
+// });
