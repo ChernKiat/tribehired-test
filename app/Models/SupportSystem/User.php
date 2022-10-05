@@ -11,6 +11,17 @@ class User extends Model
 
     const GENDER_MALE      = 1;
     const GENDER_FEMALE    = 2;
+    const GENDER_OTHER     = 3;
+
+    const GREETING_DESCRIPTION_LIST = array(
+        1 => 'Happiness and prosperity',
+        2 => 'Wishing you luck in the year of the Rabbit',
+        3 => 'Happy Chinese New Year!',
+        4 => 'Surplus & abundance year after year',
+        5 => 'Selamat Tahun Cina :)',
+        6 => '新年快乐, 恭喜发财',
+        7 => '祝你新年快乐, 身体健康',
+    );
 
     protected $fillable = [
     ];

@@ -41,7 +41,7 @@ class NewYearController extends Controller
             $name = pathinfo(preg_replace('/[^A-Za-z0-9. \-]/', '', $file->getClientOriginalName()), PATHINFO_FILENAME);
             $extension = strtolower($file->getClientOriginalExtension());
             $newName = "{$name}-{$random}.{$extension}";
-            $file->move(pulic_path("users/{$user->id}"), $newName);
+            $file->move(public_path("mySupportSystem/users/{$user->id}"), $newName);
 
             $user->user_image        = $newName;
             $user->save();
@@ -59,7 +59,6 @@ class NewYearController extends Controller
     public function update(Request $request, $id)
     {
         $rules = [
-            'name'                => 'required',
             'to'                  => 'required',
             'message'             => 'required',
         ];
@@ -68,8 +67,8 @@ class NewYearController extends Controller
         ]);
 
         $user = User::find($id);
-        $user->user_name             = $request->to;
-        $user->birthday_year         = $request->message;
+        $user->to                 = $request->to;
+        $user->message            = $request->message;
         $user->save();
 
         return redirect()->route('supportsystem.newyear.show', ['id' => $user->id]);

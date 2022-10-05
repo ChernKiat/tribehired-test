@@ -95,7 +95,7 @@
                 <!--Finaly Submit-->
                 <div class="container" id ="submit">
                       <img  src="/mySupportSystem/newyear/curvebutton.png" alt="ok" style="width: 150px; font-weight: bolder; font-family: Georgia, 'Times New Roman', Times, serif; cursor: pointer;">
-                      <div  class="centered" >OK</div>
+                      <div  class="centered" style="cursor: pointer;">OK</div>
                 </div>
             </div>
         </div>
@@ -118,13 +118,12 @@
 
     <script>
         $('#submit').click(function () {
-          //do something
-          $('#newyear-form').submit();
+            //do something
+            $('#newyear-form').submit();
         });
 
-
         function uploadImg(path) {
-          alert(path);
+            alert(path);
         }
 
         imgInp.onchange = evt => {

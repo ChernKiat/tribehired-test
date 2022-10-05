@@ -22,7 +22,7 @@ class CreateSupportsTable extends Migration
             $table->tinyInteger('user_gender')->nullable();
             $table->integer('birthday_year')->nullable();
             $table->text('to')->nullable();
-            $table->tinyInteger('message')->nullable();
+            $table->text('message')->nullable();
             $table->unsignedInteger('voucher_code')->nullable();
             $table->timestamps();
         });
