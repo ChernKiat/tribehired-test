@@ -46,9 +46,12 @@
 
                 <h4 style="text-align: center;  margin: 5px; color: rgb(255, 255, 81);">Profile Photo</h4>
 
+                @include('layouts.message')
+
                 <h6 style="text-align: center;  margin-top: 30px; color: rgb(255, 255, 81);">Delicate to:</h6>
 
-                <input type="text" id="delicate" name="to" autocomplete="off" class="form-control form-rounded" placeholder="Enter Here" style=" text-align: center; border-radius: 1rem; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;color: rgb(0, 39, 110); font-size:xx-large; font-weight: bold;">
+                <input type="text" id="delicate" name="to" autocomplete="off" class="form-control form-rounded" placeholder="Enter Here" maxlength="20" required style="text-align: center; border-radius: 1rem; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;color: rgb(0, 39, 110); font-size:xx-large; font-weight: bold;">
+                <p class="myFontLengthText" style="font-size: small; text-align: end; color: rgb(255, 255, 255);">0 character</p>
 
                 <!--Greetings DropDown-->
                 <div class="row" >
@@ -100,12 +103,29 @@
             $('#newyear-form').submit();
         });
 
+        $('.myFontLengthText').each(function() {
+            var myFontLengthText = $(this);
+            myFontLengthText.prev().on("keyup", function() {
+                var character = $(this).val().length;
+                if (character > 1) {
+                    var isPlural = 'characters';
+                } else {
+                    var isPlural = 'character';
+                }
+                if (character < 20) {
+                    myFontLengthText.html(character + ' ' + isPlural);
+                } else if (character == 20) {
+                    myFontLengthText.html("maximum 20 characters reach");
+                }
+            });
+            myFontLengthText.prev().keyup();
+        });
+
         //Update list data on selected text
         $('#greetinglist').change(function () {
             var selectedgreeting = $("#greetinglist option:selected").text();
 
             document.getElementById("greeting").value =selectedgreeting;
-            console.log(selectedgreeting);
             greetingtext=selectedgreeting;
         });
     </script>

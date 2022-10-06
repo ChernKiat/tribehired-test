@@ -18,14 +18,14 @@ class NewYearController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'image'               => 'required|mimetypes:image/jpeg,image/png',
+            // 'image'               => 'required|mimetypes:image/jpeg,image/png',
             'name'                => 'required',
             'birthday'            => 'required',
             'gender'              => 'required',
             'email'               => 'required|email',
         ];
         $request->validate($rules, [
-            'image.mimetypes'     => 'You must upload image in .jpg or .png format.',
+            // 'image.mimetypes'     => 'You must upload image in .jpg or .png format.',
         ]);
 
         $user = new User();
@@ -63,7 +63,8 @@ class NewYearController extends Controller
             'message'             => 'required',
         ];
         $request->validate($rules, [
-            // 'pdf.mimetypes' => 'You must upload scanned copy of the document in .pdf format.',
+            'to.required'         => 'The delicate to field is required.',
+            'message.required'    => 'The greeting field is required.',
         ]);
 
         $user = User::find($id);

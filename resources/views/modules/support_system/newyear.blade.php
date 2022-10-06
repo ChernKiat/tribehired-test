@@ -38,10 +38,12 @@
                 <h4 style="text-align: center;  margin: 5px; color: rgb(255, 255, 81);">Profile Photo</h4>
                 <input type="file" name="image" accept="image/*" id="imgInp" style="color: #000000; background-color: rgb(255, 255, 255); border-radius: 1rem;">
 
+                @include('layouts.message')
+
                 <h6 style="text-align: center;  margin-top: 30px; color: rgb(255, 255, 81);">Name</h6>
                 <input  type="text" class="form-control form-rounded" placeholder="Enter Name" name="name" maxlength="20" required
                   style=" text-align: center; border-radius: 1rem; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;color: rgb(0, 39, 110); font-size:xx-large; font-weight: bold;">
-                 <p class="myFontLengthText" style="font-size: small; text-align: end; color: rgb(255, 255, 255);">0 character</p>
+                <p class="myFontLengthText" style="font-size: small; text-align: end; color: rgb(255, 255, 255);">0 character</p>
                 <!--Bio Data-->
                 <div class="row">
                     <div class="col">
