@@ -70,6 +70,7 @@ class NewYearController extends Controller
         $user->to                 = $request->to;
         $user->message            = $request->message;
         $user->save();
+        $user->generateVoucherCode();
 
         return redirect()->route('supportsystem.newyear.show', ['id' => $user->id]);
     }

@@ -1,6 +1,7 @@
 <?php
 namespace App\Models\SupportSystem;
 
+use App\Tools\StringTool;
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
@@ -26,4 +27,8 @@ class User extends Model
     protected $fillable = [
     ];
 
+    public function generateVoucherCode() {
+        $this->voucher_code  = StringTool::randomGenerator('number', 6, false);
+        $this->save();
+    }
 }

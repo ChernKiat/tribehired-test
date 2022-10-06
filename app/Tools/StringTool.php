@@ -7,20 +7,32 @@ use Illuminate\Support\Str;
 
 class StringTool
 {
-    public static function randomGenerator($type, $length = 8)
+    public static function randomGenerator($type, $length = 8, $safe_mode = true)
     {
         switch ($type) {
             case 'filename':
                 return Str::random(10) . Carbon::now()->getTimestamp();
                 break;
             case 'letter':
-                $characters = 'ABCDEFGHJKLMNPQRSTUVWXYZ'; // no I & O
+                if ($safe_mode) {
+                    $characters = 'ABCDEFGHJKLMNPQRSTUVWXYZ'; // no I & O
+                } else {
+                    $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                }
                 break;
             case 'number':
-                $characters = '23456789'; // no 0 & 1
+                if ($safe_mode) {
+                    $characters = '23456789'; // no 0 & 1
+                } else {
+                    $characters = '0123456789';
+                }
                 break;
             case 'both':
-                $characters = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
+                if ($safe_mode) {
+                    $characters = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
+                } else {
+                    $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                }
                 break;
             default:
                 return mt_rand(); // random integer
