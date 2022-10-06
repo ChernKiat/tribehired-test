@@ -50,7 +50,7 @@
 
                 <h6 style="text-align: center;  margin-top: 30px; color: rgb(255, 255, 81);">Delicate to:</h6>
 
-                <input type="text" id="delicate" name="to" autocomplete="off" class="form-control form-rounded" placeholder="Enter Here" maxlength="20" required style="text-align: center; border-radius: 1rem; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;color: rgb(0, 39, 110); font-size:xx-large; font-weight: bold;">
+                <input type="text" id="delicate" name="to" autocomplete="off" class="form-control form-rounded" placeholder="Enter Here" required style="text-align: center; border-radius: 1rem; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;color: rgb(0, 39, 110); font-size:xx-large; font-weight: bold;">
                 <p class="myFontLengthText" style="font-size: small; text-align: end; color: rgb(255, 255, 255);">0 character</p>
 
                 <!--Greetings DropDown-->
@@ -105,7 +105,7 @@
 
         $('.myFontLengthText').each(function() {
             var myFontLengthText = $(this);
-            myFontLengthText.prev().on("keyup", function() {
+            myFontLengthText.prev().on("keydown keyup", function() {
                 var character = $(this).val().length;
                 if (character > 1) {
                     var isPlural = 'characters';
@@ -114,11 +114,11 @@
                 }
                 if (character < 20) {
                     myFontLengthText.html(character + ' ' + isPlural);
-                } else if (character == 20) {
+                } else if (character >= 20) {
                     myFontLengthText.html("maximum 20 characters reach");
+                    return false;
                 }
             });
-            myFontLengthText.prev().keyup();
         });
 
         //Update list data on selected text

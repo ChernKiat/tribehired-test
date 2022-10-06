@@ -22,7 +22,7 @@ class NewYearController extends Controller
             'name'                => 'required',
             'birthday'            => 'required',
             'gender'              => 'required',
-            'email'               => 'required|email',
+            'email'               => 'required|email|unique:supportsystem_users,user_email',
         ];
         $request->validate($rules, [
             // 'image.mimetypes'     => 'You must upload image in .jpg or .png format.',
