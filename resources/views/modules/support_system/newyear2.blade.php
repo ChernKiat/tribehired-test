@@ -55,7 +55,7 @@
                     <div class="col">
                         <h6 style="text-align: center;  margin-top: 30px; color: rgb(255, 255, 81);">Select your
                             greetings</h6>
-                        <input type="text" id="greeting" name="message" autocomplete="off" class="form-control form-rounded" readonly="readonly" placeholder="Not Selected"
+                        <input type="text" id="greeting" name="message" autocomplete="off" class="form-control form-rounded" placeholder="Not Selected"
 
                             style="margin-top: 10px ; margin-bottom: 10px; text-align: center; border-radius: 1rem; font-weight: bold; background-color: #ffffff;">
 

@@ -39,8 +39,9 @@
                 <input type="file" name="image" accept="image/*" id="imgInp" style="color: #000000; background-color: rgb(255, 255, 255); border-radius: 1rem;">
 
                 <h6 style="text-align: center;  margin-top: 30px; color: rgb(255, 255, 81);">Name</h6>
-                <input  type="text" class="form-control form-rounded" placeholder="Enter Name" name="name" required
+                <input  type="text" class="form-control form-rounded" placeholder="Enter Name" name="name" maxlength="20" required
                   style=" text-align: center; border-radius: 1rem; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;color: rgb(0, 39, 110); font-size:xx-large; font-weight: bold;">
+                 <p class="myFontLengthText" style="font-size: small; text-align: end; color: rgb(255, 255, 255);">0 character</p>
                 <!--Bio Data-->
                 <div class="row">
                     <div class="col">
@@ -118,6 +119,24 @@
         $('#submit').click(function () {
             //do something
             $('#newyear-form').submit();
+        });
+
+        $('.myFontLengthText').each(function() {
+            var myFontLengthText = $(this);
+            myFontLengthText.prev().on("keyup", function() {
+                var character = $(this).val().length;
+                if (character > 1) {
+                    var isPlural = 'characters';
+                } else {
+                    var isPlural = 'character';
+                }
+                if (character < 20) {
+                    myFontLengthText.html(character + ' ' + isPlural);
+                } else if (character == 20) {
+                    myFontLengthText.html("maximum 20 characters reach");
+                }
+            });
+            myFontLengthText.prev().keyup();
         });
 
         function uploadImg(path) {
