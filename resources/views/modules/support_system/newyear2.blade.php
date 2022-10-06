@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>Sendgreeting</title>
+    <title>New Year - Greeting</title>
 
     <style>
         .container {
@@ -42,7 +42,7 @@
             <div class="col">
                 <!--Image and name data-->
 
-                <img src='{{ "/mySupportSystem/users/{$user->id}/{$user->user_image}" }}' alt="" width="100px" height="100px" id="profile"
+                <img src='{{ !empty($user->user_image) ? "/mySupportSystem/newyear/users/{$user->id}/{$user->user_image}" : "/mySupportSystem/newyear/profilesample.png" }}' alt="" width="100px" height="100px" id="profile"
                     style="border-radius: 50%;">
 
                 <h4 style="text-align: center;  margin: 5px; color: rgb(255, 255, 81);">Profile Photo</h4>

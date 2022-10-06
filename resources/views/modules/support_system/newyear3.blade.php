@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -10,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>Thanks</title>
+    <title>New Year - Message</title>
 
     <style>
         .container {
@@ -18,7 +17,6 @@
             text-align: center;
             color: white;
         }
-
 
         .centered {
             position: absolute;
@@ -34,7 +32,8 @@
         <div class="row">
             <div class="col">
                 <!--Image and name data-->
-                <img src="img/profilesample.png" alt="" width="100px" height="100px" id="profile" style="border-radius: 50%;">
+                <img src='{{ !empty($user->user_image) ? "/mySupportSystem/newyear/users/{$user->id}/{$user->user_image}" : "/mySupportSystem/newyear/profilesample.png" }}' alt="" width="100px" height="100px" id="profile"
+                    style="border-radius: 50%;">
                 <h4 style="text-align: center;  margin: 5px; color: rgb(255, 255, 81);"></h4>
                 <br/>
                 <!--Bio Data-->
@@ -42,7 +41,7 @@
                     <div class="col">
                         <h6 style="text-align: center;  margin-top: 100px; color: rgb(255, 255, 255);">Thanks</h6>
                         <h6 id="name" style="text-align: center;  margin-top: 30px; color: rgb(255, 255, 255);  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;color: rgb(255, 255, 255); font-size:xx-large; font-weight: bold;"  >{{ $user->user_name }}</h6>
-                        <h6 style="text-align: center;  margin-top: 30px;color: rgb(255, 255, 255);">Please redeem the voucher at redemption counter</h6>
+                        <h6 style="text-align: center;  margin-top: 30px;color: rgb(255, 255, 255);">Please redeem<br/>the voucher at redemption counter</h6>
                     </div>
                 </div>
             </div>
