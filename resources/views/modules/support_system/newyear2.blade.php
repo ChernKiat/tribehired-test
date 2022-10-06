@@ -63,7 +63,7 @@
                             <select class="form-control" name="" id="greetinglist" multiple="multiple"
                                 style="text-align: start;  font-weight: bold;">
                                 <option value="">Please Select</option>
-                                @foreach (\Vanguard\User::GREETING_DESCRIPTION_LIST as $key => $greeting)
+                                @foreach (\App\Models\SupportSystem\User::GREETING_DESCRIPTION_LIST as $key => $greeting)
                                     <option value="{{ $key }}">{{ $greeting }}</option>
                                 @endforeach
                             </select>
