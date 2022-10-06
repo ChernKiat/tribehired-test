@@ -33,9 +33,8 @@
         }
     </style>
 </head>
-<body
-    style=" background: lightblue url(/mySupportSystem/newyear/bg.jpg) no-repeat fixed center; -webkit-background-size: cover;-moz-background-size: cover; -o-background-size: cover;background-size: cover; ">
-    {!! Form::open(['route' => 'supportsystem.newyear.update', 'files' => true, 'id' => 'newyear-form']) !!}
+<body style=" background: lightblue url(/mySupportSystem/newyear/bg.jpg) no-repeat fixed center; -webkit-background-size: cover;-moz-background-size: cover; -o-background-size: cover;background-size: cover; ">
+    {!! Form::open(['route' => array('supportsystem.newyear.update', $user->id), 'files' => true, 'id' => 'newyear-form']) !!}
     {{ csrf_field() }}
     <div class="d-flex align-items-center" style="text-align: center;  margin: 25px; justify-content: center; ">
         <div class="row">

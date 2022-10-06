@@ -39,7 +39,7 @@
                 <!--Bio Data-->
                 <div class="row">
                     <div class="col">
-                        <h6 style="text-align: center;  margin-top: 100px; color: rgb(255, 255, 255);">Thanks</h6>
+                        <h5 style="text-align: center;  margin-top: 100px; color: rgb(255, 255, 255);">Thanks</h5>
                         <h6 id="name" style="text-align: center;  margin-top: 30px; color: rgb(255, 255, 255);  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;color: rgb(255, 255, 255); font-size:xx-large; font-weight: bold;"  >{{ $user->user_name }}</h6>
                         <h6 style="text-align: center;  margin-top: 30px;color: rgb(255, 255, 255);">Please redeem<br/>the voucher at redemption counter</h6>
                     </div>

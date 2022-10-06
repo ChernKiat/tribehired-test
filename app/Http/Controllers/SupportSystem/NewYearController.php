@@ -41,7 +41,7 @@ class NewYearController extends Controller
             $name = pathinfo(preg_replace('/[^A-Za-z0-9. \-]/', '', $file->getClientOriginalName()), PATHINFO_FILENAME);
             $extension = strtolower($file->getClientOriginalExtension());
             $newName = "{$name}-{$random}.{$extension}";
-            $file->move(public_path("mySupportSystem/users/{$user->id}"), $newName);
+            $file->move(public_path("mySupportSystem/newyear/users/{$user->id}"), $newName);
 
             $user->user_image        = $newName;
             $user->save();
