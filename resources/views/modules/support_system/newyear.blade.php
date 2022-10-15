@@ -8,6 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="/mySupportSystem/newyear/styles.css" rel="stylesheet">
 
     <title>New Year - People</title>
 
@@ -36,8 +37,41 @@
                 <!--Image and name data-->
                 <img src="/mySupportSystem/newyear/profilesample.png" alt="" width="100px" height="100px" id="profile" style="border-radius: 50%;">
                 <h4 style="text-align: center;  margin: 5px; color: rgb(255, 255, 81);">Profile Photo</h4>
-                <input type="file" name="image" accept="image/*" capture="camera" id="imgInp" style="color: #000000; background-color: rgb(255, 255, 255); border-radius: 1rem;">
+                {{-- <input type="file" name="image" accept="image/*" capture="camera" id="imgInp" style="color: #000000; background-color: rgb(255, 255, 255); border-radius: 1rem;"> --}}
 
+                <div class="row mt-4 justify-content-md-center text-center px-4">
+                    <div class="col" id="fileuploadAlbum">
+                        <div class="myfileupload-buttonbar ">
+                            <label class="myui-button">
+                                <span class="white"><b>From Album</b></span>
+                                <input id="file" onchange="readURL(this);" type="file" name="image1" />
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col white slash">
+                        /
+                    </div>
+                    <div class="col" id="fileuploadCamera">
+                        <div class="myfileupload-buttonbar ">
+                            <label class="myui-button">
+                                <span class="white"><b>Take Photo</b></span>
+                                <input type="file" onchange="readURL(this);" accept="image/*" capture="camera" name="image2" />
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    function readURL(input) {
+                        if (input.files && input.files[0]) {
+                            var reader = new FileReader();
+
+                            reader.onload = function (e) {
+                                $('#profile').attr('src', e.target.result)
+                            };
+                            reader.readAsDataURL(input.files[0]);
+                        }
+                    }
+                </script>
                 @include('layouts.message')
 
                 <h6 style="text-align: center;  margin-top: 30px; color: rgb(255, 255, 81);">Name</h6>

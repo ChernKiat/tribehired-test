@@ -1,0 +1,176 @@
+.myfileupload-buttonbar input
+      {
+          position: absolute;
+          top: 0;
+          right: 0;
+          margin: 0;
+          border: solid transparent;
+          border-width: 0 0 100px 200px;
+          opacity: 0.0;
+          filter: alpha(opacity=0);
+          -o-transform: translate(250px, -50px) scale(1);
+          -moz-transform: translate(-300px, 0) scale(4);
+          direction: ltr;
+          cursor: pointer;
+      }
+      .myui-button
+      {
+          position: relative;
+          cursor: pointer;
+          text-align: center;
+          overflow: visible;
+          overflow: hidden;
+      }
+
+      .submitBtn{
+        border-width: medium;
+        border-color: #f59849 !important;
+        background-color: #ca2d2b;
+      }
+      .submitBtn:hover{
+        background-color: #d53b3a!important;
+        opacity: 1.5;
+      }
+
+      .dropdown-menu {
+        max-height: 250px;
+        overflow-y: auto;
+      }
+
+
+      .pageone{
+        max-width: 425px;
+        border-radius: 0;
+        background-image: url('./bg.png');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+      }
+
+      .cbody{
+        max-width: 100%;
+        max-height: 100%;
+      }
+
+      .rounded-circle{
+        height: 150px;
+        width: 150px;
+      }
+
+      #fileuploadAlbum{
+        flex: 45%;
+      }
+
+      #fileuploadCamera{
+        padding:0;
+        flex: 45%;
+      }
+
+      .slash{
+        padding:0;
+        flex: 10%;
+      }
+
+      .fp{
+        padding: 10px;
+      }
+
+      .slctbirth{
+        text-align: center;
+        width:90%;
+        border-radius: 20px;
+        background-color: white;
+        color: #00008B;
+        font-weight: bolder;
+        padding-right: 0px;
+        padding-left: 0px;
+      }
+
+      .nameinpt{
+        border-radius: 20px;
+        width:100%;
+        color:#00008B;
+        font-size: 25px;
+        font-weight: bold;
+      }
+
+      .gender{
+        float: left;
+        margin-bottom: 5px;
+      }
+
+      .genderopt{
+        text-align: center;
+        width:100%;
+        border-radius: 20px;
+        color: #00008B;
+        font-weight: bolder;
+      }
+
+      .email{
+        width: 100%;
+        text-align: left !important;
+        margin-bottom: 5px;
+      }
+
+
+      .emaildiv{
+        margin-right: 0px;
+        margin-left: 0px;
+      }
+
+      .emailinpt{
+        width:100%;
+        color:#00008B;
+        border-radius: 20px;
+         font-weight: bold;
+      }
+
+      @media only screen and (width > 768px) {
+        .pageone{
+          padding-right: 0;
+          padding-left: 0;
+          height: 707px;
+        }
+      }
+
+      @media only screen and (width < 768px) {
+        .pageone{
+          padding-right: 0;
+          padding-left: 0;
+          height: 707px;
+
+        }
+        
+      }
+
+      .yellow{
+        color: #FFFF00;
+      }
+
+      .white{
+        color: white;
+      }
+
+      .mauto{
+        margin:auto;
+      }
+
+      .ptwoinpt{
+        border-radius: 20px; width:100%; color:#00008B; font-size: 25px; font-weight: bold;
+      }
+
+      .mt150{
+        margin-top: 150px;
+      }
+
+      .mt120{
+        margin-top: 120px;
+      }
+
+      .nameDisplay{
+        margin-top: 25px; padding: 0;
+      }
+
+      .result{
+        margin-top: 25px; padding-left: 30px; padding-right: 30px;
+      }
