@@ -23,9 +23,11 @@ class NewYearController extends Controller
             'birthday'            => 'required',
             'gender'              => 'required',
             'email'               => 'required|email|unique:supportsystem_users,user_email',
+            'agree'               => 'required',
         ];
         $request->validate($rules, [
             // 'image.mimetypes'     => 'You must upload image in .jpg or .png format.',
+            'agree.required'     => 'User must agree to share their personal info to participate the interactive.',
         ]);
 
         $user = new User();
@@ -35,9 +37,20 @@ class NewYearController extends Controller
         $user->user_email            = $request->email;
         $user->save();
 
-        dd($request->file('image1'), $request->file('image2'));
-        if ($request->has('image')) {
-            $file = $request->file('image');
+        if ($request->has('image1')) {
+            $file = $request->file('image1');
+            $random = Carbon::now()->timestamp . Str::random(10);
+            $name = pathinfo(preg_replace('/[^A-Za-z0-9. \-]/', '', $file->getClientOriginalName()), PATHINFO_FILENAME);
+            $extension = strtolower($file->getClientOriginalExtension());
+            $newName = "{$name}-{$random}.{$extension}";
+            $file->move(public_path("mySupportSystem/newyear/users/{$user->id}"), $newName);
+
+            $user->user_image        = $newName;
+            $user->save();
+        }
+
+        if ($request->has('image2')) {
+            $file = $request->file('image2');
             $random = Carbon::now()->timestamp . Str::random(10);
             $name = pathinfo(preg_replace('/[^A-Za-z0-9. \-]/', '', $file->getClientOriginalName()), PATHINFO_FILENAME);
             $extension = strtolower($file->getClientOriginalExtension());

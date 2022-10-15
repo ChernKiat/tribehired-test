@@ -123,7 +123,7 @@
                 <div class="form-check">
                     <label class="form-check-label"
                         style="text-align: start;  margin: 3px; color: rgb(255, 255, 255); font-weight: bold;">
-                        <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" checked>
+                        <input type="checkbox" class="form-check-input" name="agree" id="" value="checkedValue" checked>
                         User are agreed to share their personal info to participate the interactive
                     </label>
                 </div>
