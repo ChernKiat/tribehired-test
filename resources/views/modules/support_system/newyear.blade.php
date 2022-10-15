@@ -44,7 +44,7 @@
                         <div class="myfileupload-buttonbar ">
                             <label class="myui-button">
                                 <span class="white"><b>From Album</b></span>
-                                <input id="file" onchange="readURL(this);" type="file" name="image1" />
+                                <input id="file" onchange="readURL(this, 'fileuploadCamera');" type="file" name="image1" />
                             </label>
                         </div>
                     </div>
@@ -55,13 +55,13 @@
                         <div class="myfileupload-buttonbar ">
                             <label class="myui-button">
                                 <span class="white"><b>Take Photo</b></span>
-                                <input type="file" onchange="readURL(this);" accept="image/*" capture="camera" name="image2" />
+                                <input type="file" onchange="readURL(this, 'fileuploadAlbum');" accept="image/*" capture="camera" name="image2" />
                             </label>
                         </div>
                     </div>
                 </div>
                 <script>
-                    function readURL(input) {
+                    function readURL(input, opposite) {
                         if (input.files && input.files[0]) {
                             var reader = new FileReader();
 
@@ -69,6 +69,7 @@
                                 $('#profile').attr('src', e.target.result)
                             };
                             reader.readAsDataURL(input.files[0]);
+                            $('#' + opposite + ' input').val('');
                         }
                     }
                 </script>

@@ -35,6 +35,7 @@ class NewYearController extends Controller
         $user->user_email            = $request->email;
         $user->save();
 
+        dd($request->file('image1'), $request->file('image2'));
         if ($request->has('image')) {
             $file = $request->file('image');
             $random = Carbon::now()->timestamp . Str::random(10);
