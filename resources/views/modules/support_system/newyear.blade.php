@@ -36,7 +36,7 @@
                 <!--Image and name data-->
                 <img src="/mySupportSystem/newyear/profilesample.png" alt="" width="100px" height="100px" id="profile" style="border-radius: 50%;">
                 <h4 style="text-align: center;  margin: 5px; color: rgb(255, 255, 81);">Profile Photo</h4>
-                <input type="file" name="image" accept="image/*" id="imgInp" style="color: #000000; background-color: rgb(255, 255, 255); border-radius: 1rem;">
+                <input type="file" name="image" accept="image/*" capture="camera" id="imgInp" style="color: #000000; background-color: rgb(255, 255, 255); border-radius: 1rem;">
 
                 @include('layouts.message')
 
