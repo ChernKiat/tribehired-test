@@ -44,7 +44,7 @@
                         <div class="myfileupload-buttonbar ">
                             <label class="myui-button">
                                 <span class="white"><b>From Album</b></span>
-                                <input id="file" onchange="readURL(this, 'fileuploadCamera');" type="file" name="image1" />
+                                <input id="file" onchange="readURL(this, 'fileuploadCamera');" type="file" name="image1" accept="image/*" />
                             </label>
                         </div>
                     </div>
